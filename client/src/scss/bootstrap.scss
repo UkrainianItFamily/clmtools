@@ -1,0 +1,10 @@
+// Define variable defaults
+$body-bg: #fff;
+$body-color: #222;
+$body-font-size: 14px;
+$body-line-height: 1.428571429;
+$body-font: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+// Then import Bootstrap an BootstrapVue SCSS files (order is important)
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';

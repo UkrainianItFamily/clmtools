@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;
@@ -22,3 +23,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/status/{serviceName?}', [StatusController::class, 'status']);
 Route::post('/mail', [StatusController::class, 'mail']);
 Route::post('/broadcast', [StatusController::class, 'event']);
+
+Route::prefix('v1')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('register', [AuthController::class, 'register']);
+
+        Route::middleware('auth:api')->group(function () {
+            Route::get('user', [AuthController::class, 'user']);
+        });
+    });
+});

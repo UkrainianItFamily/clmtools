@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.7",
         "pda/pheanstalk": "^4.0",
         "predis/predis": "^2.0",
-        "sentry/sentry-laravel": "^2.12"
+        "sentry/sentry-laravel": "^2.12",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",

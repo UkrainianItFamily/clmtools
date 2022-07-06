@@ -19,7 +19,7 @@ class AuthController extends Controller
             'last_name' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'phone' => 'required|regex:/[0-9]{12}/|unique:users',
-            'password'  => 'required|min:3|confirmed',
+            'password'  => 'required|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|',
         ]);
         if ($v->fails())
         {

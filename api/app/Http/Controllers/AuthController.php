@@ -35,6 +35,7 @@ class AuthController extends Controller
         $user->phone = $request->phone;
         $user->password = bcrypt($request->password);
         $user->save();
+        $user->sendEmailVerificationNotification();
         return response()->json(['status' => 'success'], 200);
     }
     /**

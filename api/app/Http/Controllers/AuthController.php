@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use App\Models\User;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -14,13 +15,35 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $v = Validator::make($request->all(), [
-            'name' => 'required|min:3',
-            'last_name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|regex:/[0-9]{12}/|unique:users',
-            'password'  => 'required|min:8|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|',
-        ]);
+        $rules = [
+            'name' => [
+                'required',
+                'min:3'
+            ],
+            'last_name' => [
+                'required',
+                'min:3'
+            ],
+            'email' => [
+                'required',
+                'email',
+                'unique:users'
+            ],
+            'phone' => [
+                'required',
+                'regex:/[0-9]{12}/',
+                'unique:users'
+            ],
+            'password'  => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers(),
+                'confirmed'
+            ]
+        ];
+
+        $v = Validator::make($request->all(), $rules);
         if ($v->fails())
         {
             return response()->json([
@@ -28,6 +51,7 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
+
         $user = new User();
         $user->name = $request->name;
         $user->last_name = $request->last_name;
@@ -38,6 +62,7 @@ class AuthController extends Controller
         $user->sendEmailVerificationNotification();
         return response()->json(['status' => 'success'], 200);
     }
+
     /**
      * Get authenticated user
      */

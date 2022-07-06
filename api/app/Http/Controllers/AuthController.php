@@ -18,7 +18,7 @@ class AuthController extends Controller
             'name' => 'required|min:3',
             'last_name' => 'required|min:3',
             'email' => 'required|email|unique:users',
-            'phone' => 'required|regex:/[0-9]{12}/',
+            'phone' => 'required|regex:/[0-9]{12}/|unique:users',
             'password'  => 'required|min:3|confirmed',
         ]);
         if ($v->fails())

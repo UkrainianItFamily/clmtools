@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;
@@ -24,7 +24,10 @@ Route::get('/status/{serviceName?}', [StatusController::class, 'status']);
 Route::post('/mail', [StatusController::class, 'mail']);
 Route::post('/broadcast', [StatusController::class, 'event']);
 
-Route::controller(AuthController::class)->group(function () {
-    Route::post('login', 'login');
+Route::prefix('v1')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('login', 'login')->name('login');
+
+    });
 
 });

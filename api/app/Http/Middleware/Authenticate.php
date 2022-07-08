@@ -25,6 +25,7 @@ class Authenticate extends Middleware
         if ($this->authenticate($request, $guards) === 'authentication_failed') {
             return response()->json(['error'=>'Unauthorized'],400);
         }
+
         return $next($request);
     }
 
@@ -33,11 +34,13 @@ class Authenticate extends Middleware
         if (empty($guards)) {
             $guards = [null];
         }
+
         foreach ($guards as $guard) {
             if ($this->auth->guard($guard)->check()) {
                 return $this->auth->shouldUse($guard);
             }
         }
+
         return 'authentication_failed';
     }
 }

@@ -27,7 +27,5 @@ Route::post('/broadcast', [StatusController::class, 'event']);
 Route::prefix('v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login')->name('login');
-
     });
-
 });

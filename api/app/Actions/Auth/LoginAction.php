@@ -20,6 +20,7 @@ final class LoginAction
         }
 
         $user = Auth::user();
+
         return new AuthenticationResponse(
             $user,
             $token,

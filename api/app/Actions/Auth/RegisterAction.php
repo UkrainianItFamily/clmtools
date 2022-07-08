@@ -27,9 +27,6 @@ final class RegisterAction
 
         $token = auth()->login($user);
 
-
-        //$this->mailer->to($user)->send(new WelcomeEmail());
-
         return new AuthenticationResponse(
             (string)$token,
             'bearer',

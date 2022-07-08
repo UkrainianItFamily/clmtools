@@ -22,7 +22,6 @@ class RegistrationController extends ApiController
         RegisterAction $action,
         AuthenticationResponseArrayPresenter $authenticationResponseArrayPresenter
     ): JsonResponse {
-
         $request = new RegisterRequest(
             $httpRequest->get('name'),
             $httpRequest->get('last_name'),

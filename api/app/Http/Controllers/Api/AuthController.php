@@ -7,18 +7,18 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LoginRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
-use App\Http\Requests\Api\Auth\LoginHttpRequest;
+use App\Http\Requests\Api\Auth\AuthRequest;
 
 final class AuthController extends ApiController
 {
     public function login(
-        LoginHttpRequest $httpRequest,
+        AuthRequest $authRequest,
         LoginAction $action,
         AuthenticationResponseArrayPresenter $authenticationResponseArrayPresenter
     ) {
         $request = new LoginRequest(
-            $httpRequest->email,
-            $httpRequest->password
+            $authRequest->email,
+            $authRequest->password
         );
 
         $response = $action->execute($request);

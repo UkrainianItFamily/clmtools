@@ -7,9 +7,9 @@
                         <div class="box shadow-box">
                             <p class="subtitle">
                                 Don't have an account?
-                                <router-link class="link link-signup" to="/auth/sign-up">
+                                <RouterLink class="link link-signup" to="/auth/sign-up">
                                     Sign up
-                                </router-link>
+                                </RouterLink>
                             </p>
 
                             <form
@@ -17,28 +17,28 @@
                                 @submit.prevent
                                 novalidate="true"
                             >
-                                <b-form-group
+                                <BFormGroup
                                     label="Email"
                                     label-for="input-email"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-email"
                                         v-model="user.email"
                                         name="email"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Password"
                                     label-for="input-password"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-password"
                                         v-model="user.password"
                                         type="password"
                                         name="password"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
                                 <div class="login-footer has-text-centered">
                                     <button

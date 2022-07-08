@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +27,7 @@ Route::post('/broadcast', [StatusController::class, 'event']);
 
 Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
-        Route::post('register', [AuthController::class, 'register']);
-
-        Route::middleware('auth:api')->group(function () {
-            Route::get('user', [AuthController::class, 'user']);
-        });
+        Route::post('register', [RegistrationController::class, 'register']);
     });
 
     Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');

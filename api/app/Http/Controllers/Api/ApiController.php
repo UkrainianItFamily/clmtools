@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Contracts\PresenterCollectionInterface;
-use App\Contracts\PresenterInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
@@ -26,11 +25,11 @@ class ApiController extends BaseController
     protected function errorResponse(string $message, int $status = JsonResponse::HTTP_BAD_REQUEST): JsonResponse
     {
         return new JsonResponse([
-                                    'error' => [
-                                        'http_code' => $status,
-                                        'message' => $message
-                                    ]
-                                ], $status);
+            'error' => [
+                'http_code' => $status,
+                'message' => $message
+            ]
+        ], $status);
     }
 
     public function createPaginatedResponse(
@@ -38,13 +37,13 @@ class ApiController extends BaseController
         PresenterCollectionInterface $presenter
     ): JsonResponse {
         return new JsonResponse([
-                                    'data' => $presenter->presentCollection(collect($paginator->items())),
-                                    'meta' => [
-                                        'total' => $paginator->total(),
-                                        'current_page' => $paginator->currentPage(),
-                                        'per_page' => $paginator->perPage(),
-                                        'last_page' => $paginator->lastPage()
-                                    ]
-                                ]);
+            'data' => $presenter->presentCollection(collect($paginator->items())),
+            'meta' => [
+                'total' => $paginator->total(),
+                'current_page' => $paginator->currentPage(),
+                'per_page' => $paginator->perPage(),
+                'last_page' => $paginator->lastPage()
+            ]
+        ]);
     }
 }

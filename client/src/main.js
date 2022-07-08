@@ -1,12 +1,19 @@
 import Vue from 'vue';
 import App from './App.vue';
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
 import router from './router';
 import store from './store';
 import { BootstrapVue } from 'bootstrap-vue';
 
-Vue.use(BootstrapVue);
 
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.use(BootstrapVue);
+Vue.use(Buefy, {
+    defaultIconComponent: 'font-awesome-icon'
+});
 Vue.config.productionTip = false;
+
 
 new Vue({
   router,

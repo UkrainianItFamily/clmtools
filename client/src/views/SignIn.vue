@@ -71,6 +71,23 @@ export default {
         }
     }),
 
+
+    methods: {
+        ...mapActions('auth', [
+            'signIn',
+        ]),
+
+        onSubmit() {
+            this.signIn(this.user)
+                .then(() => {
+                    alert("Login");
+
+                    this.$router.push({ path: '/' }).catch(() => {});
+                })
+                .catch((error) => {console.log(error);} );
+        },
+    },
+
 };
 </script>
 

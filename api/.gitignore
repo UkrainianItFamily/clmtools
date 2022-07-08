@@ -15,3 +15,4 @@ yarn-error.log
 .mysqldata
 _ide_helper.php
 .phpstorm.meta.php
+composer.lock

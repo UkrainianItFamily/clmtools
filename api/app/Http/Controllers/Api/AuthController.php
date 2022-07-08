@@ -20,10 +20,12 @@ final class AuthController extends ApiController
             $httpRequest->email,
             $httpRequest->password
         );
+
         $response = $action->execute($request);
 
-        if(!$response->getExpiresIn())
+        if(!$response->getExpiresIn()){
             return $this->errorResponse('Unauthorized');
+        }
 
         return $this->successResponse($authenticationResponseArrayPresenter->present($response));
     }

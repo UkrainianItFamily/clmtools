@@ -1,42 +1,24 @@
 <template>
-    <nav
-        v-if="user.id"
-        class="navbar"
-        role="navigation"
-        aria-label="main navigation"
-    >
-
-        <div id="header-navbar" class="navbar-menu">
-
-            <div class="navbar-end">
-                <b-dropdown
-                    position="is-bottom-left"
-                    aria-role="menu"
-                    class="profile"
-                >
-                    <a class="navbar-link" slot="trigger" role="button">
-                        <figure class="image is-32x32 is-square">
-                            <img
-                                v-if="user.avatar"
-                                class="profile-image is-rounded"
-                                :src="user.avatar"
-                            >
-                            <DefaultAvatar v-else class="image is-32x32" :user="user" />
-                        </figure>
-                        <span class="profile-name">{{ this.fullName }}</span>
-                    </a>
-
-                    <b-dropdown-item has-link aria-role="menuitem">
-                        <router-link :to="{ name: 'profile' }" class="page-link">
-                            <b-icon pack="fa" icon="cog" />
-                            <span>Settings</span>
-                        </router-link>
-                    </b-dropdown-item>
-
-                </b-dropdown>
-            </div>
-        </div>
-    </nav>
+    <div>
+        <b-nav pills v-if="user.id">
+            <b-nav-item-dropdown
+                id="my-nav-dropdown"
+                text="{{ this.fullName }}"
+                toggle-class="nav-link-custom"
+                right
+            >
+                <b-dropdown-item>Profile</b-dropdown-item>
+                <b-dropdown-item>Exit</b-dropdown-item>
+            </b-nav-item-dropdown>
+        </b-nav>
+        <b-nav pills>
+            <b-nav-item active>
+                <router-link :to="{ name: 'auth.signUp' }" class="page-link">
+                    <span>Sign up</span>
+                </router-link>
+            </b-nav-item>
+        </b-nav>
+    </div>
 </template>
 
 <script>

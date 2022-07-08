@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Requests\Api\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 final class AuthRequest extends FormRequest
 {
@@ -17,7 +18,13 @@ final class AuthRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email',
-            'password' => 'required|min:8|string',
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers(),
+                'string'
+            ],
         ];
     }
 }

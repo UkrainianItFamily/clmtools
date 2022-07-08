@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <Navbar v-if="isLoggedIn" />
+      <Navbar />
     <BContainer class="content">
       <RouterView />
     </BContainer>
@@ -31,10 +31,10 @@ export default {
     },
 
     created() {
-        EventEmitter.$on(TOKEN_EXPIRED_EVENT, () => {
-            this.logout();
-            this.$router.push({ name: 'auth.signIn' }).catch(() => {});
-        });
+        // EventEmitter.$on(TOKEN_EXPIRED_EVENT, () => {
+        //     this.logout();
+        //     this.$router.push({ name: 'auth.signIn' }).catch(() => {});
+        // });
     },
 
     methods: {

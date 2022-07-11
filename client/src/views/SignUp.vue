@@ -7,9 +7,9 @@
                         <div class="box shadow-box">
                             <p class="subtitle">
                                 Already have an account?
-                                <router-link class="link link-signup" to="/auth/sign-in">
+                                <RouterLink class="link link-signup" to="/auth/sign-in">
                                     Sign in
-                                </router-link>
+                                </RouterLink>
                             </p>
 
                             <form
@@ -17,74 +17,74 @@
                                 @submit.prevent
                                 novalidate="true"
                             >
-                                <b-form-group
+                                <BFormGroup
                                     label="First Name"
                                     label-for="input-name"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-name"
                                         v-model="user.name"
                                         name="first_name"
                                         autofocus
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Last Name"
                                     label-for="input-lastName"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-lastName"
                                         v-model="user.lastName"
                                         name="last_name"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Email"
                                     label-for="input-email"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-email"
                                         v-model="user.email"
                                         name="email"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Phone"
                                     label-for="input-phone"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-phone"
                                         v-model="user.phone"
                                         name="phone"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Password"
                                     label-for="input-password"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-password"
                                         v-model="user.password"
                                         type="password"
                                         name="password"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
-                                <b-form-group
+                                <BFormGroup
                                     label="Password"
                                     label-for="input-passwordConfirmation"
                                 >
-                                    <b-form-input
+                                    <BFormInput
                                         id="input-passwordConfirmation"
                                         v-model="user.passwordConfirmation"
                                         type="password"
                                         name="password_confirmation"
-                                    ></b-form-input>
-                                </b-form-group>
+                                    ></BFormInput>
+                                </BFormGroup>
 
                                 <div class="login-footer has-text-centered">
                                     <button

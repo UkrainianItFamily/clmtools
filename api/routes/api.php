@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\Api\RegistrationController;
+use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;

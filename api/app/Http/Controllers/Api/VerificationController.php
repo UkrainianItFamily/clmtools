@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Actions\Auth\ResendVerificationAction;
 use App\Actions\Auth\VerificationAction;
@@ -8,7 +8,7 @@ use App\Actions\Auth\VerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class VerificationController extends Controller
+class VerificationController extends ApiController
 {
     public function verify(
         $user_id,
@@ -25,7 +25,7 @@ class VerificationController extends Controller
 
         $action->execute($verificationRequest);
 
-        return response()->json(['msg' => 'User successfully verified.'], 200);
+        return $this->successResponse(['msg' => 'User successfully verified.'], 200);
     }
 
     public function resend(
@@ -33,6 +33,6 @@ class VerificationController extends Controller
     ) {
         $action->execute();
 
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
+        return $this->successResponse(['msg' => 'Email verification link sent on your email id']);
     }
 }

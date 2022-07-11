@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Actions\Auth\RegisterAction;
 use App\Actions\Auth\RegisterRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
 use App\Http\Requests\Api\Auth\RegisterValidationRequest;
-use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Auth;
-use App\Models\User;
 
 class RegistrationController extends ApiController
 {

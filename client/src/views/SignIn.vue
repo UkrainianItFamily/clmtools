@@ -30,8 +30,15 @@
                         <BRow>
                             <BCol>
                                 <p class="ml-4">
-                                    <RouterLink class="link link-signup" to="/auth/sign-up">
+                                    <RouterLink class="link link-signup" :to="{name: 'auth.signUp'}">
                                         Registration
+                                    </RouterLink>
+                                </p>
+                            </BCol>
+                            <BCol>
+                                <p class="mr-4 text-right">
+                                    <RouterLink class="link link-signup" :to="{name: 'auth.forgotPassword'}">
+                                        Forgot password?
                                     </RouterLink>
                                 </p>
                             </BCol>

@@ -6,6 +6,7 @@ import Status from '@/views/Status';
 
 import SignUp from '@/views/SignUp';
 import SignIn from '@/views/SignIn';
+import ForgotPassword from "@/views/ForgotPassword";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,12 @@ const routes = [
         path: '/auth/sign-in',
         name: 'auth.signIn',
         component: SignIn,
+        meta: { handleAuth: true },
+    },
+    {
+        path: '/auth/forgot-password',
+        name: 'auth.forgotPassword',
+        component: ForgotPassword,
         meta: { handleAuth: true },
     },
 

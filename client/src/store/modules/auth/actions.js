@@ -38,15 +38,19 @@ export default {
     async signIn({ commit }, { email, password }) {
 
         try {
-            const data = await requestService.post('/auth/login', {
+            const data = await requestService.post('/v1/login', {
                 email,
                 password,
             });
 
             commit(mutations.USER_LOGIN, {
-                accessToken: data.access_token,
-                tokenType: data.token_type
+                accessToken: data.data.access_token,
+                tokenType: data.data.token_type
             });
+
+            commit(mutations.SET_AUTHENTICATED_USER,
+               data.data.user,
+            );
 
             return Promise.resolve();
         } catch (error) {

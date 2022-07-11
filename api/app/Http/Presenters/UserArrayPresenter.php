@@ -14,6 +14,8 @@ final class UserArrayPresenter
             'id' => $user->getId(),
             'email' => $user->getEmail(),
             'name' => $user->getName(),
+            'last_name' => $user->getLastName(),
+            'phone' => $user->getPhone(),
             'email_verified_at' => $user->getVerifiedEmail(),
         ];
     }

@@ -1,27 +1,24 @@
 <template>
     <div>
-        <BNav pills v-if="user.id">
-            <BNavItemDropdown
-                id="my-nav-dropdown"
-                toggle-class="nav-link-custom"
-                right
-            >
-                <BDropdownItem>Profile</BDropdownItem>
-                <BDropdownItem>Exit</BDropdownItem>
-            </BNavItemDropdown>
-        </BNav>
-        <BNav pills>
-            <BNavItem active>
-                <RouterLink :to="{ name: 'auth.signUp' }" class="page-link">
-                    <span>Sign up</span>
-                </RouterLink>
-            </BNavItem>
-            <BNavItem>
-                <RouterLink :to="{ name: 'auth.signIn' }" class="page-link">
-                    <span>Sign in</span>
-                </RouterLink>
-            </BNavItem>
-        </BNav>
+        <BNavbar type="dark" variant="dark">
+            <BNavbarBrand :to="{ path: '/' }">CMLTool</BNavbarBrand>
+
+            <BNavbarNav class="ml-auto" align="right" v-if="user.id">
+                <BNavItemDropdown
+                    id="my-nav-dropdown"
+                    toggle-class="nav-link-custom"
+                    text="User"
+                >
+                    <BDropdownItem>Profile</BDropdownItem>
+                    <BDropdownItem :to="{ name: 'auth.logout'}">Exit</BDropdownItem>
+                </BNavItemDropdown>
+            </BNavbarNav>
+
+            <BNavbarNav class="ml-auto" align="right" v-else>
+                <BNavItem :to="{ name: 'auth.signUp' }">Sign up</BNavItem>
+                <BNavItem :to="{ name: 'auth.signIn' }">Sign in</BNavItem>
+            </BNavbarNav>
+        </BNavbar>
     </div>
 </template>
 

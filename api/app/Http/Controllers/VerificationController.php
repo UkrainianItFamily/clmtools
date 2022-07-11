@@ -23,12 +23,16 @@ class VerificationController extends Controller
             $request->get('signature')
         );
 
-        return $action->execute($verificationRequest);
+        $action->execute($verificationRequest);
+
+        return response()->json(['msg' => 'User successfully verified.'], 200);
     }
 
     public function resend(
         ResendVerificationAction $action,
     ) {
-        return $action->execute();
+        $action->execute();
+
+        return response()->json(["msg" => "Email verification link sent on your email id"]);
     }
 }

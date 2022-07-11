@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
-use Illuminate\Http\JsonResponse;
+use App\Exceptions\EmailAlreadyVerifiedException;
 
 final class ResendVerificationAction
 {
-    public function execute(): JsonResponse
+    public function execute(): void
     {
         if (auth()->user()->hasVerifiedEmail()) {
-            return response()->json(["msg" => "Email already verified."], 400);
+            throw new EmailAlreadyVerifiedException();
         }
 
         auth()->user()->sendEmailVerificationNotification();
-
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
     }
 }

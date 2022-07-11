@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
+use App\Exceptions\InvalidExpiredUrlProvidedException;
 use App\Repository\UserRepository;
-use Illuminate\Http\JsonResponse;
 
 final class VerificationAction
 {
@@ -13,10 +13,10 @@ final class VerificationAction
     {
     }
 
-    public function execute(VerificationRequest $request): JsonResponse
+    public function execute(VerificationRequest $request): void
     {
         if (!$request->getRequest()->hasValidSignature()) {
-            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
+            throw new InvalidExpiredUrlProvidedException();
         }
 
         $user = $this->userRepository->getById($request->getUserId());
@@ -24,7 +24,5 @@ final class VerificationAction
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-
-        return response()->json(["msg" => "User successfully verified."], 200);
     }
 }

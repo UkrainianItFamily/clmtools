@@ -7,7 +7,7 @@ namespace App\Http\Requests\Api\Auth;
 use App\Http\Requests\Api\ApiFormRequest;
 use Illuminate\Validation\Rules\Password;
 
-final class RegisterHttpRequest extends ApiFormRequest
+final class RegisterValidationRequest extends ApiFormRequest
 {
     /**
      * Get the validation rules that apply to the request.

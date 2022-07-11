@@ -5,23 +5,33 @@ namespace Tests\Feature;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthApiTest extends TestCase
 {
-    private $email = 'test@example.com';
-    private $password = 'Ye4oKoEa3Ro9llC';
-    private $api_url = '/api/v1/login';
+    private $email;
+    private $password;
+    private $api_url;
+    private $user;
 
-    public function test_existent_user()
+    public function setUp(): void
     {
-        $user = User::factory()->create([
+        parent::setUp();
+        $this->email = 'test@example.com';
+        $this->password = 'Ye4oKoEa3Ro9llC';
+        $this->api_url = '/api/v1/login';
+    }
+
+    public function test_existing_user()
+    {
+        $this->user = User::factory()->create([
             'name' => 'Test User',
             'email' => Str::random(5).'@'.Str::random(5).'.com',
-            'password' => bcrypt($this->password),
+            'password' => Hash::make($this->password),
         ]);
 
         $response = $this->postJson($this->api_url, [
-            'email' => $user->email,
+            'email' => $this->user->email,
             'password' => $this->password
         ]);
 
@@ -29,10 +39,10 @@ class AuthApiTest extends TestCase
             ->assertStatus(200)
             ->assertSeeText('access_token');
 
-        User::destroy($user->id);
+        User::destroy($this->user->id);
     }
 
-    public function test_non_existent_user()
+    public function test_nonexistent_user()
     {
         $response = $this->postJson($this->api_url, [
             'email' => Str::random(15).'@mail.com',
@@ -40,11 +50,11 @@ class AuthApiTest extends TestCase
         ]);
 
         $response
-            ->assertStatus(400)
-            ->assertSeeText('error');
+            ->assertJsonFragment(['message' => 'Unauthorized'])
+            ->assertStatus(400);
     }
 
-    public function test_incorrect_data_request()
+    public function test_incorrect_email()
     {
         $response = $this->postJson($this->api_url, [
             'email' => Str::random(10),
@@ -53,19 +63,18 @@ class AuthApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertSeeText('error');
+            ->assertJsonFragment(['email' => ["The email must be a valid email address."]]);
     }
 
-    public function test_seven_character_password()
+    public function test_incorrect_password()
     {
         $response = $this->postJson($this->api_url, [
             'email' => $this->email,
-            'password' => Str::random(7)
+            'password' => Str::substr($this->password, 0, 8),
         ]);
 
         $response
             ->assertStatus(422)
-            ->assertSeeText('error');
+            ->assertJsonFragment(['password' => ["The password must be at least 8 characters."]]);
     }
 }
-

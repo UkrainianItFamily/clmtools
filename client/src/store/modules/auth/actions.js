@@ -55,4 +55,45 @@ export default {
         }
     },
 
+    async forgotPassword({ commit }, { email }) {
+
+        try {
+            const data = await requestService.post('/auth/forgot-password', {
+                email
+            });
+
+            commit(mutations.USER_LOGIN, {
+                accessToken: data.access_token,
+                tokenType: data.token_type
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+        }
+    },
+
+    async resetPassword({ commit }, {
+        password, passwordConfirmation
+    }) {
+
+        try {
+            const data = await requestService.post('/auth/reset', {
+                email: this.$route.params.email,
+                password,
+                password_confirmation: passwordConfirmation,
+                token: this.$route.params.token
+            });
+
+            commit(mutations.USER_LOGIN, {
+                accessToken: data.access_token,
+                tokenType: data.token_type
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+        }
+    },
+
 };

@@ -1,7 +1,7 @@
 <template>
     <section class="mt-4">
-            <div class="container">
-                <div class="box shadow-box">
+            <div class="d-flex justify-content-center">
+                <div class="box shadow-box w-50">
                     <h3 class="text-center mb-4">Authorization</h3>
                     <form
                         class="form"

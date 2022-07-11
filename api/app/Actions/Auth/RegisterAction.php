@@ -28,6 +28,7 @@ final class RegisterAction
         $token = auth()->login($user);
 
         return new AuthenticationResponse(
+            $user,
             (string)$token,
             'bearer',
             auth()->factory()->getTTL() * 60

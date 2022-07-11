@@ -10,7 +10,10 @@ final class AuthenticationResponseArrayPresenter
 {
     public function present(AuthenticationResponse $response): array
     {
+        $userArrayPresenter = new UserArrayPresenter;
+
         return [
+            'user' => $userArrayPresenter->present($response->getUser()),
             'access_token' => $response->getAccessToken(),
             'token_type' => $response->getTokenType(),
             'expires_in' => $response->getExpiresIn()

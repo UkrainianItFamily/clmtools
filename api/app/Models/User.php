@@ -19,6 +19,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property string $phone
  * @property string $password
  */
+
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -73,5 +74,28 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getVerifiedEmail()
+    {
+        return $this->email_verified_at;
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\VerificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;
+use App\Http\Controllers\Api\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,11 @@ Route::prefix('v1')->group(function () {
         Route::post('register', [RegistrationController::class, 'register']);
     });
 
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('login', 'login')->name('login');
+    });
+
     Route::get('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 });
-
 

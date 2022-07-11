@@ -7,10 +7,16 @@ namespace App\Actions\Auth;
 final class AuthenticationResponse
 {
     public function __construct(
+        private object $user,
         private string $accessToken,
         private string $tokenType,
         private int $expiresIn
     ) {
+    }
+
+    public function getUser(): object
+    {
+        return $this->user;
     }
 
     public function getAccessToken(): string

@@ -1,23 +1,27 @@
 <template>
     <div>
-        <b-nav pills v-if="user.id">
-            <b-nav-item-dropdown
+        <BNav pills v-if="user.id">
+            <BNavItemDropdown
                 id="my-nav-dropdown"
-                text="{{ this.fullName }}"
                 toggle-class="nav-link-custom"
                 right
             >
-                <b-dropdown-item>Profile</b-dropdown-item>
-                <b-dropdown-item>Exit</b-dropdown-item>
-            </b-nav-item-dropdown>
-        </b-nav>
-        <b-nav pills>
-            <b-nav-item active>
-                <router-link :to="{ name: 'auth.signUp' }" class="page-link">
+                <BDropdownItem>Profile</BDropdownItem>
+                <BDropdownItem>Exit</BDropdownItem>
+            </BNavItemDropdown>
+        </BNav>
+        <BNav pills>
+            <BNavItem active>
+                <RouterLink :to="{ name: 'auth.signUp' }" class="page-link">
                     <span>Sign up</span>
-                </router-link>
-            </b-nav-item>
-        </b-nav>
+                </RouterLink>
+            </BNavItem>
+            <BNavItem>
+                <RouterLink :to="{ name: 'auth.signIn' }" class="page-link">
+                    <span>Sign in</span>
+                </RouterLink>
+            </BNavItem>
+        </BNav>
     </div>
 </template>
 
@@ -33,5 +37,5 @@ export default {
         }),
     },
 
-}
+};
 </script>

@@ -5,6 +5,7 @@ import Storage from '@/services/Storage';
 import Status from '@/views/Status';
 
 import SignUp from '@/views/SignUp';
+import SignIn from '@/views/SignIn';
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,12 @@ const routes = [
         path: '/auth/sign-up',
         name: 'auth.signUp',
         component: SignUp,
+        meta: { handleAuth: true },
+    },
+    {
+        path: '/auth/sign-in',
+        name: 'auth.signIn',
+        component: SignIn,
         meta: { handleAuth: true },
     },
 

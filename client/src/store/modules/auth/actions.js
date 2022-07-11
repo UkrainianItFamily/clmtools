@@ -24,13 +24,33 @@ export default {
                 password_confirmation: passwordConfirmation
             });
 
-            commit(USER_LOGIN, {
+            commit(mutations.USER_LOGIN, {
                 accessToken: data.access_token,
                 tokenType: data.token_type
             });
 
             return Promise.resolve();
         } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
+    async signIn({ commit }, { email, password }) {
+
+        try {
+            const data = await requestService.post('/auth/login', {
+                email,
+                password,
+            });
+
+            commit(mutations.USER_LOGIN, {
+                accessToken: data.access_token,
+                tokenType: data.token_type
+            });
+
+            return Promise.resolve();
+        } catch (error) {
+
             return Promise.reject(error);
         }
     },

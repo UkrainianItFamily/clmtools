@@ -18,16 +18,16 @@ class RegistrationController extends ApiController
      * Register a new user
      */
    public function register(
-       RegisterValidationRequest $httpRequest,
+       RegisterValidationRequest $validationRequest,
        RegisterAction $action,
        AuthenticationResponseArrayPresenter $authenticationResponseArrayPresenter
     ): JsonResponse {
         $request = new RegisterRequest(
-            $httpRequest->get('name'),
-            $httpRequest->get('last_name'),
-            $httpRequest->get('email'),
-            $httpRequest->get('phone'),
-            $httpRequest->get('password')
+            $validationRequest->get('name'),
+            $validationRequest->get('last_name'),
+            $validationRequest->get('email'),
+            $validationRequest->get('phone'),
+            $validationRequest->get('password')
         );
 
         $response = $action->execute($request);

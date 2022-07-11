@@ -2,32 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Actions\Auth\ResendVerificationAction;
+use App\Actions\Auth\VerificationAction;
+use App\Actions\Auth\VerificationRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    public function verify($user_id, Request $request) {
-        if (!$request->hasValidSignature()) {
-            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
-        }
+    public function verify(
+        $user_id,
+        Request $request,
+        VerificationAction $action,
+    ): JsonResponse {
+        $request = new VerificationRequest(
+            $user_id,
+            $request
+        );
 
-        $user = User::findOrFail($user_id);
-
-        if (!$user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
-        }
-
-        return response()->json(["msg" => "User successfully verified."], 200);
+        return $action->execute($request);
     }
 
-    public function resend() {
-        if (auth()->user()->hasVerifiedEmail()) {
-            return response()->json(["msg" => "Email already verified."], 400);
-        }
-
-        auth()->user()->sendEmailVerificationNotification();
-
-        return response()->json(["msg" => "Email verification link sent on your email id"]);
+    public function resend(
+        ResendVerificationAction $action,
+    ) {
+        return $action->execute();
     }
 }

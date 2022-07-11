@@ -23,6 +23,7 @@ final class RegisterAction
             'phone' => $request->getPhone(),
             'password' => $request->getPassword()
         ]);
+
         $user->sendEmailVerificationNotification();
 
         $token = auth()->login($user);

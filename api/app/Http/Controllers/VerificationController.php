@@ -15,12 +15,15 @@ class VerificationController extends Controller
         Request $request,
         VerificationAction $action,
     ): JsonResponse {
-        $request = new VerificationRequest(
+        $verificationRequest = new VerificationRequest(
             $user_id,
-            $request
+            $request,
+            $request->get('expires'),
+            $request->get('hash'),
+            $request->get('signature')
         );
 
-        return $action->execute($request);
+        return $action->execute($verificationRequest);
     }
 
     public function resend(

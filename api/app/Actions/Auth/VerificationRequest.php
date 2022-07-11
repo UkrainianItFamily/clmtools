@@ -11,6 +11,9 @@ final class VerificationRequest
     public function __construct(
         private int $user_id,
         private Request $request,
+        private string $expires,
+        private string $hash,
+        private string $signature
     ) {
     }
 
@@ -22,5 +25,20 @@ final class VerificationRequest
     public function getRequest(): Request
     {
         return $this->request;
+    }
+
+    public function getExpires(): string
+    {
+        return $this->expires;
+    }
+
+    public function getHash(): string
+    {
+        return $this->hash;
+    }
+
+    public function getSignature(): string
+    {
+        return $this->signature;
     }
 }

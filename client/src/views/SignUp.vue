@@ -1,105 +1,84 @@
 <template>
-    <section class="hero is-fullheight">
-        <div class="hero-body">
-            <div class="container">
-                <div class="columns is-mobile is-centered">
-                    <div class="column is-three-quarters-mobile is-two-thirds-tablet is-one-third-desktop">
-                        <div class="box shadow-box">
-                            <p class="subtitle">
-                                Already have an account?
-                                <RouterLink class="link link-signup" to="/auth/sign-in">
-                                    Sign in
-                                </RouterLink>
-                            </p>
+    <section class="mt-4">
+        <div class="container">
+            <div class="box shadow-box">
+                <h3 class="text-center">Registration</h3>
+                <form
+                    class="form"
+                    @submit.prevent
+                    novalidate="true"
+                >
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-email"
+                            v-model="user.email"
+                            name="email"
+                            placeholder="Email"
+                        ></BFormInput>
+                    </BFormGroup>
 
-                            <form
-                                class="form"
-                                @submit.prevent
-                                novalidate="true"
-                            >
-                                <BFormGroup
-                                    label="First Name"
-                                    label-for="input-name"
-                                >
-                                    <BFormInput
-                                        id="input-name"
-                                        v-model="user.name"
-                                        name="first_name"
-                                        autofocus
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-password"
+                            v-model="user.password"
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                        ></BFormInput>
+                    </BFormGroup>
 
-                                <BFormGroup
-                                    label="Last Name"
-                                    label-for="input-lastName"
-                                >
-                                    <BFormInput
-                                        id="input-lastName"
-                                        v-model="user.lastName"
-                                        name="last_name"
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-passwordConfirmation"
+                            v-model="user.passwordConfirmation"
+                            type="password"
+                            name="password_confirmation"
+                            placeholder="Confirm password"
+                        ></BFormInput>
+                    </BFormGroup>
 
-                                <BFormGroup
-                                    label="Email"
-                                    label-for="input-email"
-                                >
-                                    <BFormInput
-                                        id="input-email"
-                                        v-model="user.email"
-                                        name="email"
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-name"
+                            v-model="user.name"
+                            name="first_name"
+                            placeholder="First name"
+                            autofocus
+                        ></BFormInput>
+                    </BFormGroup>
 
-                                <BFormGroup
-                                    label="Phone"
-                                    label-for="input-phone"
-                                >
-                                    <BFormInput
-                                        id="input-phone"
-                                        v-model="user.phone"
-                                        name="phone"
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-lastName"
+                            v-model="user.lastName"
+                            name="last_name"
+                            placeholder="Last name"
+                        ></BFormInput>
+                    </BFormGroup>
 
-                                <BFormGroup
-                                    label="Password"
-                                    label-for="input-password"
-                                >
-                                    <BFormInput
-                                        id="input-password"
-                                        v-model="user.password"
-                                        type="password"
-                                        name="password"
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <BFormGroup>
+                        <BFormInput
+                            id="input-phone"
+                            v-model="user.phone"
+                            name="phone"
+                            placeholder="Phone"
+                        ></BFormInput>
+                    </BFormGroup>
 
-                                <BFormGroup
-                                    label="Password"
-                                    label-for="input-passwordConfirmation"
-                                >
-                                    <BFormInput
-                                        id="input-passwordConfirmation"
-                                        v-model="user.passwordConfirmation"
-                                        type="password"
-                                        name="password_confirmation"
-                                    ></BFormInput>
-                                </BFormGroup>
+                    <p class="text-right">
+                        <RouterLink class="link link-signup" to="/auth/sign-in">
+                            Already have an account? Sign in.
+                        </RouterLink>
+                    </p>
 
-                                <div class="login-footer has-text-centered">
-                                    <button
-                                        type="button"
-                                        class="button is-primary is-rounded"
-                                        @click="onSubmit"
-                                    >
-                                        Sign up
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <BButton
+                            block
+                            @click="onSubmit"
+                        >
+                            Sign up
+                        </BButton>
+                </form>
+</div>
         </div>
     </section>
 </template>

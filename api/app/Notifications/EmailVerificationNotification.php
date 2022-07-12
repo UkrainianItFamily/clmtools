@@ -4,7 +4,9 @@ namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\URL;
 
 class EmailVerificationNotification extends VerifyEmail
 {
@@ -37,23 +39,20 @@ class EmailVerificationNotification extends VerifyEmail
      */
     public function toMail($notifiable)
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $notifiable->getKey(),
+                'hash' => sha1($notifiable->getEmailForVerification()),
+            ]
+        );
 
-        $query  = explode('&', $verificationUrl);
-        $preUrl = explode('?', $query[0]);
-        $expires = explode('=', $preUrl[1]);
-        $hash = explode('=', $query[1]);
-        $signature = explode('=', $query[2]);
-
-        $customUrl = env('APP_URL') .
-            '/verify-email/' . $notifiable->id .
-            '?expires=' . $expires[1] .
-            '&hash=' . $hash[1] .
-            '&signature=' . $signature[1];
+        $url = env('APP_URL') . '/verify-email?url=' . $verifyUrl;
 
         return (new MailMessage)
             ->line('Please click the button below to verify your email address.')
-            ->action('Verify Email Address', $customUrl)
+            ->action('Verify Email Address', $url)
             ->line('Thank you for using our application!');
     }
 

@@ -16,11 +16,8 @@ class VerificationController extends ApiController
         VerificationAction $action,
     ): JsonResponse {
         $verificationRequest = new VerificationRequest(
-            $user_id,
+            (int)$user_id,
             $request,
-            $request->get('expires'),
-            $request->get('hash'),
-            $request->get('signature')
         );
 
         $action->execute($verificationRequest);
@@ -33,6 +30,6 @@ class VerificationController extends ApiController
     ) {
         $action->execute();
 
-        return $this->successResponse(['msg' => 'Email verification link sent on your email id']);
+        return $this->successResponse(['msg' => 'Email verification link sent on your email.']);
     }
 }

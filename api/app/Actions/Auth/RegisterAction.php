@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Actions\Auth;
 
 use App\Repository\UserRepository;
-use Illuminate\Mail\Mailer;
-use Illuminate\Support\Facades\Auth;
 
 final class RegisterAction
 {

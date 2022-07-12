@@ -15,7 +15,7 @@ final class VerificationAction
 
     public function execute(VerificationRequest $request): void
     {
-        if (!$request->getRequest()->hasValidSignature()) {
+        if (!$request->getValidSignature()->hasValidSignature()) {
             throw new InvalidExpiredUrlProvidedException();
         }
 

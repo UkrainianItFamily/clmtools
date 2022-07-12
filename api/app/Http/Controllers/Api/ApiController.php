@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Contracts\PresenterCollectionInterface;
-use App\Contracts\PresenterInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;

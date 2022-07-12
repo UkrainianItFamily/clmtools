@@ -36,7 +36,6 @@ export default {
     },
 
     async signIn({ commit }, { email, password }) {
-
         try {
             const data = await requestService.post('/v1/login', {
                 email,
@@ -60,15 +59,9 @@ export default {
     },
 
     async forgotPassword({ commit }, { email }) {
-
         try {
             const data = await requestService.post('/auth/forgot-password', {
                 email
-            });
-
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.access_token,
-                tokenType: data.token_type
             });
 
             return Promise.resolve();
@@ -78,9 +71,9 @@ export default {
     },
 
     async resetPassword({ commit }, {
-        password, passwordConfirmation
+        password,
+        passwordConfirmation
     }) {
-
         try {
             const data = await requestService.post('/auth/reset', {
                 email: this.$route.params.email,

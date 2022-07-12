@@ -20,16 +20,23 @@ class AuthApiTest extends TestCase
         $this->email = 'test@example.com';
         $this->password = 'Ye4oKoEa3Ro9llC';
         $this->api_url = '/api/v1/login';
-    }
-
-    public function test_existing_user()
-    {
         $this->user = User::factory()->create([
             'name' => 'Test User',
             'email' => Str::random(5).'@'.Str::random(5).'.com',
             'password' => Hash::make($this->password),
         ]);
+    }
 
+    public function tearDown(): void
+    {
+        $this->email = null;
+        $this->password = null;
+        $this->api_url = null;
+        User::destroy($this->user->id);
+    }
+
+    public function test_existing_user()
+    {
         $response = $this->postJson($this->api_url, [
             'email' => $this->user->email,
             'password' => $this->password
@@ -38,8 +45,6 @@ class AuthApiTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertSeeText('access_token');
-
-        User::destroy($this->user->id);
     }
 
     public function test_nonexistent_user()
@@ -70,7 +75,7 @@ class AuthApiTest extends TestCase
     {
         $response = $this->postJson($this->api_url, [
             'email' => $this->email,
-            'password' => Str::substr($this->password, 0, 8),
+            'password' => Str::random(7),
         ]);
 
         $response

@@ -12,12 +12,12 @@ class VerificationController extends ApiController
 {
     public function verify(
         $user_id,
-        Request $request,
+        Request $validSignature,
         VerificationAction $action,
     ): JsonResponse {
         $verificationRequest = new VerificationRequest(
             (int)$user_id,
-            $request,
+            $validSignature,
         );
 
         $action->execute($verificationRequest);

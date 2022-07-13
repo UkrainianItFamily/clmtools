@@ -2,18 +2,33 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class RegistrationApiTest extends TestCase
 {
     private string $register_api_url;
+    private mixed $user;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->register_api_url = 'api/v1/auth/register';
+        $this->user = User::factory()->create([
+            'name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'testuser@example.com',
+            'phone' => '380951122333',
+            'password' => Hash::make('Smith123456'),
+        ]);
+    }
+
+    public function tearDown(): void
+    {
+        User::destroy($this->user->id);
     }
 
     public function test_required_fields_for_registration()

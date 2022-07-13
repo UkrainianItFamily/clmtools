@@ -14,7 +14,7 @@ final class ForgotPasswordResponse
         ];
     }
 
-    public function sendResetLinkFailedResponse(ForgotPasswordRequest $request, $response): array
+    public function sendResetLinkFailedResponse(ForgotPasswordRequest $request, $response)
     {
         return 'Email could not be sent to this email address.';
     }

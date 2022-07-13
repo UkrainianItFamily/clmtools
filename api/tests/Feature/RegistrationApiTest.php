@@ -163,4 +163,25 @@ class RegistrationApiTest extends TestCase
             ->assertStatus(422)
             ->assertJsonFragment(["email" => ["The email must be a valid email address."]]);
     }
+
+    public function test_incorrect_name_and_last_name()
+    {
+        $userData = [
+            "name" => "Jo",
+            "last_name" => "Sm",
+            "email" => "john@example.com",
+            "phone" => "380951122555",
+            "password" => "Smith123456",
+            "password_confirmation" => "Smith123456",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment([
+                "name" => ["The name must be at least 3 characters."],
+                "last_name" => ["The last name must be at least 3 characters."]
+            ]);
+    }
 }

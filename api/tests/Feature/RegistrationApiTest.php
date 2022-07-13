@@ -33,4 +33,22 @@ class RegistrationApiTest extends TestCase
                 ]
             ]);
     }
+
+    public function test_email_already_taken()
+    {
+        $userData = [
+            "name" => "John",
+            "last_name" => "Smith",
+            "email" => "testuser@example.com",
+            "phone" => "380951122444",
+            "password" => "Smith123456",
+            "password_confirmation" => "Smith123456",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment(["email" => ["The email has already been taken."]]);
+    }
 }

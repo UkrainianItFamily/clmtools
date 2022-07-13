@@ -24,14 +24,7 @@ export default {
                 password_confirmation: passwordConfirmation
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.data.access_token,
-                tokenType: data.data.token_type
-            });
-
-            commit(mutations.SET_AUTHENTICATED_USER,
-                data.data.user,
-            );
+            commit(mutations.SHOW_REGISTER_MODAL);
 
             return Promise.resolve();
         } catch (error) {

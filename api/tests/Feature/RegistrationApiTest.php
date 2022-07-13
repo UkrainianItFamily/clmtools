@@ -66,4 +66,22 @@ class RegistrationApiTest extends TestCase
             ->assertStatus(422)
             ->assertJsonFragment(["email" => ["The email has already been taken."]]);
     }
+
+    public function test_phone_already_taken()
+    {
+        $userData = [
+            "name" => "John",
+            "last_name" => "Smith",
+            "email" => "john@example.com",
+            "phone" => "380951122333",
+            "password" => "Smith123456",
+            "password_confirmation" => "Smith123456",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment(["phone" => ["The phone has already been taken."]]);
+    }
 }

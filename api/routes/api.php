@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login')->name('login');
+        Route::post('/auth/forgot-password', 'forgotPassword')->name('forgot-password');
     });
 
     Route::post('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');

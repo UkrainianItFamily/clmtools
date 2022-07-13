@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class RegistrationApiTest extends TestCase
@@ -125,5 +126,23 @@ class RegistrationApiTest extends TestCase
                     "The password must contain at least one number."
                 ]
             ]);
+    }
+
+    public function test_incorrect_phone()
+    {
+        $userData = [
+            "name" => "John",
+            "last_name" => "Smith",
+            "email" => "john@example.com",
+            "phone" => Str::random(11),
+            "password" => "Smith123456",
+            "password_confirmation" => "Smith123456",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment(["phone" => ["The phone format is invalid."]]);
     }
 }

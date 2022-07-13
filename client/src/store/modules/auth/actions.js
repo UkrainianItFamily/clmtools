@@ -37,7 +37,7 @@ export default {
 
     async signIn({ commit }, { email, password }) {
         try {
-            const data = await requestService.post('/v1/login', {
+            const data = await requestService.post('/login', {
                 email,
                 password,
             });
@@ -64,6 +64,11 @@ export default {
                 email
             });
 
+            console.log(data);
+
+            if(data.message)
+                alert(data.message);
+
             return Promise.resolve();
         } catch (errorMsg) {
             return Promise.reject(errorMsg);
@@ -82,10 +87,7 @@ export default {
                 token: this.$route.params.token
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.access_token,
-                tokenType: data.token_type
-            });
+            console.log(data);
 
             return Promise.resolve();
         } catch (errorMsg) {

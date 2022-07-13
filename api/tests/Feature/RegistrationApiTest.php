@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -12,12 +13,15 @@ use Tests\TestCase;
 class RegistrationApiTest extends TestCase
 {
     private string $register_api_url;
+    private string $resend_url;
     private mixed $user;
+    private mixed $user_not_verified;
 
     public function setUp(): void
     {
         parent::setUp();
         $this->register_api_url = 'api/v1/auth/register';
+        $this->resend_url = 'api/v1/email/resend';
         $this->user = User::factory()->create([
             'name' => 'Test',
             'last_name' => 'User',
@@ -25,11 +29,20 @@ class RegistrationApiTest extends TestCase
             'phone' => '380951122333',
             'password' => Hash::make('Smith123456'),
         ]);
+        $this->user_not_verified = User::factory()->create([
+            'name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'testnotverified@example.com',
+            'phone' => '380951122999',
+            'password' => Hash::make('Smith123456'),
+            'email_verified_at' => NULL
+        ]);
     }
 
     public function tearDown(): void
     {
         User::destroy($this->user->id);
+        User::destroy($this->user_not_verified->id);
         User::where('email', '=', 'johnsuccess@example.com')->delete();
     }
 
@@ -214,5 +227,21 @@ class RegistrationApiTest extends TestCase
                 "token_type",
                 "expires_in"
             ]);
+    }
+
+    public function test_resend_email_verify_success()
+    {
+        $user = User::find($this->user_not_verified->id);
+        Auth::login($user);
+
+        $response = $this->postJson($this->resend_url);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson(
+                [
+                    "msg" => "Email verification link sent on your email."
+                ]
+            );
     }
 }

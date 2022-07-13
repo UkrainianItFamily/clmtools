@@ -102,4 +102,28 @@ class RegistrationApiTest extends TestCase
             ->assertStatus(422)
             ->assertJsonFragment(["password" => ["The password confirmation does not match."]]);
     }
+
+    public function test_incorrect_password()
+    {
+        $userData = [
+            "name" => "John",
+            "last_name" => "Smith",
+            "email" => "john@example.com",
+            "phone" => "380951122555",
+            "password" => "smith",
+            "password_confirmation" => "smith",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(422)
+            ->assertJsonFragment([
+                "password" => [
+                    "The password must be at least 8 characters.",
+                    "The password must contain at least one uppercase and one lowercase letter.",
+                    "The password must contain at least one number."
+                ]
+            ]);
+    }
 }

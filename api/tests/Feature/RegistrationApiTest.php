@@ -30,6 +30,7 @@ class RegistrationApiTest extends TestCase
     public function tearDown(): void
     {
         User::destroy($this->user->id);
+        User::where('email', '=', 'johnsuccess@example.com')->delete();
     }
 
     public function test_required_fields_for_registration()
@@ -182,6 +183,36 @@ class RegistrationApiTest extends TestCase
             ->assertJsonFragment([
                 "name" => ["The name must be at least 3 characters."],
                 "last_name" => ["The last name must be at least 3 characters."]
+            ]);
+    }
+
+    public function test_successful_registration()
+    {
+        $userData = [
+            "name" => "John",
+            "last_name" => "Smith",
+            "email" => "johnsuccess@example.com",
+            "phone" => "380951122555",
+            "password" => "Smith123456",
+            "password_confirmation" => "Smith123456",
+        ];
+
+        $response = $this->postJson($this->register_api_url, $userData);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "user" => [
+                    "id",
+                    "email",
+                    "name",
+                    "last_name",
+                    "phone",
+                    "email_verified_at",
+                ],
+                "access_token",
+                "token_type",
+                "expires_in"
             ]);
     }
 }

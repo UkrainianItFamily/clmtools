@@ -244,4 +244,23 @@ class RegistrationApiTest extends TestCase
                 ]
             );
     }
+
+    public function test_resend_email_verify_already_verified()
+    {
+        $user = User::find($this->user->id);
+        Auth::login($user);
+
+        $response = $this->postJson($this->resend_url);
+
+        $response
+            ->assertStatus(400)
+            ->assertJson(
+                [
+                    "error" => [
+                        "message" => "Email already verified.",
+                        "code" => 400
+                    ]
+                ]
+            );
+    }
 }

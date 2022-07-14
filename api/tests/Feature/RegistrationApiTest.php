@@ -305,4 +305,33 @@ class RegistrationApiTest extends TestCase
                 ]
             );
     }
+
+    public function test_email_verify_invalid_url()
+    {
+        $user = User::find($this->user_not_verified->id);
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification()),
+            ]
+        );
+
+        $parse = parse_url($verifyUrl);
+        $parsedUrl = $parse['path'] . '?' . $parse['query'];
+
+        $response = $this->postJson(substr($parsedUrl,0,-1));
+
+        $response
+            ->assertStatus(400)
+            ->assertJson(
+                [
+                    "error" => [
+                        "message" => "Invalid url provided.",
+                        "code" => 401
+                    ]
+                ]
+            );
+    }
 }

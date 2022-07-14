@@ -5,8 +5,11 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -16,6 +19,7 @@ class RegistrationApiTest extends TestCase
     private string $resend_url;
     private mixed $user;
     private mixed $user_not_verified;
+    private mixed $user_not_verified_two;
 
     public function setUp(): void
     {
@@ -37,12 +41,21 @@ class RegistrationApiTest extends TestCase
             'password' => Hash::make('Smith123456'),
             'email_verified_at' => NULL
         ]);
+        $this->user_not_verified_two = User::factory()->create([
+            'name' => 'Test',
+            'last_name' => 'User',
+            'email' => 'testnotverified2@example.com',
+            'phone' => '380951122888',
+            'password' => Hash::make('Smith123456'),
+            'email_verified_at' => NULL
+        ]);
     }
 
     public function tearDown(): void
     {
         User::destroy($this->user->id);
         User::destroy($this->user_not_verified->id);
+        User::destroy($this->user_not_verified_two->id);
         User::where('email', '=', 'johnsuccess@example.com')->delete();
     }
 
@@ -259,6 +272,35 @@ class RegistrationApiTest extends TestCase
                     "error" => [
                         "message" => "Email already verified.",
                         "code" => 400
+                    ]
+                ]
+            );
+    }
+
+    public function test_email_verify_expired_url()
+    {
+        $user = User::find($this->user_not_verified->id);
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(-1),
+            [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification()),
+            ]
+        );
+
+        $parse = parse_url($verifyUrl);
+        $parsedUrl = $parse['path'] . '?' . $parse['query'];
+
+        $response = $this->postJson($parsedUrl);
+
+        $response
+            ->assertStatus(400)
+            ->assertJson(
+                [
+                    "error" => [
+                        "message" => "Expired url provided.",
+                        "code" => 401
                     ]
                 ]
             );

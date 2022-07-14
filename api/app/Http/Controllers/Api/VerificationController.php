@@ -27,9 +27,16 @@ class VerificationController extends ApiController
     }
 
     public function resend(
+        $user_id,
         ResendVerificationAction $action,
+        Request $request,
     ) {
-        $action->execute();
+        $verificationRequest = new VerificationRequest(
+            (int)$user_id,
+            $request,
+        );
+
+        $action->execute($verificationRequest);
 
         return $this->successResponse(['msg' => 'Email verification link sent on your email.']);
     }

@@ -7,6 +7,7 @@ import Status from '@/views/Status';
 import SignUp from '@/views/SignUp';
 import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
+import ResetPassword from "@/views/ResetPassword";
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,12 @@ const routes = [
         path: '/auth/forgot-password',
         name: 'auth.forgotPassword',
         component: ForgotPassword,
+        meta: { handleAuth: true },
+    },
+    {
+        path: '/auth/reset-password/:token',
+        name: 'auth.resetPassword',
+        component: ResetPassword,
         meta: { handleAuth: true },
     },
 

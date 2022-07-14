@@ -36,9 +36,8 @@ export default {
     },
 
     async signIn({ commit }, { email, password }) {
-
         try {
-            const data = await requestService.post('/v1/login', {
+            const data = await requestService.post('/login', {
                 email,
                 password,
             });
@@ -56,6 +55,36 @@ export default {
         } catch (error) {
 
             return Promise.reject(error);
+        }
+    },
+
+    async forgotPassword({ commit }, { email }) {
+        try {
+            await requestService.post('/auth/forgot-password', {
+                email
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+        }
+    },
+
+    async resetPassword({ commit }, {
+        password,
+        passwordConfirmation
+    }) {
+        try {
+            const data = await requestService.post('/auth/reset', {
+                email: this.$route.params.email,
+                password,
+                password_confirmation: passwordConfirmation,
+                token: this.$route.params.token
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
         }
     },
 

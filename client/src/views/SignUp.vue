@@ -80,14 +80,20 @@
                 </form>
 </div>
         </div>
+        <RegistrationModal />
     </section>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import RegistrationModal from '@/components/auth/RegistrationModal.vue';
 
 export default {
     name: 'SignUpPage',
+
+    components:{
+        RegistrationModal
+    },
 
     data: () => ({
         user: {
@@ -108,9 +114,9 @@ export default {
         onSubmit() {
             this.signUp(this.user)
                 .then(() => {
-                    alert("Register");
-
-                    this.$router.push({ path: '/' }).catch(() => {});
+                    // alert("Register");
+                    //
+                    // this.$router.push({ path: '/' }).catch(() => {});
                 })
                 .catch((error) => {console.log(error);} );
         },

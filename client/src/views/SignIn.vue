@@ -54,14 +54,20 @@
                     </form>
                 </div>
             </div>
+        <RegistrationModal />
     </section>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import RegistrationModal from '@/components/auth/RegistrationModal.vue';
 
 export default {
     name: "SignInPage",
+
+    components:{
+        RegistrationModal
+    },
 
     data: () => ({
         user: {

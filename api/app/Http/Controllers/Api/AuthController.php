@@ -6,12 +6,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
-use App\Actions\Auth\ForgotPasswordResponse;
 use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LoginRequest;
 use App\Actions\Auth\ResetPasswordAction;
 use App\Actions\Auth\ResetPasswordRequest;
-use App\Actions\Auth\ResetPasswordResponse;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
 use App\Http\Requests\Api\Auth\AuthRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
@@ -44,18 +42,15 @@ final class AuthController extends ApiController
 
     public function forgotPassword(
         PasswordResetLinkRequest $passwordResetLinkRequest,
-        ForgotPasswordAction $action,
-        ForgotPasswordResponse $forgotPasswordResponse
+        ForgotPasswordAction $action
     ) {
         $request = new ForgotPasswordRequest(
             $passwordResetLinkRequest->email
         );
 
-        $response = $action->execute($request);
+        $action->execute($request);
 
-        return $response == Password::RESET_LINK_SENT
-            ? $this->successResponse($forgotPasswordResponse->sendResetLinkResponse($request, $response))
-            : $this->errorResponse($forgotPasswordResponse->sendResetLinkFailedResponse($request, $response));
+        return $this->successResponse(['msg' => 'Password reset email sent.'], 200);
     }
 
     public function reset(

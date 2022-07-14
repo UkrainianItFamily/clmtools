@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Exceptions\FailedSentPasswordResetLinkException;
 use Illuminate\Support\Facades\Password;
-use App\Actions\Auth\ForgotPasswordResponse;
 
 final class ForgotPasswordAction
 {
-    use SendsPasswordResetEmails;
-
-    public function execute(ForgotPasswordRequest $request)
+    public function execute(ForgotPasswordRequest $request): void
     {
         $response = Password::broker()->sendResetLink(['email' => $request->getEmail()]);
 
-        return $response;
+        if($response != Password::RESET_LINK_SENT)
+            throw new FailedSentPasswordResetLinkException();
     }
 }

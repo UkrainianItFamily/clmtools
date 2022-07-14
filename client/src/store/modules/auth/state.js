@@ -6,4 +6,5 @@ export default {
     isLoggedIn: Storage.hasToken(),
     token: Storage.getToken(),
     registration_modal: false,
+    registration_user: null,
 };

@@ -25,6 +25,9 @@ export default {
             });
 
             commit(mutations.SHOW_REGISTER_MODAL);
+            commit(mutations.ADD_REGISTER_USER, {
+                id: data.data.user.id,
+            });
 
             return Promise.resolve();
         } catch (error) {
@@ -48,6 +51,18 @@ export default {
             commit(mutations.SET_AUTHENTICATED_USER,
                data.data.user,
             );
+
+            return Promise.resolve();
+        } catch (error) {
+
+            return Promise.reject(error);
+        }
+    },
+
+    async reSendEmail({ commit }, { id }) {
+
+        try {
+            const data = await requestService.post('/v1/email/resend/' + id.id);
 
             return Promise.resolve();
         } catch (error) {

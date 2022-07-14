@@ -59,4 +59,15 @@ export default {
         }
     },
 
+    async verifyEmail({ commit }, { url }) {
+
+        try {
+            await requestService.post(url);
+
+            return Promise.resolve();
+        } catch (error) {
+
+            return Promise.reject(error);
+        }
+    },
 };

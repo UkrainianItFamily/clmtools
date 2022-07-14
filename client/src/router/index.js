@@ -7,6 +7,7 @@ import Status from '@/views/Status';
 import SignUp from '@/views/SignUp';
 import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
+import VerifyEmail from '@/views/VerifyEmail';
 
 Vue.use(VueRouter);
 
@@ -34,7 +35,12 @@ const routes = [
         component: ForgotPassword,
         meta: { handleAuth: true },
     },
-
+    {
+        path: '/verify-email',
+        name: 'verify.email',
+        component: VerifyEmail,
+        meta: { handleAuth: true },
+    },
 ];
 
 const router = new VueRouter({

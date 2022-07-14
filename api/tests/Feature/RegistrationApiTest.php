@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +25,7 @@ class RegistrationApiTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Artisan::call('migrate:refresh');
         $this->register_api_url = 'api/v1/auth/register';
         $this->resend_url = 'api/v1/email/resend';
         $this->user = User::factory()->create([

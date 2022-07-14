@@ -60,14 +60,9 @@ export default {
 
     async forgotPassword({ commit }, { email }) {
         try {
-            const data = await requestService.post('/auth/forgot-password', {
+            await requestService.post('/auth/forgot-password', {
                 email
             });
-
-            console.log(data);
-
-            if(data.message)
-                alert(data.message);
 
             return Promise.resolve();
         } catch (errorMsg) {
@@ -86,8 +81,6 @@ export default {
                 password_confirmation: passwordConfirmation,
                 token: this.$route.params.token
             });
-
-            console.log(data);
 
             return Promise.resolve();
         } catch (errorMsg) {

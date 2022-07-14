@@ -60,8 +60,7 @@ final class AuthController extends ApiController
 
     public function reset(
         ResetRequest $resetRequest,
-        ResetPasswordAction $action,
-        ResetPasswordResponse $resetPasswordResponse
+        ResetPasswordAction $action
     ) {
         $request = new ResetPasswordRequest(
             $resetRequest->token,
@@ -70,11 +69,9 @@ final class AuthController extends ApiController
             $resetRequest->password_confirmation
         );
 
-        $response = $action->execute($request);
+        $action->execute($request);
 
-        return $response == Password::PASSWORD_RESET
-            ? $this->successResponse($resetPasswordResponse->sendResetResponse($request, $response))
-            : $this->errorResponse($resetPasswordResponse->sendResetFailedResponse($request, $response));
+        return $this->successResponse(['msg' => 'Password has been successfully changed'], 200);
     }
 
 }

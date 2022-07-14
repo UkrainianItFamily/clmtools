@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Actions\Auth;
 
+use App\Exceptions\InvalidResetPasswordTokenException;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 final class ResetPasswordAction
 {
-    public function execute(ResetPasswordRequest $request)
+    public function execute(ResetPasswordRequest $request): void
     {
         $response = Password::broker()->reset([
             'email' => $request->getEmail(),
@@ -18,16 +19,15 @@ final class ResetPasswordAction
             'password_confirmation' => $request->getPasswordConfirmation(),
             'token' => $request->getToken()
         ], function ($user, $password) {
-            $this->resetPassword($user, $password);
+            $user->forceFill(['password' => Hash::make($password)])->save();
+            event(new PasswordReset($user));
         });
 
-        return $response;
+        if($response == Password::INVALID_TOKEN)
+            throw new InvalidResetPasswordTokenException();
+
+        if($response != Password::PASSWORD_RESET)
+            throw new InvalidResetPasswordTokenException();
     }
 
-    protected function resetPassword($user, $password)
-    {
-        $user->password = Hash::make($password);
-        $user->save();
-        event(new PasswordReset($user));
-    }
 }

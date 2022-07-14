@@ -334,4 +334,30 @@ class RegistrationApiTest extends TestCase
                 ]
             );
     }
+
+    public function test_email_verify_success()
+    {
+        $user = User::find($this->user_not_verified_two->id);
+        $verifyUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            [
+                'id' => $user->getKey(),
+                'hash' => sha1($user->getEmailForVerification()),
+            ]
+        );
+
+        $parse = parse_url($verifyUrl);
+        $parsedUrl = $parse['path'] . '?' . $parse['query'];
+
+        $response = $this->postJson($parsedUrl);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson(
+                [
+                    "msg" => "User successfully verified."
+                ]
+            );
+    }
 }

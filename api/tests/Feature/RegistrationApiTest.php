@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +15,8 @@ use Tests\TestCase;
 
 class RegistrationApiTest extends TestCase
 {
+    use RefreshDatabase;
+
     private string $register_api_url;
     private string $resend_url;
     private mixed $user;
@@ -25,7 +26,6 @@ class RegistrationApiTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Artisan::call('migrate:refresh');
         $this->register_api_url = 'api/v1/auth/register';
         $this->resend_url = 'api/v1/email/resend';
         $this->user = User::factory()->create([
@@ -51,14 +51,6 @@ class RegistrationApiTest extends TestCase
             'password' => Hash::make('Smith123456'),
             'email_verified_at' => NULL
         ]);
-    }
-
-    public function tearDown(): void
-    {
-        User::destroy($this->user->id);
-        User::destroy($this->user_not_verified->id);
-        User::destroy($this->user_not_verified_two->id);
-        User::where('email', '=', 'johnsuccess@example.com')->delete();
     }
 
     public function test_required_fields_for_registration()

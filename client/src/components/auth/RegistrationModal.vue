@@ -1,5 +1,5 @@
 <template>
-    <div v-show="status" class="modal bg-dark bg-opacity-40" tabindex="-1" role="dialog">
+    <div v-show="show_modal" class="modal bg-dark bg-opacity-40" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -26,10 +26,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { SHOW_REGISTER_MODAL } from '/src/store/modules/auth/types/mutations.js';
 
 export default {
     name: "RegistrationModal",
+
+    data: () => ({
+        show_modal: false,
+    }),
 
     computed: {
         ...mapGetters('auth', {
@@ -50,8 +53,11 @@ export default {
                 })
                 .catch((error) => {console.log(error);} );
         },
+        showModal() {
+            this.show_modal = true;
+        },
         Close() {
-            this.$store.commit(`auth/${SHOW_REGISTER_MODAL}`);
+            this.show_modal = false;
         }
     },
 

@@ -80,7 +80,7 @@
                 </form>
 </div>
         </div>
-        <RegistrationModal />
+        <RegistrationModal ref="modal" />
     </section>
 </template>
 
@@ -110,13 +110,13 @@ export default {
         ...mapActions('auth', [
             'signUp',
         ]),
-
+        showModal() {
+            this.$refs.modal.showModal();
+        },
         onSubmit() {
             this.signUp(this.user)
                 .then(() => {
-                    // alert("Register");
-                    //
-                    // this.$router.push({ path: '/' }).catch(() => {});
+                    this.showModal();
                 })
                 .catch((error) => {console.log(error);} );
         },

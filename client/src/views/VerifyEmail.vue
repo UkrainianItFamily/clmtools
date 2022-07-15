@@ -49,15 +49,14 @@
             reSend() {
                 this.reSendEmail({ id: this.registered_user_id })
                     .then(() => {
-                        alert("Email resended");
+                        alert("Лист з верифікацією надіслан повторно");
                     })
                     .catch((error) => {console.log(error);} );
             },
         },
         mounted() {
-            this.url = this.$router.history.current.query.url.split(process.env.VUE_APP_API_URL)[1];
+            this.url = decodeURIComponent(document.location.href).split(process.env.VUE_APP_API_URL)[1];
             this.registered_user_id = this.url.split('?')[0].split('verify/')[1];
-
             this.verifyEmail({ url: this.url })
                 .then(() => {
                     this.message = "Дякуємо за підтвердження електронної адреси.";

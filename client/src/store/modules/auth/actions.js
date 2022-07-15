@@ -60,7 +60,6 @@ export default {
     },
 
     async verifyEmail({ commit }, { url }) {
-
         try {
             await requestService.post(url);
 

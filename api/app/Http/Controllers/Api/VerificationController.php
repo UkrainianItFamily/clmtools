@@ -7,7 +7,6 @@ use App\Actions\Auth\VerificationAction;
 use App\Actions\Auth\VerificationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends ApiController
 {
@@ -23,7 +22,7 @@ class VerificationController extends ApiController
 
         $action->execute($verificationRequest);
 
-        return $this->successResponse(['msg' => 'User successfully verified.'], 200);
+        return $this->successResponse(['msg' => __('register.user_successfully_verified')], 200);
     }
 
     public function resend(
@@ -31,6 +30,6 @@ class VerificationController extends ApiController
     ) {
         $action->execute();
 
-        return $this->successResponse(['msg' => 'Email verification link sent on your email.']);
+        return $this->successResponse(['msg' => __('register.email_verification_link_sent_on_your_email')]);
     }
 }

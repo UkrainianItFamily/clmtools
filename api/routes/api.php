@@ -40,4 +40,3 @@ Route::prefix('v1')->group(function () {
     Route::post('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 });
-

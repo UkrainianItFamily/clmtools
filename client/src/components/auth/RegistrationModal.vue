@@ -49,7 +49,7 @@ export default {
         reSend() {
             this.reSendEmail({ id: this.registered_user_id })
                 .then(() => {
-                    alert("Email resended");
+                    alert("Лист з верифікацією надіслан повторно");
                 })
                 .catch((error) => {console.log(error);} );
         },

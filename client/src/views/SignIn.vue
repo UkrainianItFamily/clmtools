@@ -93,7 +93,7 @@ export default {
             this.signIn(this.user)
                 .then(() => {
                     if (this.hasAuthenticatedUser) {
-                        alert("Login");
+                        alert("Ви увійшли до системи");
                         this.$router.push({ path: '/' }).catch(() => {});
                     } else {
                         this.showModal();

@@ -31,12 +31,12 @@ class VerificationController extends ApiController
         ResendVerificationAction $action,
         Request $request,
     ) {
-        $verificationRequest = new VerificationRequest(
-            (int)$user_id,
-            $request,
+        $action->execute(
+            new VerificationRequest(
+                (int)$user_id,
+                $request,
+            )
         );
-
-        $action->execute($verificationRequest);
 
         return $this->successResponse(['msg' => 'Email verification link sent on your email.']);
     }

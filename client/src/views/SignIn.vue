@@ -54,12 +54,12 @@
                     </form>
                 </div>
             </div>
-        <RegistrationModal />
+        <RegistrationModal ref="modal" />
     </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import RegistrationModal from '@/components/auth/RegistrationModal.vue';
 
 export default {
@@ -76,18 +76,28 @@ export default {
         }
     }),
 
+    computed: {
+        ...mapGetters('auth', [
+            'getAuthenticatedUser',
+        ]),
+    },
 
     methods: {
         ...mapActions('auth', [
             'signIn',
         ]),
-
+        showModal() {
+            this.$refs.modal.showModal();
+        },
         onSubmit() {
             this.signIn(this.user)
                 .then(() => {
-                    alert("Login");
-
-                    this.$router.push({ path: '/' }).catch(() => {});
+                    if (this.getAuthenticatedUser) {
+                        alert("Login");
+                        this.$router.push({ path: '/' }).catch(() => {});
+                    } else {
+                        this.showModal();
+                    }
                 })
                 .catch((error) => {console.log(error);} );
         },

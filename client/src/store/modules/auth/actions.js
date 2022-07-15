@@ -44,8 +44,6 @@ export default {
             });
 
             if (data.data.user.email_verified_at === '') {
-                commit(mutations.SHOW_REGISTER_MODAL);
-
                 commit(mutations.ADD_REGISTER_USER, {
                     id: data.data.user.id,
                 });

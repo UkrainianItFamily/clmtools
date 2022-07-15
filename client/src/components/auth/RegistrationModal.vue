@@ -36,7 +36,6 @@ export default {
 
     computed: {
         ...mapGetters('auth', {
-            status: 'getRegistrationModalStatus',
             registered_user_id: 'getRegistrationUserId'
         }),
     },
@@ -60,12 +59,6 @@ export default {
             this.show_modal = false;
         }
     },
-
-    created() {
-        if (this.status) {
-            this.Close();
-        }
-    }
 };
 </script>
 

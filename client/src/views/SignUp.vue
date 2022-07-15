@@ -118,7 +118,11 @@ export default {
                 .then(() => {
                     this.showModal();
                 })
-                .catch((error) => {console.log(error);} );
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                } );
         },
     },
 };

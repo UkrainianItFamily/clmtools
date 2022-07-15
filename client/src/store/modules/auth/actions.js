@@ -42,14 +42,20 @@ export default {
                 password,
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.data.access_token,
-                tokenType: data.data.token_type
-            });
+            if (data.data.user.email_verified_at === '') {
+                commit(mutations.ADD_REGISTER_USER, {
+                    id: data.data.user.id,
+                });
+            } else {
+                commit(mutations.USER_LOGIN, {
+                    accessToken: data.data.access_token,
+                    tokenType: data.data.token_type
+                });
 
-            commit(mutations.SET_AUTHENTICATED_USER,
-               data.data.user,
-            );
+                commit(mutations.SET_AUTHENTICATED_USER,
+                    data.data.user,
+                );
+            }
 
             return Promise.resolve();
         } catch (error) {

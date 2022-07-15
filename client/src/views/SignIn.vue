@@ -78,7 +78,7 @@ export default {
 
     computed: {
         ...mapGetters('auth', [
-            'getAuthenticatedUser',
+            'hasAuthenticatedUser',
         ]),
     },
 
@@ -92,7 +92,7 @@ export default {
         onSubmit() {
             this.signIn(this.user)
                 .then(() => {
-                    if (this.getAuthenticatedUser) {
+                    if (this.hasAuthenticatedUser) {
                         alert("Login");
                         this.$router.push({ path: '/' }).catch(() => {});
                     } else {

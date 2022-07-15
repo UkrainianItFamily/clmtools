@@ -15,7 +15,7 @@ export default {
     }) {
 
         try {
-            const data = await requestService.post('/v1/auth/register', {
+            const data = await requestService.post('/auth/register', {
                 name: name,
                 last_name: lastName,
                 email: email,
@@ -38,7 +38,7 @@ export default {
     async signIn({ commit }, { email, password }) {
 
         try {
-            const data = await requestService.post('/v1/login', {
+            const data = await requestService.post('/login', {
                 email,
                 password,
             });
@@ -62,7 +62,7 @@ export default {
     async reSendEmail({ commit }, { id }) {
 
         try {
-            const data = await requestService.post('/v1/email/resend/' + id.id);
+            const data = await requestService.post('/email/resend/' + id.id);
 
             return Promise.resolve();
         } catch (error) {

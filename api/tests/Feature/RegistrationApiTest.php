@@ -26,8 +26,10 @@ class RegistrationApiTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
         $this->register_api_url = 'api/v1/auth/register';
         $this->resend_url = 'api/v1/email/resend';
+
         $this->user = User::factory()->create([
             'name' => 'Test',
             'last_name' => 'User',
@@ -35,6 +37,7 @@ class RegistrationApiTest extends TestCase
             'phone' => '380951122333',
             'password' => Hash::make('Smith123456'),
         ]);
+
         $this->user_not_verified = User::factory()->create([
             'name' => 'Test',
             'last_name' => 'User',
@@ -43,6 +46,7 @@ class RegistrationApiTest extends TestCase
             'password' => Hash::make('Smith123456'),
             'email_verified_at' => NULL
         ]);
+
         $this->user_not_verified_two = User::factory()->create([
             'name' => 'Test',
             'last_name' => 'User',

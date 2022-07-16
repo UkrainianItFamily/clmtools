@@ -29,6 +29,8 @@ Route::post('/broadcast', [StatusController::class, 'event']);
 Route::prefix('v1')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('register', [RegistrationController::class, 'register']);
+        Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+        Route::post('reset', [AuthController::class, 'reset'])->name('reset-password');
     });
 
     Route::controller(AuthController::class)->group(function () {
@@ -38,4 +40,3 @@ Route::prefix('v1')->group(function () {
     Route::post('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
 });
-

@@ -51,9 +51,9 @@ class EmailVerificationNotification extends VerifyEmail
         $url = env('APP_URL') . '/verify-email?url=' . $verifyUrl;
 
         return (new MailMessage)
-            ->line('Please click the button below to verify your email address.')
-            ->action('Verify Email Address', $url)
-            ->line('Thank you for using our application!');
+            ->line(__('register.please_click_the_button_below_to_verify_your_email_address'))
+            ->action(__('register.verify_email_address'), $url)
+            ->line(__('register.thank_you_for_using_our_application'));
     }
 
     /**

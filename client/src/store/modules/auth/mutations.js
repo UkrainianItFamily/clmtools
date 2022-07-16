@@ -22,4 +22,8 @@ export default {
         state.isLoggedIn = true;
         state.user = userMapper(user);
     },
+
+    [mutations.ADD_REGISTER_USER]: (state, id) => {
+        state.registration_user = id;
+    },
 };

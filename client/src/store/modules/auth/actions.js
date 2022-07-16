@@ -24,9 +24,8 @@ export default {
                 password_confirmation: passwordConfirmation
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.access_token,
-                tokenType: data.token_type
+            commit(mutations.ADD_REGISTER_USER, {
+                id: data.data.user.id,
             });
 
             return Promise.resolve();
@@ -64,6 +63,18 @@ export default {
         }
     },
 
+    async reSendEmail({ commit }, { id }) {
+
+        try {
+            const data = await requestService.post('/email/resend/' + id.id);
+
+            return Promise.resolve();
+        } catch (error) {
+
+            return Promise.reject(error);
+        }
+    },
+    
     async forgotPassword({ commit }, { email }) {
         try {
             await requestService.post('/auth/forgot-password', {
@@ -91,6 +102,7 @@ export default {
             return Promise.resolve();
         } catch (errorMsg) {
             return Promise.reject(errorMsg);
+
         }
     },
 

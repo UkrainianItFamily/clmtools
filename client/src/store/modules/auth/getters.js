@@ -5,4 +5,5 @@ export default {
     getAuthenticatedUser: state => state.user,
     getToken: state => state.token,
     getFullName: state => `${state.user.name} ${state.user.lastName}`,
+    getRegistrationUserId: state => state.registration_user,
 };

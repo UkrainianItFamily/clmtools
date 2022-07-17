@@ -10,6 +10,6 @@ final class ExpiredUrlProvidedException extends BaseException
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct('Expired url provided.', 401, $previous);
+        parent::__construct(__('register.expired_url_provided'), 401, $previous);
     }
 }

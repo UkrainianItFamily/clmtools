@@ -2,7 +2,7 @@
     <section class="mt-4">
         <div class="d-flex justify-content-center">
             <div class="box shadow-box w-50">
-                <h3 class="text-center">Registration</h3>
+                <h3 class="text-center">Реєстрація</h3>
                 <form
                     class="form"
                     @submit.prevent
@@ -23,7 +23,7 @@
                             v-model="user.password"
                             type="password"
                             name="password"
-                            placeholder="Password"
+                            placeholder="Пароль"
                         ></BFormInput>
                     </BFormGroup>
 
@@ -33,7 +33,7 @@
                             v-model="user.passwordConfirmation"
                             type="password"
                             name="password_confirmation"
-                            placeholder="Confirm password"
+                            placeholder="Підтвердіть пароль"
                         ></BFormInput>
                     </BFormGroup>
 
@@ -42,7 +42,7 @@
                             id="input-name"
                             v-model="user.name"
                             name="first_name"
-                            placeholder="First name"
+                            placeholder="Ім'я"
                             autofocus
                         ></BFormInput>
                     </BFormGroup>
@@ -52,7 +52,7 @@
                             id="input-lastName"
                             v-model="user.lastName"
                             name="last_name"
-                            placeholder="Last name"
+                            placeholder="Прізвище"
                         ></BFormInput>
                     </BFormGroup>
 
@@ -61,13 +61,13 @@
                             id="input-phone"
                             v-model="user.phone"
                             name="phone"
-                            placeholder="Phone"
+                            placeholder="Телефон"
                         ></BFormInput>
                     </BFormGroup>
 
                     <p class="text-right">
                         <RouterLink class="link link-signup" to="/auth/sign-in">
-                            Already have an account? Sign in.
+                            Вже є аккаунт? Увійти.
                         </RouterLink>
                     </p>
 
@@ -75,19 +75,25 @@
                             block
                             @click="onSubmit"
                         >
-                            Sign up
+                            Зареєструватися
                         </BButton>
                 </form>
 </div>
         </div>
+        <RegistrationModal ref="modal" />
     </section>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import RegistrationModal from '@/components/auth/RegistrationModal.vue';
 
 export default {
     name: 'SignUpPage',
+
+    components:{
+        RegistrationModal
+    },
 
     data: () => ({
         user: {
@@ -104,15 +110,19 @@ export default {
         ...mapActions('auth', [
             'signUp',
         ]),
-
+        showModal() {
+            this.$refs.modal.showModal();
+        },
         onSubmit() {
             this.signUp(this.user)
                 .then(() => {
-                    alert("Register");
-
-                    this.$router.push({ path: '/' }).catch(() => {});
+                    this.showModal();
                 })
-                .catch((error) => {console.log(error);} );
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                } );
         },
     },
 };

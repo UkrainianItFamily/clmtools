@@ -31,7 +31,7 @@ return [
         'string' => 'The :attribute must be between :min and :max characters.',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'The :attribute confirmation does not match.',
+    'confirmed' => 'Підтвердження :attribute не збігається.',
     'current_password' => 'The password is incorrect.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
@@ -94,8 +94,8 @@ return [
     'min' => [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'numeric' => 'The :attribute must be at least :min.',
-        'string' => 'The :attribute must be at least :min characters.',
+        'numeric' => ':attribute має бути не менше :min.',
+        'string' => ':attribute має бути не менше ніж :min символів.',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
@@ -103,8 +103,8 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'password' => [
         'letters' => 'The :attribute must contain at least one letter.',
-        'mixed' => 'The :attribute must contain at least one uppercase and one lowercase letter.',
-        'numbers' => 'The :attribute must contain at least one number.',
+        'mixed' => ':attribute має містити щонайменше одну велику та одну малу літери.',
+        'numbers' => ':attribute має містити щонайменше одну цифру.',
         'symbols' => 'The :attribute must contain at least one symbol.',
         'uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
     ],
@@ -167,6 +167,7 @@ return [
 
     'attributes' => [
         'email'       => 'e-mail',
+        'password'    => 'пароль',
     ],
 
 ];

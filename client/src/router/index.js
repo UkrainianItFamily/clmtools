@@ -36,7 +36,7 @@ const routes = [
         meta: { handleAuth: true },
     },
     {
-        path: '/auth/reset-password/:token',
+        path: '/auth/reset-password/:token/:email',
         name: 'auth.resetPassword',
         component: ResetPassword,
         meta: { handleAuth: true },

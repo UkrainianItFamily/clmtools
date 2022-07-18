@@ -74,7 +74,7 @@ export default {
             return Promise.reject(error);
         }
     },
-    
+
     async forgotPassword({ commit }, { email }) {
         try {
             await requestService.post('/auth/forgot-password', {
@@ -88,15 +88,17 @@ export default {
     },
 
     async resetPassword({ commit }, {
+        token,
+        email,
         password,
         passwordConfirmation
     }) {
         try {
             const data = await requestService.post('/auth/reset', {
-                email: this.$route.params.email,
-                password,
+                token: token,
+                email: email,
+                password: password,
                 password_confirmation: passwordConfirmation,
-                token: this.$route.params.token
             });
 
             return Promise.resolve();

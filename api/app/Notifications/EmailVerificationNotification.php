@@ -40,15 +40,16 @@ class EmailVerificationNotification extends VerifyEmail
     public function toMail($notifiable)
     {
         $verifyUrl = URL::temporarySignedRoute(
-            'verification.verify',
+            'index',
             Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-            ]
+            ],
+            false
         );
 
-        $url = env('APP_URL') . '/verify-email?url=' . $verifyUrl;
+        $url = env('APP_URL') . '/verify-email/' . $notifiable->getId() . mb_substr($verifyUrl, 1);
 
         return (new MailMessage)
             ->line(__('register.please_click_the_button_below_to_verify_your_email_address'))

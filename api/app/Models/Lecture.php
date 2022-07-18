@@ -10,4 +10,8 @@ class Lecture extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'preview_image', 'link', 'created_at'];
+
+    public function users() {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -50,7 +50,7 @@ final class AuthController extends ApiController
 
         $action->execute($request);
 
-        return $this->successResponse(['msg' => 'Password reset email sent.'], 200);
+        return $this->successResponse(['msg' => __('passwords.sent')], 200);
     }
 
     public function reset(
@@ -66,7 +66,7 @@ final class AuthController extends ApiController
 
         $action->execute($request);
 
-        return $this->successResponse(['msg' => 'Password has been successfully changed'], 200);
+        return $this->successResponse(['msg' => __('passwords.reset')], 200);
     }
 
 }

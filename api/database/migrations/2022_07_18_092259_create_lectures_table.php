@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('preview_image');
             $table->string('link');
-            $table->date('created');
             $table->timestamps();
         });
     }

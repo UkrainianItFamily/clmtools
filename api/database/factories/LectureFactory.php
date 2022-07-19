@@ -22,7 +22,6 @@ class LectureFactory extends Factory
             'title' => $title,
             'link' => 'https://www.youtube.com/watch?v=USjZcfj8yxE',
             'preview_image' => $preview_image,
-            'created' => $this->faker->dateTimeBetween('-1 years'),
         ];
     }
 }

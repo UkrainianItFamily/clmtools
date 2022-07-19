@@ -16,23 +16,23 @@ final class LectureResponse
         return $this->lecture;
     }
 
-    public function getLectureTitle(): string
+    public function getLectureTitle(): ?string
     {
         return $this->lecture->title;
     }
 
-    public function getLectureImage(): string
+    public function getLectureImage(): ?string
     {
         return $this->lecture->preview_image;
     }
 
-    public function getLectureLink(): string
+    public function getLectureLink(): ?string
     {
         return $this->lecture->link;
     }
 
     public function getLectureDate(): string
     {
-        return $this->lecture->created;
+        return $this->lecture->created_at;
     }
 }

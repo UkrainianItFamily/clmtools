@@ -14,7 +14,7 @@ final class LectureArrayPresenter
             'title' => $lecture->getLectureTitle(),
             'image' => $lecture->getLectureImage(),
             'link' => $lecture->getLectureLink(),
-            'created' => $lecture->getLectureDate(),
+            'created_at' => $lecture->getLectureDate(),
         ];
     }
 }

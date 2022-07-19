@@ -4,30 +4,18 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-6 col-md">
+                    <div class="col-6 col-md-3">
                         <ul class="list-unstyled text-small">
-                            <li><a class="text-muted" href="#">Cool stuff</a></li>
-                            <li><a class="text-muted" href="#">Random feature</a></li>
-                            <li><a class="text-muted" href="#">Team feature</a></li>
-                            <li><a class="text-muted" href="#">Stuff for developers</a></li>
-                            <li><a class="text-muted" href="#">Another one</a></li>
-                            <li><a class="text-muted" href="#">Last time</a></li>
+                            <li v-bind:key="link.title" v-for="link in linksLeft">
+                                <RouterLink class="text-muted" :to="{ name: link.route }">{{ link.title }}</RouterLink>
+                            </li>
                         </ul>
                     </div>
-                    <div class="col-6 col-md">
+                    <div class="col-6 col-md-3">
                         <ul class="list-unstyled text-small">
-                            <li><a class="text-muted" href="#">Resource</a></li>
-                            <li><a class="text-muted" href="#">Resource name</a></li>
-                            <li><a class="text-muted" href="#">Another resource</a></li>
-                            <li><a class="text-muted" href="#">Final resource</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-6 col-md">
-                        <ul class="list-unstyled text-small">
-                            <li><a class="text-muted" href="#">Team</a></li>
-                            <li><a class="text-muted" href="#">Locations</a></li>
-                            <li><a class="text-muted" href="#">Privacy</a></li>
-                            <li><a class="text-muted" href="#">Terms</a></li>
+                            <li v-bind:key="link.title" v-for="link in linksRight">
+                                <RouterLink class="text-muted" :to="{ name: link.route }">{{ link.title }}</RouterLink>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -38,6 +26,30 @@
 <script>
 export default {
     name: "Footer",
+    data() {
+        return {
+            linksLeft: [
+                {
+                    title: "Новини",
+                    route: "Tasks"
+                },
+                {
+                    title: "Новини2",
+                    route: "MoreInfo"
+                },
+            ],
+            linksRight: [
+                {
+                    title: "Новини3",
+                    route: "Tasks"
+                },
+                {
+                    title: "Новини4",
+                    route: "MoreInfo"
+                },
+            ]
+        };
+    }
 };
 </script>
 

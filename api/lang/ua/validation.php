@@ -94,8 +94,8 @@ return [
     'min' => [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'numeric' => ':attribute має бути не менше :min.',
-        'string' => ':attribute має бути не менше ніж :min символів.',
+        'numeric' => ':Attribute має бути не менше :min.',
+        'string' => ':Attribute має бути не менше ніж :min символів.',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value.',
     'not_in' => 'The selected :attribute is invalid.',
@@ -103,8 +103,8 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'password' => [
         'letters' => 'The :attribute must contain at least one letter.',
-        'mixed' => ':attribute має містити щонайменше одну велику та одну малу літери.',
-        'numbers' => ':attribute має містити щонайменше одну цифру.',
+        'mixed' => ':Attribute має містити щонайменше одну велику та одну малу літери.',
+        'numbers' => ':Attribute має містити щонайменше одну цифру.',
         'symbols' => 'The :attribute must contain at least one symbol.',
         'uncompromised' => 'The given :attribute has appeared in a data leak. Please choose a different :attribute.',
     ],

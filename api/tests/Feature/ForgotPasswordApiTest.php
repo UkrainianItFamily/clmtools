@@ -4,12 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -51,7 +46,7 @@ class ForgotPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertSeeText(['msg' => 'Ми надіслали ваше посилання для зміни пароля електронною поштою!']);
+            ->assertSeeText(['msg' => __('passwords.sent')]);
     }
 
     public function test_user_not_exist()
@@ -62,7 +57,7 @@ class ForgotPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertSeeText(['message' => 'Даний e-mail не існує.']);
+            ->assertSeeText(['message' => __('validation.exists',['attribute' => __('validation.attributes.email')])]);
     }
 
     public function test_required_fields_for_forgot_password()
@@ -72,9 +67,9 @@ class ForgotPasswordApiTest extends TestCase
         $response
             ->assertStatus(422)
             ->assertJson([
-                "message" => "Поле e-mail обов'язкове.",
+                "message" => __('validation.required',['attribute' => __('validation.attributes.email')]),
                 "errors" => [
-                    "email" => ["Поле e-mail обов'язкове."],
+                    "email" => [__('validation.required',['attribute' => __('validation.attributes.email')])],
                 ]
             ]);
     }
@@ -87,7 +82,7 @@ class ForgotPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(["email" => ["e-mail має бути дійсною електронною адресою."]]);
+            ->assertJsonFragment(["email" => [__('validation.email',['attribute'=> __('validation.attributes.email')])]]);
     }
 
 }

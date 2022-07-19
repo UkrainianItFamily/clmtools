@@ -11,7 +11,7 @@ final class LectureResponse
     ) {
     }
 
-    public function getLecture(): object
+    public function getLecture(): ?object
     {
         return $this->lecture;
     }

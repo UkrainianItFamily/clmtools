@@ -1,10 +1,19 @@
 <template>
   <div id="app">
       <Navbar />
-    <BContainer class="content">
-      <RouterView />
-    </BContainer>
-      <Footer />
+      <BContainer class="content">
+          <section class="row g-4" v-if="isLoggedIn">
+              <LeftMenu />
+              <div class="col-lg-9">
+                  <RouterView />
+              </div>
+          </section>
+
+          <section v-else>
+              <RouterView />
+          </section>
+      </BContainer>
+      <Footer v-if="isLoggedIn" />
   </div>
 </template>
 
@@ -15,6 +24,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import Navbar from '@/components/common/Navbar.vue';
+import LeftMenu from '@/components/common/LeftMenu.vue';
 import Footer from '@/components/common/Footer.vue';
 import { USER_LOGOUT } from './store/modules/auth/types/mutations';
 import { EventEmitter, TOKEN_EXPIRED_EVENT } from './services/EventEmitter';
@@ -24,6 +34,7 @@ export default {
 
     components:{
         Navbar,
+        LeftMenu,
         Footer
     },
 

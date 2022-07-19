@@ -61,6 +61,7 @@ const routes = [
         component: VerifyEmail,
         meta: { handleAuth: true },
     },
+    {
         path: '/auth/reset-password/:token',
         name: 'auth.resetPassword',
         component: ResetPassword,

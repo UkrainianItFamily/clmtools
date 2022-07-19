@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Storage from '@/services/Storage';
 
+import Index from '@/views/Index';
+
 import Status from '@/views/Status';
 
 import SignUp from '@/views/SignUp';
@@ -12,11 +14,16 @@ import ResetPassword from "@/views/ResetPassword";
 Vue.use(VueRouter);
 
 const routes = [
-      {
+    {
         path: '/',
+        name: 'Index',
+        component: Index
+    },
+    {
+        path: '/status',
         name: 'Status',
         component: Status
-      },
+    },
     {
         path: '/auth/sign-up',
         name: 'auth.signUp',

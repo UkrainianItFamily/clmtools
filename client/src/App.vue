@@ -4,6 +4,7 @@
     <BContainer class="content">
       <RouterView />
     </BContainer>
+      <Footer />
   </div>
 </template>
 
@@ -14,6 +15,7 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex';
 import Navbar from '@/components/common/Navbar.vue';
+import Footer from '@/components/common/Footer.vue';
 import { USER_LOGOUT } from './store/modules/auth/types/mutations';
 import { EventEmitter, TOKEN_EXPIRED_EVENT } from './services/EventEmitter';
 
@@ -21,7 +23,8 @@ export default {
     name: 'App',
 
     components:{
-        Navbar
+        Navbar,
+        Footer
     },
 
     computed: {

@@ -251,7 +251,7 @@ class RegistrationApiTest extends TestCase
             ->assertStatus(200)
             ->assertJson(
                 [
-                    "msg" => "Посилання для підтвердження електронної пошти надіслано на вашу електронну адресу."
+                    "msg" => __('register.email_verification_link_sent_on_your_email')
                 ]
             );
     }
@@ -268,7 +268,7 @@ class RegistrationApiTest extends TestCase
             ->assertJson(
                 [
                     "error" => [
-                        "message" => "Електронна адреса вже підтверджена.",
+                        "message" => __('register.email_already_verified'),
                         "code" => 400
                     ]
                 ]
@@ -297,7 +297,7 @@ class RegistrationApiTest extends TestCase
             ->assertJson(
                 [
                     "error" => [
-                        "message" => "Термін дії URL-адреси закінчився.",
+                        "message" => __('register.expired_url_provided'),
                         "code" => 401
                     ]
                 ]
@@ -326,7 +326,7 @@ class RegistrationApiTest extends TestCase
             ->assertJson(
                 [
                     "error" => [
-                        "message" => "Надано недійсну URL-адресу.",
+                        "message" => __('register.invalid_url_provided'),
                         "code" => 401
                     ]
                 ]
@@ -354,7 +354,7 @@ class RegistrationApiTest extends TestCase
             ->assertStatus(200)
             ->assertJson(
                 [
-                    "msg" => "Адреса електронної пошти успішно підтверджена."
+                    "msg" => __('register.user_successfully_verified')
                 ]
             );
     }

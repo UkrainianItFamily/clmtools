@@ -63,8 +63,18 @@ export default {
         }
     },
 
-    async reSendEmail({ commit }, { id }) {
+    async verifyEmail({ commit }, { url }) {
+        try {
+            await requestService.post('/email/verify/' + url);
+            
+            return Promise.resolve();
+        } catch (error) {
 
+            return Promise.reject(error);
+        }
+    },
+
+    async reSendEmail({ commit }, { id }) {
         try {
             const data = await requestService.post('/email/resend/' + id.id);
 
@@ -107,5 +117,4 @@ export default {
 
         }
     },
-
 };

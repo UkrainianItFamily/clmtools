@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Presenters;
 
-use App\Actions\Lecture\LectureArrayResponse;
+use App\Actions\Lecture\LectureCollectionResponse;
 use App\Actions\Lecture\LectureResponse;
 
 final class LectureArrayPresenter
@@ -19,7 +19,7 @@ final class LectureArrayPresenter
         ];
     }
 
-    public function getCollections(LectureArrayResponse $lecture): array
+    public function getCollections(LectureCollectionResponse $lecture): array
     {
         return [
             'lectures' => $lecture->getLecture()

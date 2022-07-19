@@ -31,7 +31,7 @@ final class LectureResponse
         return $this->lecture->link;
     }
 
-    public function getLectureDate(): string
+    public function getLectureDate()
     {
         return $this->lecture->created_at;
     }

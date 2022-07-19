@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LectureControllers;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Http\Request;
@@ -39,4 +40,9 @@ Route::prefix('v1')->group(function () {
 
     Route::post('email/verify/{id}', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('email/resend/{id}', [VerificationController::class, 'resend'])->name('verification.resend');
+
+    Route::middleware('auth:api')->group(function () {
+        Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
+        Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
+    });
 });

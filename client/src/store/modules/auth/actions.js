@@ -61,7 +61,7 @@ export default {
 
     async verifyEmail({ commit }, { url }) {
         try {
-            await requestService.post(url);
+            await requestService.post('/email/verify/' + url);
 
             return Promise.resolve();
         } catch (error) {

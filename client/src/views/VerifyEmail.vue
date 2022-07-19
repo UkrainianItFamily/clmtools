@@ -37,7 +37,7 @@
         data: () => ({
             message: 'Перевіряємо...',
             expired: false,
-            url: '/email/verify/',
+            url: null,
             registered_user_id: null
         }),
 
@@ -61,7 +61,7 @@
         mounted() {
             this.registered_user_id = this.$router.history.current.params.user_id;
             let params = new URLSearchParams(this.$router.history.current.query);
-            this.url += this.registered_user_id + '?' + params.toString();
+            this.url = this.registered_user_id + '?' + params.toString();
 
             this.verifyEmail({ url: this.url })
                 .then(() => {

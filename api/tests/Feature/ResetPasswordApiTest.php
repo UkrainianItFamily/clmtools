@@ -69,9 +69,9 @@ class ResetPasswordApiTest extends TestCase
         $response
             ->assertStatus(422)
             ->assertJson([
-                "message" => "Поле пароль обов'язкове.",
+                "message" => __('validation.required',['attribute'=>__('validation.attributes.password')]),
                 "errors" => [
-                    "password" => ["Поле пароль обов'язкове."],
+                    "password" => [__('validation.required',['attribute'=>__('validation.attributes.password')])],
                 ]
             ]);
     }
@@ -88,7 +88,7 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(["password" => ["Підтвердження пароль не збігається."]]);
+            ->assertJsonFragment(["password" => [__('validation.confirmed',['attribute' => __('validation.attributes.password')])]]);
     }
 
     public function test_length_password()
@@ -103,7 +103,15 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(["password" => ["пароль має бути не менше ніж 8 символів."]]);
+            ->assertJsonFragment([
+                "password" => [
+                __('validation.min.string',
+                    [
+                        'attribute' => __('validation.attributes.password'),
+                        'min'=>'8'
+                    ])
+                ]
+            ]);
     }
 
     public function test_mixed_case_password()
@@ -118,7 +126,11 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(["password" => ["пароль має містити щонайменше одну велику та одну малу літери."]]);
+            ->assertJsonFragment([
+                "password" => [
+                    __('validation.password.mixed', ['password' => __('validation.attributes.password')])
+                ]
+            ]);
     }
 
     public function test_number_password()
@@ -133,7 +145,7 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(422)
-            ->assertJsonFragment(["password" => ["пароль має містити щонайменше одну цифру."]]);
+            ->assertJsonFragment(["password" => [__('validation.password.numbers', ['password' => __('validation.attributes.password')])]]);
     }
 
     public function test_successful_reset()
@@ -148,7 +160,7 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonFragment(["msg" => ["Ваш пароль скинуто!"]]);
+            ->assertJsonFragment(["msg" => [__('passwords.reset')]]);
     }
 
     public function test_reset_password_expired_token()
@@ -164,7 +176,7 @@ class ResetPasswordApiTest extends TestCase
 
         $response
             ->assertStatus(400)
-            ->assertJsonFragment(["message" => ["Цей токен скидання пароля недійсний."]]);
+            ->assertJsonFragment(["message" => [__('passwords.token')]]);
     }
 
 }

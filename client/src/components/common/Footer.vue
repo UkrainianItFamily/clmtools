@@ -52,26 +52,3 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped>
-    html {
-        position: relative;
-        min-height: 100%;
-    }
-    body {
-        margin-bottom: 60px; /* Margin bottom by footer height */
-    }
-    ul {
-        margin-top: 1rem;
-    }
-    .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        background-color: #f5f5f5;
-    }
-    container {
-        width: auto;
-        padding: 0 15px;
-    }
-</style>

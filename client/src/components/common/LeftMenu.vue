@@ -9,11 +9,3 @@
     </ul>
   </div>
 </template>
-
-<script>
-</script>
-<style lang="scss" scoped>
-    .router-link-active {
-        font-weight: 700;
-    }
-</style>

@@ -25,8 +25,7 @@ class ApiController extends BaseController
     protected function errorResponse(string $message, int $status = JsonResponse::HTTP_BAD_REQUEST): JsonResponse
     {
         return new JsonResponse([
-            'error' => [
-                'http_code' => $status,
+            'errors' => [
                 'message' => $message
             ]
         ], $status);

@@ -24,9 +24,8 @@ export default {
                 password_confirmation: passwordConfirmation
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.access_token,
-                tokenType: data.token_type
+            commit(mutations.ADD_REGISTER_USER, {
+                id: data.data.user.id,
             });
 
             return Promise.resolve();
@@ -36,21 +35,26 @@ export default {
     },
 
     async signIn({ commit }, { email, password }) {
-
         try {
-            const data = await requestService.post('/v1/login', {
+            const data = await requestService.post('/login', {
                 email,
                 password,
             });
 
-            commit(mutations.USER_LOGIN, {
-                accessToken: data.data.access_token,
-                tokenType: data.data.token_type
-            });
+            if (data.data.user.email_verified_at === '') {
+                commit(mutations.ADD_REGISTER_USER, {
+                    id: data.data.user.id,
+                });
+            } else {
+                commit(mutations.USER_LOGIN, {
+                    accessToken: data.data.access_token,
+                    tokenType: data.data.token_type
+                });
 
-            commit(mutations.SET_AUTHENTICATED_USER,
-               data.data.user,
-            );
+                commit(mutations.SET_AUTHENTICATED_USER,
+                    data.data.user,
+                );
+            }
 
             return Promise.resolve();
         } catch (error) {
@@ -62,11 +66,53 @@ export default {
     async verifyEmail({ commit }, { url }) {
         try {
             await requestService.post(url);
+            
+            return Promise.resolve();
+        } catch (error) {
+
+            return Promise.reject(error);
+        }
+    },
+
+    async reSendEmail({ commit }, { id }) {
+        try {
+            const data = await requestService.post('/email/resend/' + id.id);
 
             return Promise.resolve();
         } catch (error) {
 
             return Promise.reject(error);
+        }
+    },
+    
+    async forgotPassword({ commit }, { email }) {
+        try {
+            await requestService.post('/auth/forgot-password', {
+                email
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+        }
+    },
+
+    async resetPassword({ commit }, {
+        password,
+        passwordConfirmation
+    }) {
+        try {
+            const data = await requestService.post('/auth/reset', {
+                email: this.$route.params.email,
+                password,
+                password_confirmation: passwordConfirmation,
+                token: this.$route.params.token
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+
         }
     },
 };

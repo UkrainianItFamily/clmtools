@@ -8,6 +8,7 @@ import SignUp from '@/views/SignUp';
 import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
 import VerifyEmail from '@/views/VerifyEmail';
+import ResetPassword from "@/views/ResetPassword";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/verify-email/:user_id',
         name: 'verify.email',
         component: VerifyEmail,
+        meta: { handleAuth: true },
+    },
+        path: '/auth/reset-password/:token',
+        name: 'auth.resetPassword',
+        component: ResetPassword,
         meta: { handleAuth: true },
     },
 ];

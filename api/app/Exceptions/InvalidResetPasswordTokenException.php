@@ -6,10 +6,10 @@ namespace App\Exceptions;
 
 use Throwable;
 
-final class EmailAlreadyVerifiedException extends BaseException
+final class InvalidResetPasswordTokenException extends BaseException
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct(__('register.email_already_verified'), 400, $previous);
+        parent::__construct('Failed, Invalid Token.', 400, $previous);
     }
 }

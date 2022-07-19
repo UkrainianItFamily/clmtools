@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Lecture\LectureAction;
 use App\Actions\Lecture\LectureRequest;
 use App\Http\Presenters\LectureArrayPresenter;
-use App\Http\Presenters\LecturesListArrayPresenter;
 use Illuminate\Http\JsonResponse;
 
 class LectureControllers extends ApiController
@@ -16,14 +15,14 @@ class LectureControllers extends ApiController
     public function userLectures(
         $user_id,
         LectureAction $action,
-        LecturesListArrayPresenter $listPresenter
+        LectureArrayPresenter $presenter
     ): JsonResponse {
         $response = $action->execute(new LectureRequest(
             (int)$user_id,
             null,
         ));
 
-        return $this->successResponse($listPresenter->present($response));
+        return $this->successResponse($presenter->getCollections($response));
     }
 
     /**

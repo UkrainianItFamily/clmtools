@@ -6,10 +6,10 @@ namespace App\Exceptions;
 
 use Throwable;
 
-final class EmailAlreadyVerifiedException extends BaseException
+final class FailedSentPasswordResetLinkException extends BaseException
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct(__('register.email_already_verified'), 400, $previous);
+        parent::__construct('Email could not be sent to this email address.', 400, $previous);
     }
 }

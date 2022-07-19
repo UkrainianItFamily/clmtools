@@ -10,6 +10,6 @@ final class InvalidUrlProvidedException extends BaseException
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct('Invalid url provided.', 401, $previous);
+        parent::__construct(__('register.invalid_url_provided'), 401, $previous);
     }
 }

@@ -54,14 +54,20 @@
                     </form>
                 </div>
             </div>
+        <RegistrationModal ref="modal" />
     </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import RegistrationModal from '@/components/auth/RegistrationModal.vue';
 
 export default {
     name: "SignInPage",
+
+    components:{
+        RegistrationModal
+    },
 
     data: () => ({
         user: {
@@ -70,20 +76,34 @@ export default {
         }
     }),
 
+    computed: {
+        ...mapGetters('auth', [
+            'hasAuthenticatedUser',
+        ]),
+    },
 
     methods: {
         ...mapActions('auth', [
             'signIn',
         ]),
-
+        showModal() {
+            this.$refs.modal.showModal();
+        },
         onSubmit() {
             this.signIn(this.user)
                 .then(() => {
-                    alert("Login");
-
-                    this.$router.push({ path: '/' }).catch(() => {});
+                    if (this.hasAuthenticatedUser) {
+                        alert("Ви увійшли до системи");
+                        this.$router.push({ path: '/' }).catch(() => {});
+                    } else {
+                        this.showModal();
+                    }
                 })
-                .catch((error) => {console.log(error);} );
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                } );
         },
     },
 

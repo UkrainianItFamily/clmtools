@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Auth;
 
 use App\Repository\UserRepository;
+use Illuminate\Support\Facades\Hash;
 
 final class RegisterAction
 {
@@ -19,7 +20,7 @@ final class RegisterAction
             'last_name' => $request->getLastName(),
             'email' => $request->getEmail(),
             'phone' => $request->getPhone(),
-            'password' => $request->getPassword()
+            'password' => Hash::make($request->getPassword())
         ]);
 
         $user->sendEmailVerificationNotification();

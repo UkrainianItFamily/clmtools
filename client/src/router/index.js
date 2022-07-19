@@ -36,7 +36,7 @@ const routes = [
         meta: { handleAuth: true },
     },
     {
-        path: '/verify-email',
+        path: '/verify-email/:user_id',
         name: 'verify.email',
         component: VerifyEmail,
         meta: { handleAuth: true },

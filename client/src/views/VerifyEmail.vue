@@ -37,7 +37,7 @@
         data: () => ({
             message: 'Перевіряємо...',
             expired: false,
-            url: null,
+            url: '/email/verify/',
             registered_user_id: null
         }),
 
@@ -51,25 +51,26 @@
                     .then(() => {
                         alert("Лист з верифікацією надіслан повторно");
                     })
-                    .catch((error) => {console.log(error);} );
+                    .catch((error) => {
+                        if (error.response.data.errors) {
+                            alert(Object.values(error.response.data.errors).join('\r\n'));
+                        }
+                    } );
             },
         },
         mounted() {
-            this.url = decodeURIComponent(document.location.href).split(process.env.VUE_APP_API_URL)[1];
-            this.registered_user_id = this.url.split('?')[0].split('verify/')[1];
+            this.registered_user_id = this.$router.history.current.params.user_id;
+            let params = new URLSearchParams(this.$router.history.current.query);
+            this.url += this.registered_user_id + '?' + params.toString();
+
             this.verifyEmail({ url: this.url })
                 .then(() => {
                     this.message = "Дякуємо за підтвердження електронної адреси.";
                 })
                 .catch((error) => {
                     console.log(error);
-                    if (error.toString().indexOf('Expired') > -1) {
-                        this.expired = true;
-                        this.message = "Термін дії URL-адреси підтвердження закінчився.";
-                    } else {
-                        this.expired = false;
-                        this.message = "Ваша електронна адреса вже була підтверджена.";
-                    }
+                    this.expired = error.response.data.error.code === 401;
+                    this.message = error.response.data.error.message;
                 } );
         },
     };

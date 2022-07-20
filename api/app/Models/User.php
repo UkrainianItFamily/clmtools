@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\Integer;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -31,11 +32,16 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'profile_image',
         'name',
         'last_name',
+        'date_birth',
         'email',
         'phone',
         'password',
+        'city',
+        'university',
+        'graduation_year'
     ];
 
     /**
@@ -55,6 +61,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'date_birth' => 'date:Y-m-d'
     ];
 
     /**
@@ -85,6 +92,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->id;
     }
 
+    public function getAvatar(): string
+    {
+        return $this->profile_image;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
@@ -95,14 +107,34 @@ class User extends Authenticatable implements JWTSubject
         return $this->name;
     }
 
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->last_name;
+    }
+
+    public function getDateBirth()
+    {
+        return $this->date_birth;
     }
 
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function getUniversity(): string
+    {
+        return $this->university;
+    }
+
+    public function getGraduationYear(): int
+    {
+        return $this->graduation_year;
     }
 
     public function getVerifiedEmail()

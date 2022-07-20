@@ -74,13 +74,11 @@ const routes = [
         path: '/lections',
         name: 'lections',
         component: Lections,
-        meta: { handleAuth: true },
     },
     {
         path: '/lections/:lection_id',
         name: 'detail.lection',
         component: DetailLection,
-        meta: { handleAuth: true },
     },
 ];
 

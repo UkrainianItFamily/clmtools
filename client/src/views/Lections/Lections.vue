@@ -1,83 +1,59 @@
 <template>
-    <div class="modal bg-dark bg-opacity-40" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Підтвердження електронної пошти</h5>
+    <div class="row-fluid">
+        <ul class="thumbnails">
+            <li class="span4" v-for="lection in this.getLections">
+                <div class="thumbnail">
+                    <img data-src="holder.js/150x150" alt="150x150" src="{{ lection.image }}" style="width: 150px; height: 150px;">
+                    <div class="caption">
+                        <h3>{{ lection.title }}</h3>
+                        <p>Створено: {{ lection.created_at }}</p>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p v-text="message"></p>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        v-show="expired"
-                        type="button"
-                        class="btn btn-secondary"
-                        @click="reSend"
-                    >Надіслати лист ще раз</button>
-                    <RouterLink class="link link-signup" to="/auth/sign-in">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                        >
-                        Перейти до авторизації</button>
-                    </RouterLink>
-                </div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: "Lections",
 
-        data: () => ({
-            message: 'Перевіряємо...',
-            expired: false,
-            url: null,
-            registered_user_id: null
-        }),
+        computed: {
+            ...mapGetters('auth', [
+                'getAuthenticatedUser',
+            ]),
+            ...mapGetters('lections', [
+                'getLections',
+            ]),
+        },
 
         methods: {
             ...mapActions('auth', [
-                'verifyEmail',
-                'reSendEmail',
+                'getLections',
             ]),
-            reSend() {
-                this.reSendEmail({ id: this.registered_user_id })
-                    .then(() => {
-                        alert("Лист з верифікацією надіслан повторно");
-                    })
-                    .catch((error) => {
-                        if (error.response.data.errors) {
-                            alert(Object.values(error.response.data.errors).join('\r\n'));
-                        }
-                    } );
-            },
         },
         mounted() {
-            this.registered_user_id = this.$router.history.current.params.user_id;
-            let params = new URLSearchParams(this.$router.history.current.query);
-            this.url = this.registered_user_id + '?' + params.toString();
-
-            this.verifyEmail({ url: this.url })
+            this.getLections({ user_id: this.getAuthenticatedUser.id })
                 .then(() => {
-                    this.message = "Дякуємо за підтвердження електронної адреси.";
+                    alert("Лист з верифікацією надіслан повторно");
                 })
                 .catch((error) => {
-                    console.log(error);
-                    this.expired = error.response.data.error.code === 401;
-                    this.message = error.response.data.error.message;
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
                 } );
         },
     };
 </script>
 
 <style>
-    .modal {
-        display: block;
+    .span4, .thumbnail {
+        display: flex;
     }
+    ul.thumbnails {
+        display: inline;
+    }
+
 </style>

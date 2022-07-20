@@ -67,7 +67,7 @@ class LectionsApiTest extends TestCase
         $response = $this->postJson($this->lecture_url);
 
         $response
-            ->assertJsonFragment(['error' => 'Unauthorized'])
+            ->assertJsonFragment(['error' => __('authorize.unauthorized')])
             ->assertStatus(400);
     }
 

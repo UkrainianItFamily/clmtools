@@ -34,6 +34,6 @@ final class LectureRepository
 
     public function getLecturesByUser(int $id): Collection
     {
-        return Lecture::where('user_id', $id)->select(['title', 'preview_image', 'created_at'])->get();
+        return Lecture::where('user_id', $id)->get();
     }
 }

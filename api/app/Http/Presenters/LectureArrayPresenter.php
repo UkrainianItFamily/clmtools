@@ -6,6 +6,7 @@ namespace App\Http\Presenters;
 
 use App\Actions\Lecture\LectureCollectionResponse;
 use App\Actions\Lecture\LectureResponse;
+use App\Models\Lecture;
 
 final class LectureArrayPresenter
 {
@@ -19,10 +20,14 @@ final class LectureArrayPresenter
         ];
     }
 
-    public function getCollections(LectureCollectionResponse $lecture): array
+    public function getCollections(LectureCollectionResponse $lectures): array
     {
-        return [
-            'lectures' => $lecture->getLecture()
-        ];
+        return $lectures->getLecture()
+            ->map(
+                function (Lecture $lecture) {
+                    return $this->present(new LectureResponse($lecture));
+                }
+            )
+            ->all();
     }
 }

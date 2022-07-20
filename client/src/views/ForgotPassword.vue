@@ -2,11 +2,13 @@
     <section class="mt-4">
         <div class="d-flex justify-content-center">
             <div class="box shadow-box w-50">
-                <h3 class="text-center mb-4">Forgot password?</h3>
-                <h4 class="text-center text-info mb-4">We will e-mailed your password reset link!</h4>
+                <h3 class="text-center mb-4">Забули пароль?</h3>
+                <p class="text-center h5 mb-4">Вам на пошту буде відправлене повідомлення з посиланням для зміни паролю</p>
+                <BAlert show variant="success" v-if="validated">Ми надіслали ваше посилання для зміни пароля електронною поштою!</BAlert>
                 <form
-                    class="form"
-                    @submit.prevent
+                    class="form needs-validation"
+                    @submit="onSubmit"
+                    :class="{ 'was-validated': validated}"
                     novalidate="true"
                 >
                     <BFormGroup>
@@ -14,21 +16,23 @@
                             id="input-email"
                             v-model="user.email"
                             name="email"
-                            placeholder="Email"
+                            placeholder="E-mail"
+                            required
                         ></BFormInput>
                     </BFormGroup>
+                    <BAlert show variant="danger" v-if="errors.email">{{ Object.values(errors.email).join('\r\n') }}</BAlert>
 
                     <p class="text-right">
                         <RouterLink class="link link-signup" :to="{name: 'auth.signIn'}">
-                            back to authorization
+                            Повернутись до авторизації
                         </RouterLink>
                     </p>
 
                     <BButton
                         block
-                        @click="onSubmit"
+                        type="submit"
                     >
-                        Send
+                        Надіслати лист
                     </BButton>
 
                 </form>
@@ -38,28 +42,34 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
+import {mapActions} from 'vuex';
 export default {
     name: "ForgotPasswordPage",
 
     data: () => ({
         user: {
             email: ''
-        }
+        },
+        validated: false,
+        errors: {}
     }),
 
-    methods:{
-        ...mapActions('auth',[
+    methods: {
+        ...mapActions('auth', [
             'forgotPassword'
         ]),
 
-        onSubmit(){
+        onSubmit(e) {
+            e.preventDefault();
             this.forgotPassword(this.user)
                 .then(() => {
-                    alert("Successful send!");
+                    this.validated = true;
+                    this.errors = {};
                 })
-                .catch((error) => {console.log(error);} );
+                .catch((error) => {
+                    this.validated = false;
+                    this.errors = error.response.data.errors;
+                });
         }
     }
 };

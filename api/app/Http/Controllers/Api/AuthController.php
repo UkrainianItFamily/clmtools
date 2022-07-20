@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
 use App\Actions\Auth\LoginAction;
@@ -16,6 +17,9 @@ use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 final class AuthController extends ApiController
@@ -68,5 +72,4 @@ final class AuthController extends ApiController
 
         return $this->successResponse(['msg' => __('passwords.reset')], 200);
     }
-
 }

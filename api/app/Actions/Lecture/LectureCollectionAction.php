@@ -12,7 +12,7 @@ final class LectureCollectionAction
     {
     }
 
-    public function execute(LectureCollectionRequest $request)
+    public function execute(LectureCollectionRequest $request): LectureCollectionResponse
     {
         return new LectureCollectionResponse(
             $this->lectureRepository->getLecturesByUser($request->getUserId())

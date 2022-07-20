@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Actions\Lecture;
 
+use Illuminate\Support\Carbon;
+
 final class LectureResponse
 {
     public function __construct(
         private object $lecture,
     ) {
-    }
-
-    public function getLecture(): ?object
-    {
-        return $this->lecture;
     }
 
     public function getLectureTitle(): ?string
@@ -31,7 +28,7 @@ final class LectureResponse
         return $this->lecture->link;
     }
 
-    public function getLectureDate()
+    public function getLectureDate(): Carbon
     {
         return $this->lecture->created_at;
     }

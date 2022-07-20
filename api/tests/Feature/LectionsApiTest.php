@@ -26,8 +26,7 @@ class LectionsApiTest extends TestCase
             'phone' => '9999999999999',
             'password' => Hash::make('Ye4oKoEa3Ro9llC'),
         ]);
-        $this->lecture_collection_url = '/api/v1/user-lectures/'. $this->user->id;
-        $this->non_number_lecture_url = '/api/v1/lecture/abc';
+
         $this->lecture = Lecture::factory()->create([
             'user_id' => $this->user->id,
             'title' => $this->title,
@@ -39,12 +38,6 @@ class LectionsApiTest extends TestCase
     {
         Lecture::destroy($this->lecture->id);
         User::destroy($this->user->id);
-        $this->lecture_collection_url = null;
-        $this->non_number_lecture_url = null;
-        $this->lecture_url = null;
-        $this->lecture = null;
-        $this->title = null;
-        $this->user = null;
         $this->refreshApplication();
     }
 
@@ -61,6 +54,7 @@ class LectionsApiTest extends TestCase
     public function test_getting_collection_lectures()
     {
         $this->actingAs($this->user);
+        $this->lecture_collection_url = '/api/v1/user-lectures/'. $this->user->id;
         $response = $this->postJson($this->lecture_collection_url);
 
         $response
@@ -80,11 +74,12 @@ class LectionsApiTest extends TestCase
     public function test_empty_user_lectures()
     {
         $this->actingAs($this->user);
-        $response = $this->postJson($this->lecture_collection_url. '9999999');
+        $this->lecture_collection_url = '/api/v1/user-lectures/9999999';
+        $response = $this->postJson($this->lecture_collection_url);
 
         $response
             ->assertStatus(200)
-            ->assertJsonFragment(['lectures' => []]);
+            ->assertJsonFragment([]);
     }
 
     public function test_incorrect_id()
@@ -97,6 +92,7 @@ class LectionsApiTest extends TestCase
 
     public function test_non_number_id()
     {
+        $this->non_number_lecture_url = '/api/v1/lecture/abc';
         $this->actingAs($this->user);
         $response = $this->postJson($this->non_number_lecture_url);
 

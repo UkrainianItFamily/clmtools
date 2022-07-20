@@ -16,12 +16,10 @@ class LectureFactory extends Factory
      */
     public function definition()
     {
-        $title = $this->faker->sentence(5,true);
-        $preview_image = 'https://via.placeholder.com/600/5F113B/FFFFFF/?text=Lecture.'.$title.'*';
         return [
-            'title' => $title,
+            'title' => $this->faker->sentence(5,true),
             'link' => 'https://www.youtube.com/watch?v=USjZcfj8yxE',
-            'preview_image' => $preview_image,
+            'preview_image' => 'https://via.placeholder.com/600/5F113B/FFFFFF/?text=Lecture*',
         ];
     }
 }

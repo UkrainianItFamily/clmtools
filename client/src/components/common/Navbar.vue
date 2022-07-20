@@ -3,7 +3,7 @@
         <BNavbar type="dark" variant="dark">
             <BNavbarBrand :to="{ path: '/' }">CMLTool</BNavbarBrand>
 
-            <BNavbarNav class="ml-auto" align="right" v-if="user.id">
+            <BNavbarNav class="ml-auto" align="right" v-if="isLoggedIn">
                 <BNavItemDropdown
                     id="my-nav-dropdown"
                     toggle-class="nav-link-custom"
@@ -31,6 +31,7 @@ export default {
         ...mapGetters('auth', {
             user: 'getAuthenticatedUser',
             fullName: 'getFullName',
+            isLoggedIn: 'isLoggedIn'
         }),
     },
 

@@ -4,14 +4,10 @@
             <BNavbarBrand :to="{ path: '/' }">CMLTool</BNavbarBrand>
 
             <BNavbarNav class="ml-auto" align="right" v-if="isLoggedIn">
-                <BNavItemDropdown
-                    id="my-nav-dropdown"
-                    toggle-class="nav-link-custom"
-                    text="User"
-                >
-                    <BDropdownItem>Profile</BDropdownItem>
-                    <BDropdownItem :to="{ name: 'auth.logout'}">Exit</BDropdownItem>
-                </BNavItemDropdown>
+                <BNavItem><img src="/img/person.png"></BNavItem>
+                <BNavItem><img src="/img/bell_icon.png"></BNavItem>
+                <BNavItem :to="{ name: 'auth.logout'}"><img src="/img/door_closed.png"></BNavItem>
+
             </BNavbarNav>
 
             <BNavbarNav class="ml-auto" align="right" v-else>

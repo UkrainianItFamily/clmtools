@@ -127,4 +127,42 @@ export default {
             return Promise.reject(error);
         }
     },
+
+    async fetchAuthenticatedUser({ commit }) {
+        try {
+            const user = await requestService.get('/auth/me');
+            commit(mutations.SET_AUTHENTICATED_USER, user);
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
+    async updateProfile({ commit }, {
+        name,
+        lastName,
+        dateBirth,
+        city,
+        university,
+        graduationYear
+    }) {
+        try {
+            const data = await requestService.put('/auth/me', {
+                name: name,
+                last_name: lastName,
+                date_birth: dateBirth,
+                city: city,
+                university: university,
+                graduation_year: graduationYear
+            });
+
+            commit(mutations.SET_AUTHENTICATED_USER, data,);
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
 };

@@ -4,7 +4,7 @@
             <BNavbarBrand :to="{ path: '/' }">CMLTool</BNavbarBrand>
 
             <BNavbarNav class="ml-auto" align="right" v-if="isLoggedIn">
-                <BNavItem><img src="/img/person.png"></BNavItem>
+                <BNavItem :to="{ name: 'profile'}"><img src="/img/person.png" alt=""></BNavItem>
                 <BNavItem><img src="/img/bell_icon.png"></BNavItem>
                 <BNavItem @click="onSignOut"><img src="/img/door_closed.png"></BNavItem>
             </BNavbarNav>
@@ -29,8 +29,14 @@ export default {
             isLoggedIn: 'isLoggedIn'
         }),
     },
+
+    async created() {
+        await this.fetchAuthenticatedUser();
+    },
+
     methods: {
         ...mapActions('auth', [
+            'fetchAuthenticatedUser',
             'signOut'
         ]),
         async onSignOut() {

@@ -9,10 +9,10 @@ final class UpdateProfileRequest
     public function __construct(
         private string $name,
         private string $lastName,
-        private string $dateBirth,
-        private string $city,
-        private string $university,
-        private int $graduationYear,
+        private ?string $dateBirth,
+        private ?string $city,
+        private ?string $university,
+        private ?int $graduationYear,
     ) {
     }
 
@@ -26,19 +26,19 @@ final class UpdateProfileRequest
         return $this->lastName;
     }
 
-    public function getDateBirth(): string{
+    public function getDateBirth(): ?string{
         return $this->dateBirth;
     }
 
-    public function getCity(): string{
+    public function getCity(): ?string{
         return $this->city;
     }
 
-    public function getUniversity(): string{
+    public function getUniversity(): ?string{
         return $this->university;
     }
 
-    public function getGraduationYear(): int{
+    public function getGraduationYear(): ?int{
         return $this->graduationYear;
     }
 

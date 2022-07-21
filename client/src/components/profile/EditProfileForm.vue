@@ -148,7 +148,7 @@ export default {
             user: 'getAuthenticatedUser'
         }),
         days() {
-            var array;
+            var array = [];
             for (var i = 1; i <= 31; i++) {
                 array.push(i);
             }

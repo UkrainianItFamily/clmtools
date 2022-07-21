@@ -31,7 +31,9 @@ export default {
     },
 
     async created() {
-        await this.fetchAuthenticatedUser();
+        if(this.isLoggedIn) {
+            await this.fetchAuthenticatedUser();
+        }
     },
 
     methods: {

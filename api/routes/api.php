@@ -33,6 +33,7 @@ Route::prefix('v1')->group(function () {
         Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
         Route::post('reset', [AuthController::class, 'reset'])->name('reset-password');
         Route::put('me', [AuthController::class, 'update'])->name('profile.update');
+        Route::get('me', [AuthController::class, 'me'])->name('profile.me');
     });
 
     Route::controller(AuthController::class)->group(function () {

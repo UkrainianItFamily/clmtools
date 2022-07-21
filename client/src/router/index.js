@@ -13,6 +13,7 @@ import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
 import VerifyEmail from '@/views/VerifyEmail';
 import ResetPassword from "@/views/ResetPassword";
+import Profile from "@/views/Profile";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,12 @@ const routes = [
         name: 'auth.resetPassword',
         component: ResetPassword,
         meta: { handleAuth: true },
+    },
+    {
+        path: '/personal/profile',
+        name: 'profile',
+        component: Profile,
+        meta: { requiresAuth: true },
     },
 ];
 

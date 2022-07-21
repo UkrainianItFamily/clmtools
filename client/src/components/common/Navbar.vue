@@ -6,7 +6,7 @@
             <BNavbarNav class="ml-auto" align="right" v-if="isLoggedIn">
                 <BNavItem><img src="/img/person.png"></BNavItem>
                 <BNavItem><img src="/img/bell_icon.png"></BNavItem>
-                <BNavItem :to="{ name: 'auth.logout'}"><img src="/img/door_closed.png"></BNavItem>
+                <BNavItem @click="onSignOut"><img src="/img/door_closed.png"></BNavItem>
             </BNavbarNav>
 
             <BNavbarNav class="ml-auto" align="right" v-else>
@@ -29,5 +29,15 @@ export default {
             isLoggedIn: 'isLoggedIn'
         }),
     },
+    methods: {
+        ...mapActions('auth', [
+            'signOut'
+        ]),
+        async onSignOut() {
+            await this.signOut();
+
+            this.$router.push({ name: 'auth.signIn' }).catch(() => {});
+        },
+    }
 };
 </script>

@@ -13,67 +13,66 @@
             <BAlert show variant="success" v-if="validated">Дані збережено!</BAlert>
             <BAlert show variant="danger" v-if="errors.message">{{ errors.message }}</BAlert>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-name"><b>Ім'я</b></label>
                 <BFormInput
                     id="input-name"
                     v-model="editUser.name"
                     :value="editUser.name"
-                    name="first_name"
-                    aria-describedby="input-name-help input-name-feedback"
+                    name="name"
                     required
                     trim
                 ></BFormInput>
             </div>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-lastName"><b>Прізвище</b></label>
                 <BFormInput
                     id="input-lastName"
                     v-model="editUser.lastName"
                     :value="editUser.lastName"
                     name="last_name"
-                    aria-describedby="input-lastName-feedback"
                     required
                     trim
                 ></BFormInput>
             </div>
 
-            <BInputGroup>
-                <BRow>
-                    <BCol>
+            <label for="input-dateBirth" class="mt-3"><b>Дата народження</b></label>
+            <BFormGroup>
+                <BRow class="justify-content-md-center">
+                    <BCol cols="4">
                         <BFormSelect
-                            id="input-graduationYear"
+                            id="input-dateBirth"
                             v-model="editUser.dateBirth"
                             :value="editUser.dateBirth"
-                            name="graduationYear"
+                            name="date_birth"
                         >
-                            <BFormSelectOption v-for="day in days" :key="day" :value="day">{{days}}</BFormSelectOption>
+                            <BFormSelectOption v-for="day in days" :key="day" :value="day">{{day}}</BFormSelectOption>
                         </BFormSelect>
                     </BCol>
-                    <BCol>
+                    <BCol cols="4">
                         <BFormSelect
-                            id="input-graduationYear"
+                            id="input-dateBirth"
                             v-model="editUser.dateBirth"
                             :options="months"
                             :value="editUser.dateBirth"
-                            name="graduationYear"
+                            name="date_birth"
                         ></BFormSelect>
                     </BCol>
-                    <BCol>
+                    <BCol cols="4">
                         <BFormSelect
-                            id="input-graduationYear"
+                            id="input-dateBirth"
                             v-model="editUser.dateBirth"
                             :value="editUser.dateBirth"
-                            name="graduationYear"
+                            name="date_birth"
                         >
                             <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
                         </BFormSelect>
                     </BCol>
                 </BRow>
-            </BInputGroup>
+            </BFormGroup>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-phone"><b>Номер телефону</b></label>
                 <BFormInput
                     id="input-phone"
@@ -84,7 +83,7 @@
                 ></BFormInput>
             </div>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-phone"><b>Електронна пошта</b></label>
                 <BFormInput
                     id="input-phone"
@@ -95,7 +94,7 @@
                 ></BFormInput>
             </div>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-city"><b>Місто</b></label>
                 <BFormSelect
                     id="input-city"
@@ -106,7 +105,7 @@
                 ></BFormSelect>
             </div>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-university"><b>Університет</b></label>
                 <BFormSelect
                     id="input-university"
@@ -117,21 +116,22 @@
                 ></BFormSelect>
             </div>
 
-            <div role="group mt-3">
+            <div role="group" class="mt-3">
                 <label for="input-graduationYear"><b>Рік випуску</b></label>
                 <BFormSelect
                     id="input-graduationYear"
                     v-model="editUser.graduationYear"
                     :value="editUser.graduationYear"
-                    name="graduationYear"
+                    name="graduation_year"
                 >
                     <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
                 </BFormSelect>
             </div>
 
-            <BButton block>Змінити пароль</BButton>
-
-            <BButton block type="submit">Зберегти</BButton>
+            <div class="mt-3">
+                <BButton block>Змінити пароль</BButton>
+                <BButton block type="submit">Зберегти</BButton>
+            </div>
         </form>
     </div>
 </template>

@@ -11,14 +11,14 @@ export default {
           const data = await ApiRequestService.post('/user-lectures/' + user_id);
 
           commit(mutations.SET_LECTIONS, {
-              lections: data.data,
+              lections: data.data
           });
 
           return Promise.resolve();
       } catch (error) {
           return Promise.reject(error);
       }
-  }
+  },
 
     [actions.GET_LECTION]: async (
         { commit },
@@ -28,7 +28,7 @@ export default {
             const data = await ApiRequestService.post('/lecture/' + lection_id);
 
             commit(mutations.SET_LECTION, {
-                lection: data.data,
+                lection: data.data
             });
 
             return Promise.resolve();

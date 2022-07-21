@@ -41,7 +41,7 @@ export default {
                 password,
             });
 
-            if (data.data.user.email_verified_at === '') {
+            if (data.data.user.email_verified_at === null) {
                 commit(mutations.ADD_REGISTER_USER, {
                     id: data.data.user.id,
                 });
@@ -66,7 +66,7 @@ export default {
     async verifyEmail({ commit }, { url }) {
         try {
             await requestService.post('/email/verify/' + url);
-            
+
             return Promise.resolve();
         } catch (error) {
 

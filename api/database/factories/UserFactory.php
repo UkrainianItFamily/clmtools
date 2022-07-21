@@ -19,7 +19,7 @@ class UserFactory extends Factory
     {
         return [
             'profile_image' => fake()->unique()->imageUrl(),
-            'name' => fake()->name(),
+            'name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'date_birth' => fake()->date(),
             'email' => fake()->safeEmail(),

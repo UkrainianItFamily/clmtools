@@ -76,7 +76,7 @@ export default {
 
     async reSendEmail({ commit }, { id }) {
         try {
-            const data = await requestService.post('/email/resend/' + id.id);
+            await requestService.post('/email/resend/' + id);
 
             return Promise.resolve();
         } catch (error) {

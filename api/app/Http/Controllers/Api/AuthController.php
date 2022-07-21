@@ -10,13 +10,14 @@ use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LoginRequest;
 use App\Actions\Auth\ResetPasswordAction;
 use App\Actions\Auth\ResetPasswordRequest;
+use App\Actions\Auth\UpdateProfileAction;
+use App\Actions\Auth\UpdateProfileRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
+use App\Http\Presenters\UserArrayPresenter;
 use App\Http\Requests\Api\Auth\AuthRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Illuminate\Support\Facades\Password;
+use App\Http\Requests\Api\Auth\UpdateValidationRequest;
 
 final class AuthController extends ApiController
 {
@@ -67,6 +68,25 @@ final class AuthController extends ApiController
         $action->execute($request);
 
         return $this->successResponse(['msg' => __('passwords.reset')], 200);
+    }
+
+    public function update(
+        UpdateValidationRequest $updateValidationRequest,
+        UpdateProfileAction $action,
+        UserArrayPresenter $userArrayPresenter
+    ){
+        $response = $action->execute(
+            new UpdateProfileRequest(
+                $updateValidationRequest->get('name'),
+                $updateValidationRequest->get('last_name'),
+                $updateValidationRequest->get('date_birth'),
+                $updateValidationRequest->get('city'),
+                $updateValidationRequest->get('university'),
+                $updateValidationRequest->get('graduation_year')
+            )
+        );
+
+        return $this->SuccessResponse($userArrayPresenter->present($response->getUser()));
     }
 
 }

@@ -3,7 +3,6 @@
         <footer class="footer">
             <div class="container">
                 <div class="row">
-
                     <div class="col-6 col-md-3">
                         <ul class="list-unstyled text-small">
                             <li v-bind:key="link.title" v-for="link in linksLeft">

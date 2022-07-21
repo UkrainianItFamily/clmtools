@@ -20,17 +20,20 @@ const routes = [
     {
         path: '/',
         name: 'Index',
-        component: Index
+        component: Index,
+        meta: { requiresAuth: true },
     },
     {
         path: '/tasks',
         name: 'Tasks',
-        component: Tasks
+        component: Tasks,
+        meta: { requiresAuth: true },
     },
     {
         path: '/more-info',
         name: 'MoreInfo',
-        component: MoreInfo
+        component: MoreInfo,
+        meta: { requiresAuth: true },
     },
     {
         path: '/status',

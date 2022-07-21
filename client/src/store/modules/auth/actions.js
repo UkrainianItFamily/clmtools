@@ -117,4 +117,14 @@ export default {
 
         }
     },
+
+    async signOut({ commit }) {
+        try {
+            await requestService.post('/logout');
+            commit(mutations.USER_LOGOUT);
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
 };

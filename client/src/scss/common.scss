@@ -12,7 +12,7 @@ html {
 body {
     margin-bottom: 60px; /* Margin bottom by footer height */
 }
-ul {
+footer ul {
     margin-top: 1rem;
 }
 .footer {
@@ -27,4 +27,7 @@ container {
 }
 .router-link-active {
     font-weight: 700;
+}
+.bg-dark {
+    background-color: #888e93 !important;
 }

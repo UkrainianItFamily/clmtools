@@ -13,24 +13,20 @@
             <BAlert show variant="success" v-if="validated">Дані збережено!</BAlert>
             <BAlert show variant="danger" v-if="errors.message">{{ errors.message }}</BAlert>
 
-            <div role="group">
+            <div role="group mt-3">
                 <label for="input-name"><b>Ім'я</b></label>
                 <BFormInput
                     id="input-name"
                     v-model="editUser.name"
                     :value="editUser.name"
                     name="first_name"
-                    aria-describedby="input-name-feedback"
+                    aria-describedby="input-name-help input-name-feedback"
                     required
                     trim
                 ></BFormInput>
-
-<!--                <BFormInvalidFeedback id="input-name-feedback">-->
-<!--                    {{ Object.values(errors.name).join('\r\n') }}-->
-<!--                </BFormInvalidFeedback>-->
             </div>
 
-            <div role="group">
+            <div role="group mt-3">
                 <label for="input-lastName"><b>Прізвище</b></label>
                 <BFormInput
                     id="input-lastName"
@@ -41,25 +37,101 @@
                     required
                     trim
                 ></BFormInput>
-
-<!--                <BFormInvalidFeedback id="input-lastName-feedback">-->
-<!--                    {{ Object.values(errors.lastName).join('\r\n') }}-->
-<!--                </BFormInvalidFeedback>-->
             </div>
 
-            <BButton
-                block
-            >
-                Змінити пароль
-            </BButton>
+            <BInputGroup>
+                <BRow>
+                    <BCol>
+                        <BFormSelect
+                            id="input-graduationYear"
+                            v-model="editUser.dateBirth"
+                            :value="editUser.dateBirth"
+                            name="graduationYear"
+                        >
+                            <BFormSelectOption v-for="day in days" :key="day" :value="day">{{days}}</BFormSelectOption>
+                        </BFormSelect>
+                    </BCol>
+                    <BCol>
+                        <BFormSelect
+                            id="input-graduationYear"
+                            v-model="editUser.dateBirth"
+                            :options="months"
+                            :value="editUser.dateBirth"
+                            name="graduationYear"
+                        ></BFormSelect>
+                    </BCol>
+                    <BCol>
+                        <BFormSelect
+                            id="input-graduationYear"
+                            v-model="editUser.dateBirth"
+                            :value="editUser.dateBirth"
+                            name="graduationYear"
+                        >
+                            <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
+                        </BFormSelect>
+                    </BCol>
+                </BRow>
+            </BInputGroup>
 
-            <BButton
-                block
-                type="submit"
-            >
-                Зберегти
-            </BButton>
+            <div role="group mt-3">
+                <label for="input-phone"><b>Номер телефону</b></label>
+                <BFormInput
+                    id="input-phone"
+                    v-model="editUser.phone"
+                    :value="editUser.phone"
+                    name="phone"
+                    readonly
+                ></BFormInput>
+            </div>
 
+            <div role="group mt-3">
+                <label for="input-phone"><b>Електронна пошта</b></label>
+                <BFormInput
+                    id="input-phone"
+                    v-model="editUser.email"
+                    :value="editUser.email"
+                    name="email"
+                    readonly
+                ></BFormInput>
+            </div>
+
+            <div role="group mt-3">
+                <label for="input-city"><b>Місто</b></label>
+                <BFormSelect
+                    id="input-city"
+                    v-model="editUser.city"
+                    :options="cities"
+                    :value="editUser.city"
+                    name="city"
+                ></BFormSelect>
+            </div>
+
+            <div role="group mt-3">
+                <label for="input-university"><b>Університет</b></label>
+                <BFormSelect
+                    id="input-university"
+                    v-model="editUser.university"
+                    :options="universities"
+                    :value="editUser.university"
+                    name="university"
+                ></BFormSelect>
+            </div>
+
+            <div role="group mt-3">
+                <label for="input-graduationYear"><b>Рік випуску</b></label>
+                <BFormSelect
+                    id="input-graduationYear"
+                    v-model="editUser.graduationYear"
+                    :value="editUser.graduationYear"
+                    name="graduationYear"
+                >
+                    <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
+                </BFormSelect>
+            </div>
+
+            <BButton block>Змінити пароль</BButton>
+
+            <BButton block type="submit">Зберегти</BButton>
         </form>
     </div>
 </template>
@@ -75,18 +147,56 @@ export default {
         ...mapGetters('auth', {
             user: 'getAuthenticatedUser'
         }),
-        // nameState() {
-        //     return this.errors.hasOwnProperty('name');
-        // },
-        // lastNameState() {
-        //     return this.errors.hasOwnProperty('lastName');
-        // },
+        days() {
+            var array;
+            for (var i = 1; i <= 31; i++) {
+                array.push(i);
+            }
+            return array;
+        },
+        years() {
+            var currentYear = new Date().getFullYear(), array = [];
+            for (var i = currentYear; i >= (currentYear - 100); i--) {
+                array.push(i);
+            }
+            return array;
+        },
     },
 
     data: () => ({
         editUser: {
             ...emptyUser()
         },
+        months: [
+            { text: 'Січень', value: '01' },
+            { text: 'Лютий', value: '02' },
+            { text: 'Березень', value: '03'},
+            { text: 'Квітень', value: '04'},
+            { text: 'Травень', value: '05'},
+            { text: 'Червень', value: '06'},
+            { text: 'Липень', value: '07'},
+            { text: 'Серпень', value: '08'},
+            { text: 'Вересень', value: '09'},
+            { text: 'Жовтень', value: '10'},
+            { text: 'Листопад', value: '11'},
+            { text: 'Грудень', value: '12'},
+        ],
+        cities: [
+            { text: 'Львів', value: 'Львів' },
+            { text: 'Київ', value: 'Київ' },
+            { text: 'Миколаїв', value: 'Миколаїв'},
+            { text: 'Харків', value: 'Харків'},
+            { text: 'Одеса', value: 'Одеса'},
+            { text: 'Донецьк', value: 'Донецьк'},
+            { text: 'Херсон', value: 'Херсон'},
+        ],
+        universities: [
+            { text: 'Київський національний університет культури і мистецтв', value: 'Київський національний університет культури і мистецтв' },
+            { text: 'КПІ ім. Ігоря Сікорського', value: 'КПІ ім. Ігоря Сікорського' },
+            { text: 'Азовський морський інститут Одеської національної морської академії', value: 'Азовський морський інститут Одеської національної морської академії'},
+            { text: 'Вінницький державний педагогічний університет ім. М. Коцюбинського', value: 'Вінницький державний педагогічний університет ім. М. Коцюбинського'},
+            { text: 'Глухівський національний педагогічний університет ім. Довженка', value: 'Глухівський національний педагогічний університет ім. Довженка'},
+        ],
         image: null,
         validated: false,
         errors: {}
@@ -96,7 +206,6 @@ export default {
         this.editUser = {
             ...this.user
         };
-        console.log(this);
     },
 
     methods:{

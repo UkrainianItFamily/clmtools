@@ -3,7 +3,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'IndexPage',
+    computed: {
+        ...mapGetters('auth', {
+            user: 'getAuthenticatedUser',
+            fullName: 'getFullName',
+            isLoggedIn: 'isLoggedIn'
+        }),
+    },
 };
 </script>

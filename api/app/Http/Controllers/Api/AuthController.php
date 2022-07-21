@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
 use App\Actions\Auth\GetAuthenticatedUserAction;
@@ -69,6 +70,15 @@ final class AuthController extends ApiController
         $action->execute($request);
 
         return $this->successResponse(['msg' => __('passwords.reset')], 200);
+    }
+
+    public function logout(
+        LogoutAction $action
+    ): JsonResponse
+    {
+        $action->execute();
+
+        return $this->emptyResponse();
     }
 
     public function me(GetAuthenticatedUserAction $action, UserArrayPresenter $userArrayPresenter)

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\MailResetPasswordNotification;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -92,7 +93,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->id;
     }
 
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->profile_image;
     }
@@ -112,7 +113,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->last_name;
     }
 
-    public function getDateBirth()
+    public function getDateBirth(): ?Carbon
     {
         return $this->date_birth;
     }
@@ -122,17 +123,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->phone;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function getUniversity(): string
+    public function getUniversity(): ?string
     {
         return $this->university;
     }
 
-    public function getGraduationYear(): int
+    public function getGraduationYear(): ?int
     {
         return $this->graduation_year;
     }

@@ -46,7 +46,7 @@ export default {
         ]),
 
         reSend() {
-            this.reSendEmail({ id: this.registered_user_id })
+            this.reSendEmail({ id: this.registered_user_id.id })
                 .then(() => {
                     alert("Лист з верифікацією надіслан повторно");
                 })

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
+use App\Actions\Auth\GetAuthenticatedUserAction;
 use App\Actions\Auth\LoginAction;
 use App\Actions\Auth\LoginRequest;
 use App\Actions\Auth\ResetPasswordAction;
@@ -68,6 +69,13 @@ final class AuthController extends ApiController
         $action->execute($request);
 
         return $this->successResponse(['msg' => __('passwords.reset')], 200);
+    }
+
+    public function me(GetAuthenticatedUserAction $action, UserArrayPresenter $userArrayPresenter)
+    {
+        $response = $action->execute();
+
+        return $this->SuccessResponse($userArrayPresenter->present($response->getUser()));
     }
 
     public function update(

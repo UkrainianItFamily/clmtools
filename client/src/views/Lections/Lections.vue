@@ -1,5 +1,6 @@
 <template>
     <div class="row-fluid">
+        <h3>Лекції</h3>
         <ul class="thumbnails">
             <li class="span4" v-for="lection in getLections" v-bind:key="lection.id" @click="onLectionClick(lection)">
                 <div class="thumbnail">

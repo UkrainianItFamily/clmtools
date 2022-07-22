@@ -1,80 +1,68 @@
 <template>
-    <div class="modal bg-dark bg-opacity-40" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Підтвердження електронної пошти</h5>
-                </div>
-                <div class="modal-body">
-                    <p v-text="message"></p>
-                </div>
-                <div class="modal-footer">
-                    <button
-                        v-show="expired"
-                        type="button"
-                        class="btn btn-secondary"
-                        @click="reSend"
-                    >Надіслати лист ще раз</button>
-                    <RouterLink class="link link-signup" to="/auth/sign-in">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                        >
-                        Перейти до авторизації</button>
-                    </RouterLink>
-                </div>
-            </div>
+    <main role="main" class="container">
+        <div class="starter-template">
+            <h2 v-text="title">Bootstrap starter template</h2>
+            <p class="lead"></p>
+            <iframe v-if="link" width="560" height="315"
+                    :src="link"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+            </iframe>
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
 
     export default {
         name: "DetailLection",
 
-        data: () => ({
-            message: 'Перевіряємо...',
-            expired: false,
-            url: null,
-            registered_user_id: null
-        }),
+        data: function() {
+            return {
+                title: null,
+                link: null
+            };
+        },
+
+        computed: {
+            ...mapGetters('lections', [
+                'getLection',
+            ]),
+        },
 
         methods: {
-            ...mapActions('auth', [
-                'verifyEmail',
-                'reSendEmail',
+            ...mapActions('lections', [
+                'GET_LECTION',
             ]),
-            reSend() {
-                this.reSendEmail({ id: this.registered_user_id })
-                    .then(() => {
-                        alert("Лист з верифікацією надіслан повторно");
-                    })
-                    .catch((error) => {
-                        if (error.response.data.errors) {
-                            alert(Object.values(error.response.data.errors).join('\r\n'));
-                        }
-                    } );
-            },
+
+            loadURL (video_url) {
+                const youtubeEmbedTemplate = 'https://www.youtube.com/embed/';
+                const url = video_url.split(/(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+                const YId = undefined !== url[2] ? url[2].split(/[^0-9a-z_/\\-]/i)[0] : url[0];
+                if (YId === url[0]) {
+                    return this.getLection.lection.link;
+                }
+
+                return youtubeEmbedTemplate.concat(YId);
+            }
         },
         mounted() {
-            this.registered_user_id = this.$router.history.current.params.user_id;
-            let params = new URLSearchParams(this.$router.history.current.query);
-            this.url = this.registered_user_id + '?' + params.toString();
-
-            this.verifyEmail({ url: this.url })
+            this.GET_LECTION({ lection_id: this.$router.history.current.params.lection_id })
                 .then(() => {
-                    this.message = "Дякуємо за підтвердження електронної адреси.";
+                    this.title = this.getLection.lection.title;
+                    this.link = this.loadURL(this.getLection.lection.link);
                 })
                 .catch((error) => {
-                    console.log(error);
-                    this.expired = error.response.data.error.code === 401;
-                    this.message = error.response.data.error.message;
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
                 } );
         },
     };
 </script>
+
 
 <style>
     .modal {

@@ -20,6 +20,7 @@ use App\Http\Requests\Api\Auth\AuthRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
 use App\Http\Requests\Api\Auth\UpdateValidationRequest;
+use Illuminate\Http\JsonResponse;
 
 final class AuthController extends ApiController
 {

@@ -14,6 +14,9 @@ import ForgotPassword from "@/views/ForgotPassword";
 import VerifyEmail from '@/views/VerifyEmail';
 import ResetPassword from "@/views/ResetPassword";
 import Profile from "@/views/Profile";
+import Lections from '@/views/Lections/Lections';
+import DetailLection from '@/views/Lections/DetailLection';
+
 
 Vue.use(VueRouter);
 
@@ -76,6 +79,16 @@ const routes = [
         name: 'profile',
         component: Profile,
         meta: { requiresAuth: true },
+    },
+    {
+        path: '/lections',
+        name: 'lections',
+        component: Lections,
+    },
+    {
+        path: '/lections/:lection_id',
+        name: 'detail.lection',
+        component: DetailLection,
     },
 ];
 

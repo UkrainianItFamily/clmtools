@@ -32,4 +32,9 @@ final class LectureResponse
     {
         return $this->lecture->created_at;
     }
+
+    public function getLectureId(): int
+    {
+        return $this->lecture->id;
+    }
 }

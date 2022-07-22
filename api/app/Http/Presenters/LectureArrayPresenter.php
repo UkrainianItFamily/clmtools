@@ -13,6 +13,7 @@ final class LectureArrayPresenter
     public function present(LectureResponse $lecture): array
     {
         return [
+            'id' => $lecture->getLectureId(),
             'title' => $lecture->getLectureTitle(),
             'image' => $lecture->getLectureImage(),
             'link' => $lecture->getLectureLink(),

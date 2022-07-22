@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
              'phone' => '111111111111',
          ]);
 
-        \App\Models\Lecture::factory()->create([
+        \App\Models\Lecture::factory(3)->create([
             'user_id' => $user->id,
         ]);
     }

@@ -13,6 +13,9 @@ import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
 import VerifyEmail from '@/views/VerifyEmail';
 import ResetPassword from "@/views/ResetPassword";
+import Lections from '@/views/Lections/Lections';
+import DetailLection from '@/views/Lections/DetailLection';
+
 
 Vue.use(VueRouter);
 
@@ -69,6 +72,16 @@ const routes = [
         name: 'auth.resetPassword',
         component: ResetPassword,
         meta: { handleAuth: true },
+    },
+    {
+        path: '/lections',
+        name: 'lections',
+        component: Lections,
+    },
+    {
+        path: '/lections/:lection_id',
+        name: 'detail.lection',
+        component: DetailLection,
     },
 ];
 

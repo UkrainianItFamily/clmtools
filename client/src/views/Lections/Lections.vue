@@ -1,7 +1,7 @@
 <template>
-    <div class="row-fluid">
+    <div class="row-fluid card example-1 square scrollbar-grey bordered-grey">
         <h3>Лекції</h3>
-        <ul class="thumbnails">
+        <ul class="thumbnails card-body">
             <li class="span4" v-for="lection in getLections" v-bind:key="lection.id" @click="onLectionClick(lection)">
                 <div class="thumbnail">
                     <img data-src="holder.js/150x150" alt="150x150" :src="lection.image" style="width: 150px; height: 150px;">

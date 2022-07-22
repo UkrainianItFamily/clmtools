@@ -1,5 +1,6 @@
 <template>
     <main role="main" class="container">
+        <StudentLectionMenu />
         <div class="starter-template">
             <h2 v-text="title">Bootstrap starter template</h2>
             <p class="lead"></p>
@@ -15,9 +16,14 @@
 
 <script>
     import { mapActions, mapGetters } from 'vuex';
+    import StudentLectionMenu from '@/components/common/StudentLectionMenu.vue';
 
     export default {
         name: "DetailLection",
+
+        components: {
+            StudentLectionMenu
+        },
 
         data: function() {
             return {

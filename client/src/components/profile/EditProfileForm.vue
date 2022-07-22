@@ -1,7 +1,13 @@
 <template>
     <div>
-        <div>
-            <img v-if="user.avatar" :src="user.avatar" class="rounded mx-auto d-block" alt="">
+        <div class="card-img mt-5">
+            <div class="d-table mx-auto position-relative">
+                <div class="h2 position-absolute d-flex" style="right: 0">
+                    <BIcon icon="pencil-fill" class="rounded-circle bg-dark p-2" variant="light"></BIcon>
+                </div>
+                <BImg v-if="user.avatar" :src="user.avatar" alt="" center></BImg>
+                <BImg v-else src="/img/empty_avatar.jpg" alt="" center></BImg>
+            </div>
         </div>
 
         <form
@@ -43,7 +49,7 @@
                     <BCol cols="4">
                         <BFormSelect
                             id="input-dateBirth"
-                            v-model="editUser.dateBirth"
+                            v-model="BirthDay"
                             :value="editUser.dateBirth"
                             name="date_birth"
                         >
@@ -53,7 +59,7 @@
                     <BCol cols="4">
                         <BFormSelect
                             id="input-dateBirth"
-                            v-model="editUser.dateBirth"
+                            v-model="BirthMonth"
                             :options="months"
                             :value="editUser.dateBirth"
                             name="date_birth"
@@ -62,7 +68,7 @@
                     <BCol cols="4">
                         <BFormSelect
                             id="input-dateBirth"
-                            v-model="editUser.dateBirth"
+                            v-model="BirthYear"
                             :value="editUser.dateBirth"
                             name="date_birth"
                         >
@@ -148,15 +154,27 @@ export default {
             user: 'getAuthenticatedUser'
         }),
         days() {
-            var array = [];
-            for (var i = 1; i <= 31; i++) {
+            let array = [];
+            for (let i = 1; i <= 31; i++) {
                 array.push(i);
             }
             return array;
         },
+        dateBirth(){
+            return this.BirthYear + '-' + this.BirthMonth + '-' + this.BirthDay;
+        },
+        // BirthDay(){
+        //     return this.BirthDay;
+        // },
+        // BirthMonth(){
+        //     return this.BirthMonth;
+        // },
+        // BirthYear(){
+        //     return this.BirthYear;
+        // },
         years() {
-            var currentYear = new Date().getFullYear(), array = [];
-            for (var i = currentYear; i >= (currentYear - 100); i--) {
+            let currentYear = new Date().getFullYear(), array = [];
+            for (let i = currentYear; i >= (currentYear - 100); i--) {
                 array.push(i);
             }
             return array;
@@ -167,6 +185,9 @@ export default {
         editUser: {
             ...emptyUser()
         },
+        BirthDay: '',
+        BirthMonth: '',
+        BirthYear: '',
         months: [
             { text: 'Січень', value: '01' },
             { text: 'Лютий', value: '02' },
@@ -206,12 +227,16 @@ export default {
         this.editUser = {
             ...this.user
         };
+        console.log(this.editUser);
     },
 
     methods:{
         ...mapActions('auth', ['updateProfile']),
 
         onSaveClick(){
+            this.editUser.dateBirth = this.dateBirth;
+            console.log(this.dateBirth);
+            console.log(this.editUser);
             this.updateProfile(this.editUser)
                 .then(() => {
                     this.validated = true;

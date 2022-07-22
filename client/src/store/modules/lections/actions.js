@@ -11,7 +11,7 @@ export default {
           const data = await ApiRequestService.post('/user-lectures/' + user_id);
 
           commit(mutations.SET_LECTIONS, {
-              lections: data.data.lections
+              lections: data.data
           });
 
           return Promise.resolve();

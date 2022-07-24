@@ -1,4 +1,4 @@
-# CLMTools Backend
+# CLMTools | Backend
 
 ## Pre-requisites
 

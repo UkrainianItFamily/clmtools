@@ -8,9 +8,11 @@ Backend:
 * [Laravel 9](https://laravel.com)
 * [Docker](https://www.docker.com/)
 * [Docker-compose](https://docs.docker.com/compose/)
-* [Beanstalkd](https://github.com/beanstalkd/beanstalkd) - message queue (очередь сообщений для обработки тяжелых задач асинхронно)
+* [Beanstalkd](https://github.com/beanstalkd/beanstalkd) - message queue
 * [REST API](https://ru.wikipedia.org/wiki/REST)
 * [CORS](https://developer.mozilla.org/ru/docs/Web/HTTP/CORS)
+* [Redis](https://redis.io/)
+* [PhpUnit](https://phpunit.de/)
 * MySQL 5.7
 
 Frontend:
@@ -19,7 +21,7 @@ Frontend:
 * [vue-cli](https://cli.vuejs.org/)
 * [vue-router](https://router.vuejs.org/)
 * [vuex](https://vuex.vuejs.org/)
-* [Buefy](https://buefy.org/) UI framework
+* [Bootstrap-Vue](https://bootstrap-vue.org/) UI framework
 
 ## Install
 

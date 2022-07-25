@@ -10,6 +10,7 @@ export const userMapper = user => ({
     university: user.university,
     graduationYear: user.graduation_year,
     verified: user.email_verified_at,
+    lecturer: user.lecturer,
 });
 
 export const emptyUser = () => ({
@@ -19,6 +20,8 @@ export const emptyUser = () => ({
     lastName: '',
     email: '',
     phone: '',
+    verified: '',
+    lecturer: false,
     dateBirth: null,
     city: '',
     university: '',

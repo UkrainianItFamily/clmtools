@@ -2,6 +2,10 @@
 
 This is a frontend part of CLMTools.
 
+## Pre-requisites
+
+- Node 12
+
 ## Usage
 
 ### Install node
@@ -43,16 +47,13 @@ Open in browser: [http://localhost:8080](http://localhost:8080)
 # local
 npm run lint
 
-#For fix
+#For local fix
 npm run lint -- --fix
 
 # docker
-# First time re-name docker-compose.override.yml.example
-cp docker-compose.override.yml.example docker-compose.override.yml
-
 npm run d-lint
 
-#For fix
+#For docker fix
 npm run d-lint -- --fix
 ```
 

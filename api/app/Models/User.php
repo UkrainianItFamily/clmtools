@@ -42,7 +42,8 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'city',
         'university',
-        'graduation_year'
+        'graduation_year',
+        'lecturer'
     ];
 
     /**
@@ -155,5 +156,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function lectures() {
         return $this->belongsTo(Lecture::class);
+    }
+
+    public function getUserRoleLecturer(): ?bool
+    {
+        return $this->lecturer;
     }
 }

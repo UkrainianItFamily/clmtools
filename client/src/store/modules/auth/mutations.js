@@ -12,6 +12,7 @@ export default {
 
     [mutations.USER_LOGOUT]: state => {
         Storage.removeToken();
+        Storage.removeUser();
 
         state.token = '';
         state.isLoggedIn = false;
@@ -20,7 +21,8 @@ export default {
 
     [mutations.SET_AUTHENTICATED_USER]: (state, user) => {
         state.isLoggedIn = true;
-        state.user = userMapper(user);
+
+        Storage.setUser(state.user = userMapper(user));
     },
 
     [mutations.ADD_REGISTER_USER]: (state, id) => {

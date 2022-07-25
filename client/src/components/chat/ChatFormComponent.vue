@@ -16,24 +16,6 @@
 <script>
 export default {
     name: 'ChatFormComponent',
-    mounted() {
-        console.log('Component mounted.');
-    }
+    mounted() {}
 };
 </script>
-
-<style>
-.form {
-    padding: 8px;
-}
-.form-input {
-    width: 100%;
-    border: 1px solid #d3e0e9;
-    padding: 5px 10px;
-    outline: none;
-}
-.notice {
-    color: #aaa
-}
-
-</style>

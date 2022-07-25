@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $fillable = ['body'];
-    protected $appends = ['selfMessage'];
+    protected $appends = ['self_message'];
 
     public function user()
     {

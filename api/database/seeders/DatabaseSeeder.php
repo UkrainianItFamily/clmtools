@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
              'last_name' => 'User',
              'email' => 'test@example.com',
              'phone' => '111111111111',
+             'lecturer' => true
          ]);
 
         \App\Models\Lecture::factory(3)->create([

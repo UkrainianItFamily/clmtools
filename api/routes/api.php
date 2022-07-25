@@ -49,5 +49,6 @@ Route::prefix('v1')->group(function () {
         Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
         Route::get('message', [MessageController::class, 'all'])->name('message');
+        Route::post('message', [MessageController::class, 'store'])->name('message.store');
     });
 });

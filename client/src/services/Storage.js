@@ -2,6 +2,7 @@ class Storage {
     constructor() {
         this.tokenKeyName = 'auth.access_token';
         this.tokenTypeKeyName = 'auth.token_type';
+        this.authorizeUser = 'auth.user';
         this.store = window.localStorage;
     }
 
@@ -35,6 +36,17 @@ class Storage {
         return this.get(this.tokenTypeKeyName);
     }
 
+    getUser() {
+        return JSON.parse(this.get(this.authorizeUser));
+    }
+
+    setUser(user) {
+        return this.set(this.authorizeUser, JSON.stringify(user));
+    }
+
+    removeUser() {
+        return this.store.removeItem(this.authorizeUser);
+    }
 }
 
 export default new Storage();

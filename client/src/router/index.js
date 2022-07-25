@@ -83,6 +83,16 @@ const routes = [
         name: 'detail.lection',
         component: DetailLection,
     },
+    {
+        path: '/add-lection',
+        name: 'add.lection',
+        component: Lections,
+    },
+    {
+        path: '/edit-lection/:lection_id',
+        name: 'edit.lection',
+        component: DetailLection,
+    },
 ];
 
 const router = new VueRouter({

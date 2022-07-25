@@ -5,6 +5,7 @@ export const userMapper = user => ({
     email: user.email,
     phone: user.phone,
     verified: user.email_verified_at,
+    lecturer: user.lecturer,
 });
 
 export const emptyUser = () => ({
@@ -13,4 +14,6 @@ export const emptyUser = () => ({
     lastName: '',
     email: '',
     phone: '',
+    verified: '',
+    lecturer: false,
 });

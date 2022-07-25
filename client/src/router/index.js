@@ -91,6 +91,16 @@ const routes = [
         component: Chat,
         meta: { requiresAuth: true },
     },
+    {
+        path: '/add-lection',
+        name: 'add.lection',
+        component: Lections,
+    },
+    {
+        path: '/edit-lection/:lection_id',
+        name: 'edit.lection',
+        component: DetailLection,
+    },
 ];
 
 const router = new VueRouter({

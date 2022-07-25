@@ -22,6 +22,7 @@ final class UserArrayPresenter
             'city' => $user->getCity(),
             'university' => $user->getUniversity(),
             'graduation_year' => $user->getGraduationYear(),
+            'lecturer' => $user->getUserRoleLecturer(),
         ];
     }
 }

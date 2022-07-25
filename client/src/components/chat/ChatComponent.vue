@@ -20,8 +20,6 @@ export default {
         ChatMessagesComponent,
         ChatFormComponent
     },
-    mounted() {
-        console.log('Component mounted.');
-    }
+    mounted() {}
 };
 </script>

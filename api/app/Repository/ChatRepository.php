@@ -30,4 +30,12 @@ final class ChatRepository
 
         return $chat;
     }
+
+    public function getChatByLectureId(int $user_id, int $lecture_id): Chat
+    {
+        return Chat::where([
+            ['user_id', $user_id],
+            ['lecture_id', $lecture_id]
+        ])->first();
+    }
 }

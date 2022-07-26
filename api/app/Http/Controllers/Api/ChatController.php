@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Chat\AddChatAction;
 use App\Actions\Chat\AddChatRequest;
+use App\Actions\Chat\AddMessageAction;
+use App\Actions\Chat\AddMessageRequest;
 use App\Actions\Chat\GetMessagesByLectureIdAction;
 use App\Actions\Chat\GetMessagesByLectureIdRequest;
 use App\Http\Presenters\ChatArrayPresenter;
@@ -42,5 +44,21 @@ class ChatController extends ApiController
         );
 
         return $this->successResponse($presenter->presentCollection($response->getMessages()));
+    }
+
+    public function storeMessage(
+        Request $request,
+        AddMessageAction $action,
+        MessageArrayPresenter $presenter
+    ): JsonResponse
+    {
+        $response = $action->execute(
+            new AddMessageRequest(
+                $request->get('lecture_id'),
+                $request->get('body')
+            )
+        );
+
+        return $this->successResponse($presenter->present($response->getMessage()));
     }
 }

@@ -73,4 +73,5 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'profile_images_dir' => 'profile-images'
 ];

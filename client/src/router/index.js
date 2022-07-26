@@ -17,6 +17,8 @@ import Profile from "@/views/Profile";
 import Lections from '@/views/Lections/Lections';
 import DetailLection from '@/views/Lections/DetailLection';
 
+import Chat from '@/views/Chat';
+
 
 Vue.use(VueRouter);
 
@@ -89,6 +91,12 @@ const routes = [
         path: '/lections/:lection_id',
         name: 'detail.lection',
         component: DetailLection,
+    },
+    {
+        path: '/chat-temp-url',
+        name: 'Chat',
+        component: Chat,
+        meta: { requiresAuth: true },
     },
     {
         path: '/add-lection',

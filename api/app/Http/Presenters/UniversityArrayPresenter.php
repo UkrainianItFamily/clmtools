@@ -10,18 +10,17 @@ use App\Models\University;
 
 final class UniversityArrayPresenter
 {
-    public function present(University $university): array
+    public function present(UniversityResponse $university): array
     {
         return [
-            'id' => $university->getId(),
-            'name' => $university->getName(),
+            'id' => $university->getUniversityId(),
+            'name' => $university->getUniversityName(),
         ];
     }
 
-
-    public function getCollections(UniversityCollectionResponse $cities): array
+    public function getCollections(UniversityCollectionResponse $university): array
     {
-        return $cities->getUniversity()
+        return $university->getUniversity()
             ->map(
                 function (University $university) {
                     return $this->present(new UniversityResponse($university));

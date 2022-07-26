@@ -10,11 +10,11 @@ use App\Models\City;
 
 final class CityArrayPresenter
 {
-    public function present(City $city): array
+    public function present(CityResponse $city): array
     {
         return [
-            'id' => $city->getId(),
-            'name' => $city->getName(),
+            'id' => $city->getCityId(),
+            'name' => $city->getCityName(),
         ];
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Presenters;
 
 use App\Models\Course;
+use Illuminate\Database\Eloquent\Collection;
 
 final class CourseArrayPresenter
 {
@@ -16,7 +17,7 @@ final class CourseArrayPresenter
         ];
     }
 
-    public function getCollections(Course $courses): array
+    public function getCollections(Collection $courses): array
     {
         return $courses->map(
                 function (Course $course) {

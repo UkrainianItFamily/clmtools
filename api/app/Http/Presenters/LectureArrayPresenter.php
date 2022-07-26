@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Presenters;
 
 use App\Actions\Lecture\LectureCollectionResponse;
+use App\Actions\Lecture\LectureFormResponse;
 use App\Actions\Lecture\LectureResponse;
 use App\Models\Lecture;
 
@@ -39,7 +40,7 @@ final class LectureArrayPresenter
         $courses_presenter = new CourseArrayPresenter();
         return [
             'courses' =>  $courses_presenter->getCollections($data->getCourses()),
-            'students' => $user_presenter->shortData($data->getStudents()),
+            'students' => $user_presenter->getCollections($data->getStudents()),
         ];
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Lecture;
 
-use Illuminate\Support\Carbon;
+use \Illuminate\Database\Eloquent\Collection;
 
 final class LectureFormResponse
 {
@@ -14,12 +14,12 @@ final class LectureFormResponse
     ) {
     }
 
-    public function getCourses(): ?Colletion
+    public function getCourses(): ?Collection
     {
         return $this->courses;
     }
 
-    public function getStudents(): ?Colletion
+    public function getStudents(): ?Collection
     {
         return $this->students;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Lecture;
 
-use App\Repository\LectureRepository;
+use App\Repository\{CourseRepository, UserRepository};
 
 final class LectureFormAction
 {

@@ -18,4 +18,14 @@ class Course extends Model
     public function lectures() {
         return $this->hasMany(Lecture::class);
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 }

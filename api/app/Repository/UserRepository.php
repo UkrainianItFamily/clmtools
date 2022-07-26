@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class UserRepository
@@ -29,5 +30,12 @@ final class UserRepository
         $user->save();
 
         return $user;
+    }
+
+    public function getStudents(): Collection
+    {
+        return User::where('lecturer', false)
+            ->orderBy('name', 'asc')
+            ->get();
     }
 }

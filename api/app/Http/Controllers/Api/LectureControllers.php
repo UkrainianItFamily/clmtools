@@ -10,7 +10,6 @@ use App\Actions\Lecture\LectureFormRequest;
 use App\Actions\Lecture\LectureRequest;
 use App\Http\Presenters\LectureArrayPresenter;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class LectureControllers extends ApiController
 {

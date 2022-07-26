@@ -32,4 +32,14 @@ final class LectureArrayPresenter
             )
             ->all();
     }
+
+    public function getDataFormLecturer(LectureFormResponse $data): array
+    {
+        $user_presenter = new UserArrayPresenter();
+        $courses_presenter = new CourseArrayPresenter();
+        return [
+            'courses' =>  $courses_presenter->getCollections($data->getCourses()),
+            'students' => $user_presenter->shortData($data->getStudents()),
+        ];
+    }
 }

@@ -14,12 +14,12 @@ final class LectureFormResponse
     ) {
     }
 
-    public function getCourses(): ?string
+    public function getCourses(): ?Colletion
     {
         return $this->courses;
     }
 
-    public function getStudents(): ?string
+    public function getStudents(): ?Colletion
     {
         return $this->students;
     }

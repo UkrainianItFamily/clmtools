@@ -25,4 +25,23 @@ final class UserArrayPresenter
             'lecturer' => $user->getUserRoleLecturer(),
         ];
     }
+
+    public function getCollections(User $users): array
+    {
+        return $users->map(
+                function (User $user) {
+                    return $this->shortData($user);
+                }
+            )
+            ->all();
+    }
+
+    public function shortData(User $user): array
+    {
+        return [
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'last_name' => $user->getLastName(),
+        ];
+    }
 }

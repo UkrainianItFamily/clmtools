@@ -12,11 +12,7 @@ final class CourseArrayPresenter
     {
         return [
             'id' => $course->getId(),
-            'avatar' => $course->getAvatar(),
-            'email' => $course->getEmail(),
-            'name' => $course->getName(),
-            'last_name' => $course->getLastName(),
-            'date_birth' => $course->getDateBirth(),
+            'title' => $course->getTitle(),
         ];
     }
 

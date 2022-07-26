@@ -12,6 +12,5 @@ export default {
     components:{
         MessageComponent
     },
-    mounted() {}
 };
 </script>

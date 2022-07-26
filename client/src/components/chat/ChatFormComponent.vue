@@ -16,6 +16,5 @@
 <script>
 export default {
     name: 'ChatFormComponent',
-    mounted() {}
 };
 </script>

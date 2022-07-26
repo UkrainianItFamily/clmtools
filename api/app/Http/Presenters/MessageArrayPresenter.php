@@ -22,8 +22,8 @@ final class MessageArrayPresenter
     {
         return [
             'id' => $message->getId(),
-            'user' => $this->userArrayPresenter->present($message->getUser()),
-            'chat' => $this->chatArrayPresenter->present($message->getChat()),
+            'user' => $this->userArrayPresenter->present($message->user()->first()),
+            'chat' => $this->chatArrayPresenter->present($message->chat()->first()),
             'body' => $message->getBody(),
             'created_at' => $message->getCreatedAt()->toDateTimeString(),
             'self_message' => $message->getSelfMessageAttribute()

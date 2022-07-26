@@ -36,16 +36,6 @@ class Message extends Model
         return $this->body;
     }
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function getChat(): Chat
-    {
-        return $this->chat;
-    }
-
     public function getCreatedAt(): Carbon
     {
         return $this->created_at;

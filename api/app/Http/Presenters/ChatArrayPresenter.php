@@ -23,8 +23,8 @@ final class ChatArrayPresenter
     {
         return [
             'id' => $chat->getId(),
-            'user' => $this->userArrayPresenter->present($chat->getUser()),
-            'lecture' => $this->lectureArrayPresenter->present(new LectureResponse($chat->getLecture())),
+            'user' => $this->userArrayPresenter->present($chat->user()->first()),
+            'lecture' => $this->lectureArrayPresenter->present(new LectureResponse($chat->lecture()->first())),
             'created_at' => $chat->getCreatedAt()->toDateTimeString()
         ];
     }

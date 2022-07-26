@@ -34,16 +34,6 @@ class Chat extends Model
         return $this->id;
     }
 
-    public function getUser(): User
-    {
-        return $this->user;
-    }
-
-    public function getLecture(): Lecture
-    {
-        return $this->lecture;
-    }
-
     public function getCreatedAt(): Carbon
     {
         return $this->created_at;

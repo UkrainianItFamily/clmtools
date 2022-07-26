@@ -11,11 +11,11 @@ class Lecture extends Model
 
     protected $fillable = ['title', 'preview_image', 'link'];
 
-    public function users() {
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function courses() {
+    public function course() {
         return $this->belongsTo(Course::class);
     }
 }

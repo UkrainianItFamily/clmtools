@@ -22,8 +22,13 @@ class DatabaseSeeder extends Seeder
              'lecturer' => true
          ]);
 
-        \App\Models\Lecture::factory(3)->create([
-            'user_id' => $user->id,
-        ]);
+        \App\Models\Course::factory(3)->create([
+            'user_id' => $user->id
+        ])->each(function($course) {
+            \App\Models\Lecture::factory(3)->create([
+                'user_id' => $course->user_id,
+                'course_id' => $course->id
+            ]);
+        });
     }
 }

@@ -14,4 +14,9 @@ class Lecture extends Model
     public function users() {
         return $this->belongsTo(User::class);
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

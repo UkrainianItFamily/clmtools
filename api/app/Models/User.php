@@ -162,4 +162,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->lecturer;
     }
+
+    public function chats()
+    {
+        return $this->hasMany(Chat::class);
+    }
 }

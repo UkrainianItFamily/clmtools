@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\City;
+use App\Models\University;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -29,5 +30,6 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(City::class);
+        $this->call(University::class);
     }
 }

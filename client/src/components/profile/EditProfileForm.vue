@@ -102,6 +102,8 @@
                     id="input-city"
                     v-model="editUser.city"
                     :options="cities"
+                    value-field="id"
+                    text-field="name"
                     :value="editUser.city"
                     name="city"
                 ></BFormSelect>
@@ -113,6 +115,8 @@
                     id="input-university"
                     v-model="editUser.university"
                     :options="universities"
+                    value-field="id"
+                    text-field="name"
                     :value="editUser.university"
                     name="university"
                 ></BFormSelect>
@@ -131,7 +135,7 @@
             </div>
 
             <div class="mt-3 mb-5">
-                <BButton block>Змінити пароль</BButton>
+                <BButton block @click="ShowChangePasswordModal">Змінити пароль</BButton>
                 <BButton block type="submit">Зберегти</BButton>
             </div>
         </form>
@@ -170,12 +174,49 @@
             </div>
         </BModal>
 
+        <BModal ref="change-password-modal" hide-footer block title="Змінити пароль">
+            <div class="form-control-file">
+                <BFormGroup>
+                    <BFormInput
+                        id="input-password"
+                        v-model="ChangePass.password"
+                        name="password"
+                        type="password"
+                        placeholder="Новий пароль"
+                        required
+                    ></BFormInput>
+                </BFormGroup>
+
+                <BFormGroup>
+                    <BFormInput
+                        id="input-passwordConfirmation"
+                        v-model="ChangePass.passwordConfirmation"
+                        name="password_confirmation"
+                        type="password"
+                        placeholder="Підтвердіть пароль"
+                        required
+                    ></BFormInput>
+                </BFormGroup>
+            </div>
+            <div class="mt-3">
+                <BRow>
+                    <BCol>
+                        <BButton variant="secondary" block @click="hideModal">Зберегти</BButton>
+                    </BCol>
+                    <BCol>
+                        <BButton variant="outline-warning" block @click="hideModal">Відмінити</BButton>
+                    </BCol>
+                </BRow>
+            </div>
+        </BModal>
+
     </div>
 </template>
 
 <script>
 import { mapGetters,mapActions } from "vuex";
 import { emptyUser } from '@/services/Normalizer';
+import moment from 'moment';
 
 export default {
     name: "EditProfileForm",
@@ -183,6 +224,10 @@ export default {
     computed: {
         ...mapGetters('auth', {
             user: 'getAuthenticatedUser'
+        }),
+        ...mapGetters('handbook', {
+            cities: 'getCities',
+            universities: 'getUniversities'
         }),
         avatar(){
             return this.user.avatar ? this.user.avatar : '/img/empty_avatar.jpg';
@@ -207,6 +252,14 @@ export default {
             }
             return day_arr;
         },
+        months(){
+            let months_obj = [];
+            moment.locale(process.env.VUE_APP_LOCALE);
+            moment.months().forEach((element, index) =>
+                months_obj.push({text:element,value: ('0'+(index+1)).slice(-2)})
+            );
+            return months_obj;
+        },
         dateBirth(){
             return this.BirthYear && this.BirthMonth && this.BirthDay ?
                 this.BirthYear + '-' + this.BirthMonth + '-' + this.BirthDay :
@@ -214,7 +267,7 @@ export default {
         },
         years() {
             let currentYear = new Date().getFullYear(), array = [];
-            for (let i = currentYear; i >= (currentYear - 100); i--) {
+            for (let i = currentYear; i > (currentYear - 110); i--) {
                 array.push(i);
             }
             return array;
@@ -234,39 +287,13 @@ export default {
         BirthYear(){
             return this.user.dateBirth ? new Date(this.user.dateBirth).getFullYear() : null;
         },
-        months: [
-            { text: 'Січень', value: '01' },
-            { text: 'Лютий', value: '02' },
-            { text: 'Березень', value: '03'},
-            { text: 'Квітень', value: '04'},
-            { text: 'Травень', value: '05'},
-            { text: 'Червень', value: '06'},
-            { text: 'Липень', value: '07'},
-            { text: 'Серпень', value: '08'},
-            { text: 'Вересень', value: '09'},
-            { text: 'Жовтень', value: '10'},
-            { text: 'Листопад', value: '11'},
-            { text: 'Грудень', value: '12'},
-        ],
-        cities: [
-            { text: 'Львів', value: 'Львів' },
-            { text: 'Київ', value: 'Київ' },
-            { text: 'Миколаїв', value: 'Миколаїв'},
-            { text: 'Харків', value: 'Харків'},
-            { text: 'Одеса', value: 'Одеса'},
-            { text: 'Донецьк', value: 'Донецьк'},
-            { text: 'Херсон', value: 'Херсон'},
-        ],
-        universities: [
-            { text: 'Київський національний університет культури і мистецтв', value: 'Київський національний університет культури і мистецтв' },
-            { text: 'КПІ ім. Ігоря Сікорського', value: 'КПІ ім. Ігоря Сікорського' },
-            { text: 'Азовський морський інститут Одеської національної морської академії', value: 'Азовський морський інститут Одеської національної морської академії'},
-            { text: 'Вінницький державний педагогічний університет ім. М. Коцюбинського', value: 'Вінницький державний педагогічний університет ім. М. Коцюбинського'},
-            { text: 'Глухівський національний педагогічний університет ім. Довженка', value: 'Глухівський національний педагогічний університет ім. Довженка'},
-        ],
+        ChangePass: {
+            password: '',
+            passwordConfirmation: '',
+        },
         image: null,
-        validated: false,
         preview: null,
+        validated: false,
         errors: {}
     }),
 
@@ -274,55 +301,68 @@ export default {
         this.editUser = {
             ...this.user
         };
-        console.log(this);
-        console.log(this.editUser);
-        console.log(this.user);
+    },
+
+    mounted() {
+        this.getCitiesList();
+        this.getUniversitiesList();
     },
 
     methods:{
         ...mapActions('auth', ['updateProfile']),
 
-        onSaveClick(){
-            this.editUser.dateBirth = this.dateBirth;
-            console.log(this.editUser);
-            this.updateProfile(this.editUser)
-                .then(() => {
-                    this.validated = true;
-                    this.errors = {};
-                    console.log(this.errors);
-                })
-                .catch((error) => {
-                    this.validated = false;
-                    this.errors = error.response.data.error;
+        ...mapActions('handbook', ['GET_CITIES','GET_UNIVERSITIES']),
 
-                    if(error.response.data.errors) {
-                        this.errors = error.response.data.errors;
+        getCitiesList(){
+            this.GET_CITIES().then(() => {}).catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
                     }
-                    console.log(error);
-                } );
+                });
+        },
+        getUniversitiesList(){
+            this.GET_UNIVERSITIES().then(() => {}).catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                });
+        },
+
+        async onSaveClick(){
+            this.editUser.dateBirth = this.dateBirth;
+            try {
+                await this.updateProfile(this.editUser)
+                    .then(() => {
+                        this.validated = true;
+                        this.errors = {};
+                    })
+                    .catch((error) => {
+                        this.validated = false;
+                        this.errors = error.response.data.error;
+                        if (error.response.data.errors) {
+                            this.errors = error.response.data.errors;
+                        }
+                    });
+            } catch (error) {
+                console.log(error);
+            }
         },
 
         ShowUploadImageModal(){
             this.$refs['upload-image-modal'].show();
         },
 
+        ShowChangePasswordModal(){
+            this.$refs['change-password-modal'].show();
+        },
+
         hideModal(){
             this.$refs['upload-image-modal'].hide();
+            this.$refs['change-password-modal'].hide();
         },
 
         selectImage() {
-            console.log(this);
             this.$refs['fileInput'].click();
-        },
-
-        onFileChange(e){
-            let file = e.target.files[0];
-
-            if(file) {
-                this.image = file;
-                this.image.path = URL.createObjectURL(file);
-            }
-            console.log(this);
         },
 
         pickFile() {
@@ -331,7 +371,8 @@ export default {
             if (file && file[0]) {
                 let reader = new FileReader;
                 reader.onload = e => {
-                    this.image = e.target.result;
+                    this.preview = e.target.result;
+                    this.image = file[0];
                 };
                 reader.readAsDataURL(file[0]);
                 this.$emit('click', file[0]);

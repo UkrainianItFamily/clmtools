@@ -4,23 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Message extends Model
 {
     protected $fillable = ['body'];
     protected $appends = ['self_message'];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function chat()
+    public function chat(): BelongsTo
     {
         return $this->belongsTo(Chat::class);
     }
 
-    public function getSelfMessageAttribute()
+    public function getSelfMessageAttribute(): bool
     {
         return $this->user_id === auth()->user()->id;
     }
@@ -30,7 +31,7 @@ class Message extends Model
         return $this->id;
     }
 
-    public function getBody()
+    public function getBody(): string
     {
         return $this->body;
     }

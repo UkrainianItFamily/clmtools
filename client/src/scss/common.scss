@@ -31,3 +31,36 @@ container {
 .bg-dark {
     background-color: #888e93 !important;
 }
+.message-area {
+    height: 400px;
+    max-height: 400px;
+    overflow-y: scroll;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+.user {
+    font-weight: 800;
+}
+.body {
+    margin-bottom: 0;
+    white-space: pre-wrap;
+}
+.message {
+    border-bottom: 1px solid #000000
+}
+.self {
+    background-color: #f0f0f0;
+    padding: 10px;
+}
+.form {
+    padding: 8px;
+}
+.form-input {
+    width: 100%;
+    border: 1px solid #d3e0e9;
+    padding: 5px 10px;
+    outline: none;
+}
+.notice {
+    color: #aaa
+}

@@ -52,7 +52,7 @@ Route::prefix('v1')->group(function () {
 
         Route::group(['prefix' => '/cities'], function () {
             Route::get('/', [HandbookControllers::class, 'getCities']);
-            Route::get('/{id}', [HandbookControllers::class, 'getCity']);
+            Route::get('/{id}', [HandbookControllers::class, 'city']);
         });
 
         Route::group(['prefix' => '/universities'], function () {

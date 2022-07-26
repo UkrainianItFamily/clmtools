@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\LectureControllers;
+use App\Http\Controllers\Api\HandbookControllers;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\VerificationController;
 use Illuminate\Http\Request;
@@ -48,5 +49,15 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
+
+        Route::group(['prefix' => '/cities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getCities']);
+            Route::get('/{id}', [HandbookControllers::class, 'getCity']);
+        });
+
+        Route::group(['prefix' => '/universities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getUniversities']);
+            Route::get('/{id}', [HandbookControllers::class, 'university']);
+        });
     });
 });

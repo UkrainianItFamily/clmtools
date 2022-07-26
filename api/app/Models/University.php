@@ -10,4 +10,14 @@ class University extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

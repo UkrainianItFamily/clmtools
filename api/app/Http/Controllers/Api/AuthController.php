@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Action\Auth\UploadProfileImageAction;
+use App\Action\Auth\UploadProfileImageRequest;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
@@ -16,10 +18,12 @@ use App\Actions\Auth\UpdateProfileAction;
 use App\Actions\Auth\UpdateProfileRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
 use App\Http\Presenters\UserArrayPresenter;
+use App\Http\Request\Api\Auth\UploadProfileImageValidationRequest;
 use App\Http\Requests\Api\Auth\AuthRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
 use App\Http\Requests\Api\Auth\UpdateValidationRequest;
+use App\Http\Response\ApiResponse;
 use Illuminate\Http\JsonResponse;
 
 final class AuthController extends ApiController
@@ -108,4 +112,17 @@ final class AuthController extends ApiController
         return $this->SuccessResponse($userArrayPresenter->present($response->getUser()));
     }
 
+    public function uploadProfileImage(
+        UploadProfileImageValidationRequest $validationRequest,
+        UploadProfileImageAction $action,
+        UserArrayPresenter $userArrayPresenter
+    ): ApiResponse {
+        $response = $action->execute(
+            new UploadProfileImageRequest(
+                $validationRequest->file('image')
+            )
+        );
+
+        return $this->SuccessResponse($userArrayPresenter->present($response->getUser()));
+    }
 }

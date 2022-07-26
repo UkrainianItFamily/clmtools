@@ -36,12 +36,11 @@ final class MessageRepository
 
     public function getMessagesByLectureId(int $user_id, int $lecture_id): Collection
     {
-        $chat = Chat::where([
+        return Chat::where([
             ['user_id', $user_id],
             ['lecture_id', $lecture_id]
-        ])->first();
-
-        return Message::where('chat_id', $chat->getId())
+        ])->first()
+            ->messages()
             ->orderBy('created_at', 'asc')
             ->get();
     }

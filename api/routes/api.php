@@ -49,5 +49,6 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
+        Route::post('chat', [ChatController::class, 'store'])->name('chat.store');
     });
 });

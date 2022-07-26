@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
@@ -19,5 +20,25 @@ class Chat extends Model
     public function messages()
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function getLecture(): Lecture
+    {
+        return $this->lecture;
+    }
+
+    public function getCreatedAt(): Carbon
+    {
+        return $this->created_at;
     }
 }

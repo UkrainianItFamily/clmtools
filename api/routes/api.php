@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\LectureControllers;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\VerificationController;

@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\City;
-use App\Models\University;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -24,10 +22,14 @@ class DatabaseSeeder extends Seeder
              'lecturer' => true
          ]);
 
-        \App\Models\Lecture::factory(3)->create([
-            'user_id' => $user->id,
-        ]);
-
+        \App\Models\Course::factory(3)->create([
+            'user_id' => $user->id
+        ])->each(function($course) {
+            \App\Models\Lecture::factory(3)->create([
+                'user_id' => $course->user_id,
+                'course_id' => $course->id
+            ]);
+        });
 
         $this->call(CitySeeder::class);
         $this->call(UniversitySeeder::class);

@@ -97,7 +97,7 @@ final class AuthController extends ApiController
         UpdateValidationRequest $updateValidationRequest,
         UpdateProfileAction $action,
         UserArrayPresenter $userArrayPresenter
-    ){
+    ): JsonResponse{
         $response = $action->execute(
             new UpdateProfileRequest(
                 $updateValidationRequest->get('name'),

@@ -86,7 +86,7 @@ const routes = [
         component: DetailLection,
     },
     {
-        path: '/chat-temp-url',
+        path: '/lections/:lection_id/chat',
         name: 'Chat',
         component: Chat,
         meta: { requiresAuth: true },

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Lecture;
+namespace App\Actions\Auth;
 
-final class LectureFormRequest
+final class AuthRequest
 {
     public function getAuthUserId(): int
     {

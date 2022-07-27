@@ -6,10 +6,10 @@ use App\Notifications\EmailVerificationNotification;
 use App\Notifications\MailResetPasswordNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use phpDocumentor\Reflection\Types\Integer;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -119,7 +119,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->date_birth;
     }
 
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -139,12 +139,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->graduation_year;
     }
 
-    public function getVerifiedEmail()
+    public function getVerifiedEmail(): Carbon
     {
         return $this->email_verified_at;
     }
 
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new EmailVerificationNotification());
     }
@@ -154,8 +154,8 @@ class User extends Authenticatable implements JWTSubject
         $this->notify(new MailResetPasswordNotification($token));
     }
 
-    public function lectures() {
-        return $this->belongsTo(Lecture::class);
+    public function lectures(): BelongsToMany {
+        return $this->belongsToMany(Lecture::class);
     }
 
     public function getUserRoleLecturer(): ?bool

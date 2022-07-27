@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
         ])->each(function($course) {
             \App\Models\Lecture::factory(3)->create([
                 'user_id' => $course->user_id,
-                'course_id' => $course->id
+                'course_id' => $course->id,
+                'author_id' => $course->user_id,
             ]);
         });
     }

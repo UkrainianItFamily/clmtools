@@ -30,5 +30,8 @@ class DatabaseSeeder extends Seeder
                 'course_id' => $course->id
             ]);
         });
+
+        $this->call(CitySeeder::class);
+        $this->call(UniversitySeeder::class);
     }
 }

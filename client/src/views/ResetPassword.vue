@@ -52,6 +52,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import {RESET_PASSWORD} from '../store/modules/auth/types/actions';
 
 export default {
     name: "ResetPasswordPage",
@@ -67,11 +68,11 @@ export default {
 
     methods:{
         ...mapActions('auth',[
-            'resetPassword'
+            'RESET_PASSWORD'
         ]),
 
         onSubmit(){
-            this.resetPassword({
+            this.RESET_PASSWORD({
                 'token' : this.$route.params.token,
                 'email' : this.$route.params.email,
                 'password' : this.user.password,

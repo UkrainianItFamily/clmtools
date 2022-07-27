@@ -5,14 +5,15 @@ import ApiRequestService from '@/services/request-service/ApiRequestService';
 import requestService from "@/services/request-service/ApiRequestService";
 
 export default {
-    async signUp({ commit }, {
-        name,
+    [actions.USER_REGISTER]: async (
+        { commit },
+        { name,
         lastName,
         email,
         phone,
         password,
-        passwordConfirmation
-    }) {
+        passwordConfirmation }
+    ) => {
 
         try {
             const data = await requestService.post('/auth/register', {
@@ -34,7 +35,11 @@ export default {
         }
     },
 
-    async signIn({ commit }, { email, password }) {
+    [actions.USER_LOGIN]: async (
+        { commit },
+        { email,
+        password }
+    ) => {
         try {
             const data = await requestService.post('/login', {
                 email,
@@ -63,7 +68,10 @@ export default {
         }
     },
 
-    async verifyEmail({ commit }, { url }) {
+    [actions.VERIFY_EMAIL]: async (
+        { commit },
+        { url }
+    ) => {
         try {
             await requestService.post('/email/verify/' + url);
 
@@ -74,7 +82,10 @@ export default {
         }
     },
 
-    async reSendEmail({ commit }, { id }) {
+    [actions.RESEND_VERIFY_EMAIL]: async (
+        { commit },
+        { id }
+    ) => {
         try {
             await requestService.post('/email/resend/' + id);
 
@@ -85,7 +96,10 @@ export default {
         }
     },
 
-    async forgotPassword({ commit }, { email }) {
+    [actions.FORGOT_PASSWORD]: async (
+        { commit },
+        { email }
+    ) => {
         try {
             await requestService.post('/auth/forgot-password', {
                 email
@@ -97,14 +111,15 @@ export default {
         }
     },
 
-    async resetPassword({ commit }, {
-        token,
+    [actions.RESET_PASSWORD]: async (
+        { commit },
+        { token,
         email,
         password,
-        passwordConfirmation
-    }) {
+        passwordConfirmation }
+    ) => {
         try {
-            const data = await requestService.post('/auth/reset', {
+            await requestService.post('/auth/reset', {
                 token: token,
                 email: email,
                 password: password,
@@ -118,7 +133,9 @@ export default {
         }
     },
 
-    async signOut({ commit }) {
+    [actions.USER_LOGOUT]: async(
+        { commit }
+    ) => {
         try {
             await requestService.post('/logout');
             commit(mutations.USER_LOGOUT);
@@ -127,4 +144,45 @@ export default {
             return Promise.reject(error);
         }
     },
+
+    [actions.GET_AUTHENTICATED_USER]: async (
+        { commit }
+    ) => {
+        try {
+            const user = await requestService.get('/auth/me');
+            commit(mutations.SET_AUTHENTICATED_USER, user);
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
+    [actions.UPDATE_PROFILE]: async (
+        { commit },
+        { name,
+        lastName,
+        dateBirth,
+        city,
+        university,
+        graduationYear }
+    ) => {
+        try {
+            const data = await requestService.put('/auth/me', {
+                name: name,
+                last_name: lastName,
+                date_birth: dateBirth,
+                city: city,
+                university: university,
+                graduation_year: graduationYear
+            });
+
+            commit(mutations.SET_AUTHENTICATED_USER, data,);
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+
 };

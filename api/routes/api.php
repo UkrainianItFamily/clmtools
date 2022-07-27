@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\LectureControllers;
 use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\Api\VerificationController;
@@ -50,9 +49,19 @@ Route::prefix('v1')->group(function () {
         Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
         Route::get('form-lecture', [LectureControllers::class, 'formLecture'])->name('form.lecture');
-      
+
         Route::post('chat', [ChatController::class, 'store'])->name('chat.store');
         Route::get('chat', [ChatController::class, 'chat'])->name('chat');
         Route::post('message', [ChatController::class, 'storeMessage'])->name('chat.store-message');
+
+        Route::group(['prefix' => '/cities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getCities']);
+            Route::get('/{id}', [HandbookControllers::class, 'city']);
+        });
+
+        Route::group(['prefix' => '/universities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getUniversities']);
+            Route::get('/{id}', [HandbookControllers::class, 'university']);
+        });
     });
 });

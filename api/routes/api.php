@@ -48,5 +48,6 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('user-lectures/{id}', [LectureControllers::class, 'userLectures'])->name('user.lectures');
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
+        Route::get('form-lecture', [LectureControllers::class, 'formLecture'])->name('form.lecture');
     });
 });

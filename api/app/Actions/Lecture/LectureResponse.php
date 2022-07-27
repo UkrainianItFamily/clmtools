@@ -37,4 +37,9 @@ final class LectureResponse
     {
         return $this->lecture->id;
     }
+
+    public function getLectureCourse(): string
+    {
+        return $this->lecture->course->title;
+    }
 }

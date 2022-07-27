@@ -14,8 +14,9 @@ final class CityCollectionAction
 
     public function execute(): CityCollectionResponse
     {
-        return new CityCollectionResponse(
-            $this->cityRepository->getAll()
-        );
+        $repository = $this->cityRepository;
+        $cities = $repository->getAll();
+
+        return new CityCollectionResponse($cities);
     }
 }

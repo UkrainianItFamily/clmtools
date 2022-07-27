@@ -14,8 +14,10 @@ final class UniversityAction
 
     public function execute(UniversityRequest $request): UniversityResponse
     {
-        return new UniversityResponse(
-            $this->universityRepository->getById($request->getUniversityId())
-        );
+        $repository = $this->universityRepository;
+        $university_id = $request->getUniversityId();
+        $university = $repository->getById($university_id);
+
+        return new UniversityResponse($university);
     }
 }

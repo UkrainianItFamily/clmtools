@@ -10,8 +10,8 @@
             </BNavbarNav>
 
             <BNavbarNav class="ml-auto" align="right" v-else>
-                <BNavItem :to="{ name: 'auth.signUp' }">Sign up</BNavItem>
-                <BNavItem :to="{ name: 'auth.signIn' }">Sign in</BNavItem>
+                <BNavItem :to="{ name: 'auth.signUp' }">Реєстрація</BNavItem>
+                <BNavItem :to="{ name: 'auth.signIn' }">Вхід</BNavItem>
             </BNavbarNav>
         </BNavbar>
     </div>
@@ -19,6 +19,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import {GET_AUTHENTICATED_USER, USER_LOGOUT} from '../../store/modules/auth/types/actions';
 
 export default {
     name: "Navbar",
@@ -32,17 +33,17 @@ export default {
 
     async created() {
         if(this.isLoggedIn) {
-            await this.fetchAuthenticatedUser();
+            await this.GET_AUTHENTICATED_USER();
         }
     },
 
     methods: {
         ...mapActions('auth', [
-            'fetchAuthenticatedUser',
-            'signOut'
+            'GET_AUTHENTICATED_USER',
+            'USER_LOGOUT'
         ]),
         async onSignOut() {
-            await this.signOut();
+            await this.USER_LOGOUT();
 
             this.$router.push({ name: 'auth.signIn' }).catch(() => {});
         },

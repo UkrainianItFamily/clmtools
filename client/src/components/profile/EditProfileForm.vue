@@ -5,7 +5,7 @@
                 <div class="h2 position-absolute d-flex" style="right: 0" @click="ShowUploadImageModal">
                     <BIcon icon="pencil-fill" class="rounded-circle bg-dark p-2" variant="light"></BIcon>
                 </div>
-                <BImg :src="avatar" alt="" center></BImg>
+                <BImg :src="editUser.avatar" alt="" center></BImg>
             </div>
         </div>
 
@@ -16,7 +16,7 @@
             novalidate="true"
         >
             <BAlert show variant="success" v-if="validated">Дані збережено!</BAlert>
-<!--            <BAlert show variant="danger" v-if="errors.message">{{ errors.message }}</BAlert>-->
+            <!--            <BAlert show variant="danger" v-if="errors.message">{{ errors.message }}</BAlert>-->
 
             <div role="group" class="mt-3">
                 <label for="input-name"><b>Ім'я</b></label>
@@ -51,7 +51,7 @@
                             v-model="BirthDay"
                             name="date_birth"
                         >
-                            <BFormSelectOption v-for="day in days" :key="day" :value="day">{{day}}</BFormSelectOption>
+                            <BFormSelectOption v-for="day in days" :key="day" :value="day">{{ day }}</BFormSelectOption>
                         </BFormSelect>
                     </BCol>
                     <BCol cols="4">
@@ -68,7 +68,10 @@
                             v-model="BirthYear"
                             name="date_birth"
                         >
-                            <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
+                            <BFormSelectOption v-for="year in years"
+                                               :key="year"
+                                               :value="year">{{ year }}
+                            </BFormSelectOption>
                         </BFormSelect>
                     </BCol>
                 </BRow>
@@ -130,7 +133,7 @@
                     :value="editUser.graduationYear"
                     name="graduation_year"
                 >
-                    <BFormSelectOption v-for="year in years" :key="year" :value="year">{{year}}</BFormSelectOption>
+                    <BFormSelectOption v-for="year in years" :key="year" :value="year">{{ year }}</BFormSelectOption>
                 </BFormSelect>
             </div>
 
@@ -149,10 +152,11 @@
                     class="imagePreviewWrapper"
                     :style="{ 'background-image': `url(${preview})` }"
                     @click="selectImage"
-                    >
+                >
                 </div>
                 <p class="mt-2 text-center" @click="selectImage">
-                    <BIcon icon="cloud-arrow-up"></BIcon> <b>{{ image ? image.name : 'Виберіти фото (jpeg, png, 5MB)' }}</b>
+                    <BIcon icon="cloud-arrow-up"></BIcon>
+                    <b>{{ image ? image.name : 'Виберіти фото (jpeg, png, 5MB)' }}</b>
                 </p>
                 <input
                     type="file"
@@ -214,60 +218,51 @@
 </template>
 
 <script>
-import { mapGetters,mapActions } from "vuex";
-import { emptyUser } from '@/services/Normalizer';
+import {mapGetters, mapActions} from 'vuex';
+import {emptyUser} from '@/services/Normalizer';
 import moment from 'moment';
+import methods from '@/components/methods/methods';
 
 export default {
-    name: "EditProfileForm",
+    name: 'EditProfileForm',
+
+    mixins: [methods],
 
     computed: {
         ...mapGetters('auth', {
-            user: 'getAuthenticatedUser'
+            user: 'getAuthenticatedUser',
         }),
         ...mapGetters('handbook', {
             cities: 'getCities',
-            universities: 'getUniversities'
+            universities: 'getUniversities',
         }),
-        avatar(){
-            return this.user.avatar ? this.user.avatar : '/img/empty_avatar.jpg';
+        days()
+        {
+             let currentYear = typeof(this.BirthYear) === 'string' ? this.BirthYear : new Date().getFullYear(),
+             currentMonth = typeof(this.BirthMonth) === 'string' ? this.BirthMonth : new Date().getMonth();
+
+            return this.getDaysInMonthArray(currentYear,currentMonth);
         },
-        days() {
-            let day_arr = [];
-            for (let i = 1; i <= 28; i++) {
-                (i < 10) ? day_arr.push('0'+i) : day_arr.push(i.toString());
-            }
-            if (this.BirthMonth === '02') {
-                if(this.BirthYear % 4 === 0) {
-                    day_arr.push(29);
-                }
-            } else if (this.BirthMonth === '04' || this.BirthMonth === '06'
-                || this.BirthMonth === '09' || this.BirthMonth === '11') {
-                day_arr.push(29);
-                day_arr.push(30);
-            } else {
-                day_arr.push(29);
-                day_arr.push(30);
-                day_arr.push(31);
-            }
-            return day_arr;
-        },
-        months(){
+        months()
+        {
             let months_obj = [];
             moment.locale(process.env.VUE_APP_LOCALE);
             moment.months().forEach((element, index) =>
-                months_obj.push({text:element,value: ('0'+(index+1)).slice(-2)})
+                months_obj.push({text: element, value: ('0' + (index + 1)).slice(-2)}),
             );
             return months_obj;
         },
-        dateBirth(){
+        dateBirth()
+        {
             return this.BirthYear && this.BirthMonth && this.BirthDay ?
                 this.BirthYear + '-' + this.BirthMonth + '-' + this.BirthDay :
                 null;
         },
-        years() {
+        years()
+        {
             let currentYear = new Date().getFullYear(), array = [];
-            for (let i = currentYear; i > (currentYear - 110); i--) {
+            for (let i = currentYear; i > (currentYear - 110); i--)
+            {
                 array.push(i);
             }
             return array;
@@ -276,15 +271,18 @@ export default {
 
     data: () => ({
         editUser: {
-            ...emptyUser()
+            ...emptyUser(),
         },
-        BirthDay(){
+        BirthDay()
+        {
             return this.user.dateBirth ? new Date(this.user.dateBirth).getDay() : null;
         },
-        BirthMonth(){
+        BirthMonth()
+        {
             return this.user.dateBirth ? new Date(this.user.dateBirth).getMonth() : null;
         },
-        BirthYear(){
+        BirthYear()
+        {
             return this.user.dateBirth ? new Date(this.user.dateBirth).getFullYear() : null;
         },
         ChangePass: {
@@ -294,91 +292,110 @@ export default {
         image: null,
         preview: null,
         validated: false,
-        errors: {}
+        errors: {},
     }),
 
-    created() {
+    created()
+    {
         this.editUser = {
-            ...this.user
+            ...this.user,
         };
     },
 
-    mounted() {
+    mounted()
+    {
         this.getCitiesList();
         this.getUniversitiesList();
     },
 
-    methods:{
-        ...mapActions('auth', ['updateProfile']),
+    methods: {
+        ...mapActions('auth', ['UPDATE_PROFILE']),
 
-        ...mapActions('handbook', ['GET_CITIES','GET_UNIVERSITIES']),
+        ...mapActions('handbook', ['GET_CITIES', 'GET_UNIVERSITIES']),
 
-        getCitiesList(){
-            this.GET_CITIES().then(() => {}).catch((error) => {
-                    if (error.response.data.errors) {
-                        alert(Object.values(error.response.data.errors).join('\r\n'));
-                    }
-                });
+        getCitiesList()
+        {
+            this.GET_CITIES().then(() => {}).catch((error) =>
+            {
+                if (error.response.data.errors)
+                {
+                    alert(Object.values(error.response.data.errors).join('\r\n'));
+                }
+            });
         },
-        getUniversitiesList(){
-            this.GET_UNIVERSITIES().then(() => {}).catch((error) => {
-                    if (error.response.data.errors) {
-                        alert(Object.values(error.response.data.errors).join('\r\n'));
-                    }
-                });
+        getUniversitiesList()
+        {
+            this.GET_UNIVERSITIES().then(() => {}).catch((error) =>
+            {
+                if (error.response.data.errors)
+                {
+                    alert(Object.values(error.response.data.errors).join('\r\n'));
+                }
+            });
         },
 
-        async onSaveClick(){
+        async onSaveClick()
+        {
             this.editUser.dateBirth = this.dateBirth;
-            try {
-                await this.updateProfile(this.editUser)
-                    .then(() => {
-                        this.validated = true;
-                        this.errors = {};
-                    })
-                    .catch((error) => {
-                        this.validated = false;
-                        this.errors = error.response.data.error;
-                        if (error.response.data.errors) {
-                            this.errors = error.response.data.errors;
-                        }
-                    });
-            } catch (error) {
+            try
+            {
+                await this.UPDATE_PROFILE(this.editUser).then(() =>
+                {
+                    this.validated = true;
+                    this.errors = {};
+                }).catch((error) =>
+                {
+                    this.validated = false;
+                    this.errors = error.response.data.error;
+                    if (error.response.data.errors)
+                    {
+                        this.errors = error.response.data.errors;
+                    }
+                });
+            } catch (error)
+            {
                 console.log(error);
             }
         },
 
-        ShowUploadImageModal(){
+        ShowUploadImageModal()
+        {
             this.$refs['upload-image-modal'].show();
         },
 
-        ShowChangePasswordModal(){
+        ShowChangePasswordModal()
+        {
             this.$refs['change-password-modal'].show();
         },
 
-        hideModal(){
+        hideModal()
+        {
             this.$refs['upload-image-modal'].hide();
             this.$refs['change-password-modal'].hide();
         },
 
-        selectImage() {
+        selectImage()
+        {
             this.$refs['fileInput'].click();
         },
 
-        pickFile() {
+        pickFile()
+        {
             let input = this.$refs.fileInput;
             let file = input.files;
-            if (file && file[0]) {
+            if (file && file[0])
+            {
                 let reader = new FileReader;
-                reader.onload = e => {
+                reader.onload = e =>
+                {
                     this.preview = e.target.result;
                     this.image = file[0];
                 };
                 reader.readAsDataURL(file[0]);
                 this.$emit('click', file[0]);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

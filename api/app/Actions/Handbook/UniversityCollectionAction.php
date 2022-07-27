@@ -14,8 +14,9 @@ final class UniversityCollectionAction
 
     public function execute(): UniversityCollectionResponse
     {
-        return new UniversityCollectionResponse(
-            $this->universityRepository->getAll()
-        );
+        $repository = $this->universityRepository;
+        $universities = $repository->getAll();
+
+        return new UniversityCollectionResponse($universities);
     }
 }

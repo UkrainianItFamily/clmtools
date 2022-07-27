@@ -14,8 +14,10 @@ final class CityAction
 
     public function execute(CityRequest $request): CityResponse
     {
-        return new CityResponse(
-            $this->cityRepository->getById($request->getCityId())
-        );
+        $repository = $this->cityRepository;
+        $city_id = $request->getCityId();
+        $city = $repository->getById($city_id);
+
+        return new CityResponse($city);
     }
 }

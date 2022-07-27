@@ -87,6 +87,7 @@
 <script>
 import { mapActions } from 'vuex';
 import RegistrationModal from '@/components/auth/RegistrationModal.vue';
+import {USER_REGISTER} from '../store/modules/auth/types/actions';
 
 export default {
     name: 'SignUpPage',
@@ -108,13 +109,13 @@ export default {
 
     methods: {
         ...mapActions('auth', [
-            'signUp',
+            'USER_REGISTER',
         ]),
         showModal() {
             this.$refs.modal.showModal();
         },
         onSubmit() {
-            this.signUp(this.user)
+            this.USER_REGISTER(this.user)
                 .then(() => {
                     this.showModal();
                 })

@@ -11,7 +11,7 @@ final class AuthRequest
         return \Auth::id();
     }
 
-    public static function isUserLecturer(): ?int
+    public static function isUserLecturer(): ?bool
     {
         return \Auth::user()->lecturer;
     }

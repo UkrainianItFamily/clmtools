@@ -183,8 +183,19 @@
                 <BFormGroup>
                     <BFormInput
                         id="input-password"
-                        v-model="ChangePass.password"
-                        name="password"
+                        v-model="ChangePass.oldPassword"
+                        name="old_password"
+                        type="password"
+                        placeholder="Старий пароль"
+                        required
+                    ></BFormInput>
+                </BFormGroup>
+
+                <BFormGroup>
+                    <BFormInput
+                        id="input-password"
+                        v-model="ChangePass.newPassword"
+                        name="new_password"
                         type="password"
                         placeholder="Новий пароль"
                         required
@@ -194,23 +205,16 @@
                 <BFormGroup>
                     <BFormInput
                         id="input-passwordConfirmation"
-                        v-model="ChangePass.passwordConfirmation"
-                        name="password_confirmation"
+                        v-model="ChangePass.newPasswordConfirmation"
+                        name="new_password_confirmation"
                         type="password"
-                        placeholder="Підтвердіть пароль"
+                        placeholder="Підтвердження нового пароля"
                         required
                     ></BFormInput>
                 </BFormGroup>
             </div>
             <div class="mt-3">
-                <BRow>
-                    <BCol>
-                        <BButton variant="secondary" block @click="hideModal">Зберегти</BButton>
-                    </BCol>
-                    <BCol>
-                        <BButton variant="outline-warning" block @click="hideModal">Відмінити</BButton>
-                    </BCol>
-                </BRow>
+                <BButton variant="secondary" block @click="onChangePassword">Зберегти</BButton>
             </div>
         </BModal>
 
@@ -222,6 +226,7 @@ import {mapGetters, mapActions} from 'vuex';
 import {emptyUser} from '@/services/Normalizer';
 import moment from 'moment';
 import methods from '@/components/methods/methods';
+import {CHANGE_PASSWORD} from '../../store/modules/auth/types/actions';
 
 export default {
     name: 'EditProfileForm',
@@ -238,10 +243,10 @@ export default {
         }),
         days()
         {
-             let currentYear = typeof(this.BirthYear) === 'string' ? this.BirthYear : new Date().getFullYear(),
-             currentMonth = typeof(this.BirthMonth) === 'string' ? this.BirthMonth : new Date().getMonth();
+            let currentYear = typeof (this.BirthYear) === 'string' ? this.BirthYear : new Date().getFullYear(),
+                currentMonth = typeof (this.BirthMonth) === 'string' ? this.BirthMonth : new Date().getMonth();
 
-            return this.getDaysInMonthArray(currentYear,currentMonth);
+            return this.getDaysInMonthArray(currentYear, currentMonth);
         },
         months()
         {
@@ -286,8 +291,9 @@ export default {
             return this.user.dateBirth ? new Date(this.user.dateBirth).getFullYear() : null;
         },
         ChangePass: {
-            password: '',
-            passwordConfirmation: '',
+            oldPassword: '',
+            newPassword: '',
+            newPasswordConfirmation: '',
         },
         image: null,
         preview: null,
@@ -309,7 +315,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('auth', ['UPDATE_PROFILE','UPDATE_PROFILE_IMAGE']),
+        ...mapActions('auth', ['UPDATE_PROFILE', 'UPDATE_PROFILE_IMAGE', 'CHANGE_PASSWORD']),
 
         ...mapActions('handbook', ['GET_CITIES', 'GET_UNIVERSITIES']),
 
@@ -332,6 +338,29 @@ export default {
                     alert(Object.values(error.response.data.errors).join('\r\n'));
                 }
             });
+        },
+
+        async onChangePassword()
+        {
+            try
+            {
+                await this.CHANGE_PASSWORD(this.ChangePass).then((response) =>
+                {
+                    this.errors = {};
+                    console.log(response);
+                }).catch((error) =>
+                {
+                    console.log(error);
+                    this.errors = error.response.data.error;
+                    if (error.response.data.errors)
+                    {
+                        this.errors = error.response.data.errors;
+                    }
+                });
+            } catch (error)
+            {
+                console.log(error);
+            }
         },
 
         async onSaveClick()
@@ -371,7 +400,6 @@ export default {
         hideModal()
         {
             this.$refs['upload-image-modal'].hide();
-            this.$refs['change-password-modal'].hide();
         },
 
         selectImage()

@@ -33,9 +33,9 @@ final class LectureRepository
         return $lecture;
     }
 
-    public function getLecturesByUser(int $id): Collection
+    public function getLecturesByLecturer(int $id): Collection
     {
-        return Lecture::where('user_id', $id)
+        return Lecture::where('author_id', $id)
             ->orderBy('order', 'desc')
             ->orderBy('id', 'desc')
             ->get();

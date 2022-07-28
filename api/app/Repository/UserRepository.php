@@ -38,4 +38,12 @@ final class UserRepository
             ->orderBy('name', 'asc')
             ->get();
     }
+
+    public function getLecturesByUser(int $id): Collection
+    {
+        return User::find($id)->lectures()
+            ->orderBy('order', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+    }
 }

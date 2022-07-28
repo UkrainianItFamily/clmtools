@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Models\Lecture;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -38,5 +39,15 @@ final class LectureRepository
             ->orderBy('order', 'desc')
             ->orderBy('id', 'desc')
             ->get();
+    }
+
+    public function attach(Lecture $lecture, array $arr_user_id): void
+    {
+        $lecture->users()->attach(User::find($arr_user_id));
+    }
+
+    public function detach(Lecture $lecture, array $arr_user_id): void
+    {
+        $lecture->users()->detach(User::find($arr_user_id));
     }
 }

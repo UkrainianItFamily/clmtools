@@ -6,8 +6,13 @@ namespace App\Actions\Auth;
 
 final class AuthRequest
 {
-    public function getAuthUserId(): int
+    public static function getAuthUserId(): int
     {
         return \Auth::id();
+    }
+
+    public static function isUserLecturer(): ?int
+    {
+        return \Auth::user()->lecturer;
     }
 }

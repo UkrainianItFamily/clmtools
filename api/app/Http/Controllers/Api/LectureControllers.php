@@ -6,8 +6,11 @@ use App\Actions\Auth\AuthRequest;
 use App\Actions\Lecture\LectureAction;
 use App\Actions\Lecture\LectureCollectionAction;
 use App\Actions\Lecture\LectureCollectionRequest;
+use App\Actions\Lecture\LectureCreateAction;
+use App\Actions\Lecture\LectureCreateRequest;
 use App\Actions\Lecture\LectureFormAction;
 use App\Actions\Lecture\LectureRequest;
+use App\Actions\Lecture\LectureVerificationRequest;
 use App\Http\Presenters\LectureArrayPresenter;
 use Illuminate\Http\JsonResponse;
 
@@ -53,5 +56,28 @@ class LectureControllers extends ApiController
         $response = $action->execute(new AuthRequest());
 
         return $this->successResponse($presenter->getDataFormLecturer($response));
+    }
+
+    /**
+     * Create a new lecture
+     */
+    public function createLecture(
+        LectureVerificationRequest $validationRequest,
+        LectureCreateAction $action,
+        LectureArrayPresenter $presenter
+    ): JsonResponse {
+        if (!AuthRequest::isUserLecturer()) {
+            return $this->errorResponse(__('authorize.forbidden_by_role'));
+        }
+        $request = new LectureCreateRequest(
+            $validationRequest->get('title'),
+            $validationRequest->get('description'),
+            $validationRequest->get('link'),
+            $validationRequest->get('course_id'),
+            $validationRequest->get('user_id')
+        );
+        $response = $action->execute($request);
+
+        return $this->successResponse($presenter->present($response));
     }
 }

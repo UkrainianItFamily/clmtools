@@ -1,3 +1,4 @@
 export default {
-    messages: null
+    messages: null,
+    message: null
 };

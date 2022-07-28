@@ -22,4 +22,21 @@ export default {
             return Promise.reject(error);
         }
     },
+
+    [actions.POST_MESSAGE]: async (
+        { commit },
+        { lecture_id, body }
+    ) => {
+        try {
+            await ApiRequestService.post('/message', {
+                lecture_id: lecture_id,
+                body: body
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+
+        }
+    },
 };

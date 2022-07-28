@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 import Event from '../../store/modules/chat/event.js';
 
 export default {
@@ -34,6 +34,9 @@ export default {
         }),
     },
     methods: {
+        ...mapActions('chat', [
+            'POST_MESSAGE',
+        ]),
         typing(e) {
             if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();
@@ -44,8 +47,21 @@ export default {
             if(!this.body || this.body.trim() === '') {
                 return;
             }
+
             let messageObj = this.buildMessage();
             Event.$emit('added_message', messageObj);
+
+            this.POST_MESSAGE({
+                lecture_id: this.$route.params.lection_id,
+                body: this.body.trim()
+            })
+                .then(() => {})
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                } );
+
             this.body = null;
         },
         buildMessage() {

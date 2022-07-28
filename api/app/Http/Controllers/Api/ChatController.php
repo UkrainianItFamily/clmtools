@@ -30,7 +30,7 @@ class ChatController extends ApiController
         return $this->successResponse($presenter->present($response->getChat()));
     }
 
-    public function chat(
+    public function messages(
         Request $request,
         GetMessagesByLectureIdAction $action,
         MessageArrayPresenter $presenter

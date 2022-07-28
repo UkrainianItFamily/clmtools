@@ -54,7 +54,7 @@ Route::prefix('v1')->group(function () {
         Route::get('form-lecture', [LectureControllers::class, 'formLecture'])->name('form.lecture');
 
         Route::post('chat', [ChatController::class, 'store'])->name('chat.store');
-        Route::get('chat', [ChatController::class, 'chat'])->name('chat');
+        Route::get('messages', [ChatController::class, 'messages'])->name('messages');
         Route::post('message', [ChatController::class, 'storeMessage'])->name('chat.store-message');
 
         Route::group(['prefix' => '/cities'], function () {

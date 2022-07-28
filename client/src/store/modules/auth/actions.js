@@ -134,6 +134,26 @@ export default {
         }
     },
 
+    [actions.CHANGE_PASSWORD]: async (
+        { commit },
+        { oldPassword,
+        newPassword,
+        newPasswordConfirmation }
+    ) => {
+        try {
+            await requestService.post('/auth/change-password', {
+                old_password: oldPassword,
+                new_password: newPassword,
+                new_password_confirmation: newPasswordConfirmation,
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+
+        }
+    },
+
     [actions.USER_LOGOUT]: async(
         { commit }
     ) => {

@@ -18,7 +18,7 @@ final class LectureCreateAction
     {
         $link_parts = stristr($request->getLink(), '=');
         $preview_image = $link_parts ?
-            'https://img.youtube.com/vi/'.$link_parts.'/maxresdefault.jpg' :
+            'https://img.youtube.com/vi/'.mb_substr($link_parts, 1).'/maxresdefault.jpg' :
             'https://via.placeholder.com/600/5F113B/FFFFFF/?text='.$request->getTitle();
 
         $lecture = $this->lectureRepository->create([

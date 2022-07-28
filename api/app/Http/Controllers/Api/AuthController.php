@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Action\Auth\UploadProfileImageAction;
-use App\Action\Auth\UploadProfileImageRequest;
+use App\Actions\Auth\UploadProfileImageAction;
+use App\Actions\Auth\UploadProfileImageRequest;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
@@ -18,7 +18,7 @@ use App\Actions\Auth\UpdateProfileAction;
 use App\Actions\Auth\UpdateProfileRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
 use App\Http\Presenters\UserArrayPresenter;
-use App\Http\Request\Api\Auth\UploadProfileImageValidationRequest;
+use App\Http\Requests\Api\Auth\UploadProfileImageValidationRequest;
 use App\Http\Requests\Api\Auth\AuthRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
@@ -97,7 +97,7 @@ final class AuthController extends ApiController
         UpdateValidationRequest $updateValidationRequest,
         UpdateProfileAction $action,
         UserArrayPresenter $userArrayPresenter
-    ){
+    ): JsonResponse{
         $response = $action->execute(
             new UpdateProfileRequest(
                 $updateValidationRequest->get('name'),
@@ -116,7 +116,7 @@ final class AuthController extends ApiController
         UploadProfileImageValidationRequest $validationRequest,
         UploadProfileImageAction $action,
         UserArrayPresenter $userArrayPresenter
-    ): ApiResponse {
+    ): JsonResponse {
         $response = $action->execute(
             new UploadProfileImageRequest(
                 $validationRequest->file('image')

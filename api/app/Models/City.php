@@ -9,6 +9,8 @@ class City extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = ['name'];
 
     public function getId(): int

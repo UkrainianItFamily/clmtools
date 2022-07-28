@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HandbookControllers;
+use App\Http\Controllers\Api\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ Route::prefix('v1')->group(function () {
         Route::post('reset', [AuthController::class, 'reset'])->name('reset-password');
         Route::put('me', [AuthController::class, 'update'])->name('profile.update');
         Route::get('me', [AuthController::class, 'me'])->name('profile.me');
-        Route::put('me/image', [AuthController::class, 'uploadProfileImage']);
+        Route::post('me/image', [AuthController::class, 'uploadProfileImage']);
     });
 
     Route::controller(AuthController::class)->group(function () {

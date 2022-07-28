@@ -3,6 +3,7 @@ import * as mutations from './types/mutations';
 import statusService from '@/services/status-service/StatusService';
 import ApiRequestService from '@/services/request-service/ApiRequestService';
 import requestService from "@/services/request-service/ApiRequestService";
+import {UPDATE_PROFILE_IMAGE} from './types/actions';
 
 export default {
     [actions.USER_REGISTER]: async (
@@ -184,5 +185,21 @@ export default {
             return Promise.reject(error);
         }
     },
+
+    [actions.UPDATE_PROFILE_IMAGE]: async (
+        { commit },
+        { image}
+    ) => {
+        try {
+            const formData = new FormData();
+            formData.append('image', image, image.name);
+            const data = await requestService.post('/auth/me/image', formData);
+            commit(mutations.SET_AUTHENTICATED_USER, data,);
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 
 };

@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function () {
         Route::post('register', [RegistrationController::class, 'register']);
         Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
         Route::post('reset', [AuthController::class, 'reset'])->name('reset-password');
+        Route::post('change-password', [AuthController::class, 'change_password'])->name('change-password');
         Route::put('me', [AuthController::class, 'update'])->name('profile.update');
         Route::get('me', [AuthController::class, 'me'])->name('profile.me');
         Route::post('me/image', [AuthController::class, 'uploadProfileImage']);

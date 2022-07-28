@@ -10,6 +10,6 @@ final class ChatNotFoundException extends BaseException
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct('Чат не знайдено.', 401, $previous);
+        parent::__construct(__('chat.chat_not_found'), 401, $previous);
     }
 }

@@ -208,7 +208,7 @@ export default {
 
     [actions.UPDATE_PROFILE_IMAGE]: async (
         { commit },
-        { image}
+        image
     ) => {
         try {
             const formData = new FormData();

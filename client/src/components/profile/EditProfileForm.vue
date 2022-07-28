@@ -375,6 +375,7 @@ export default {
                 }).catch((error) =>
                 {
                     this.validated = false;
+                    console.log(error);
                     this.errors = error.response.data.error;
                     if (error.response.data.errors)
                     {
@@ -420,7 +421,7 @@ export default {
                     this.image = file[0];
                 };
                 reader.readAsDataURL(file[0]);
-                this.$emit('input', file[0]);
+                this.$emit('fileInput', file[0]);
             }
         },
 

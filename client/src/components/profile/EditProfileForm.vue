@@ -169,7 +169,7 @@
             <div class="mt-3">
                 <BRow>
                     <BCol>
-                        <BButton variant="secondary" block @click="hideModal">Зберегти</BButton>
+                        <BButton variant="secondary" block @click="uploadAvatar">Зберегти</BButton>
                     </BCol>
                     <BCol>
                         <BButton variant="outline-warning" block @click="hideModal">Відмінити</BButton>
@@ -309,7 +309,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('auth', ['UPDATE_PROFILE']),
+        ...mapActions('auth', ['UPDATE_PROFILE','UPDATE_PROFILE_IMAGE']),
 
         ...mapActions('handbook', ['GET_CITIES', 'GET_UNIVERSITIES']),
 
@@ -392,9 +392,21 @@ export default {
                     this.image = file[0];
                 };
                 reader.readAsDataURL(file[0]);
-                this.$emit('click', file[0]);
+                this.$emit('input', file[0]);
             }
         },
+
+        async uploadAvatar()
+        {
+            try
+            {
+                await this.UPDATE_PROFILE_IMAGE(this.image);
+            } catch (error)
+            {
+                console.log(error);
+            }
+        },
+
     },
 };
 </script>

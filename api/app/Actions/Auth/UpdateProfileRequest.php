@@ -10,8 +10,8 @@ final class UpdateProfileRequest
         private string $name,
         private string $lastName,
         private ?string $dateBirth,
-        private ?string $city,
-        private ?string $university,
+        private ?int $city,
+        private ?int $university,
         private ?int $graduationYear,
     ) {
     }
@@ -30,11 +30,11 @@ final class UpdateProfileRequest
         return $this->dateBirth;
     }
 
-    public function getCity(): ?string{
+    public function getCity(): ?int{
         return $this->city;
     }
 
-    public function getUniversity(): ?string{
+    public function getUniversity(): ?int{
         return $this->university;
     }
 

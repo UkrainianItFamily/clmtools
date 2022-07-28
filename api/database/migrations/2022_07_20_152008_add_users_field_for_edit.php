@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('profile_image')->nullable();
             $table->date("date_birth")->nullable();
-            $table->string("city")->nullable();
-            $table->string("university")->nullable();
-            $table->year("graduation_year")->nullable();
+            $table->integer("city")->nullable()->unsigned();
+            $table->integer("university")->nullable()->unsigned();
+            $table->integer("graduation_year")->nullable()->unsigned();
         });
     }
 

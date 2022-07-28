@@ -7,4 +7,7 @@ export default {
     [mutations.SET_MESSAGE]: (state, chat) => {
         state.message = chat.message;
     },
+    [mutations.SET_CHAT]: (state, chat) => {
+        state.chat = chat.chat;
+    },
 };

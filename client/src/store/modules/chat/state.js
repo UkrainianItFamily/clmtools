@@ -1,4 +1,5 @@
 export default {
     messages: null,
-    message: null
+    message: null,
+    chat: null
 };

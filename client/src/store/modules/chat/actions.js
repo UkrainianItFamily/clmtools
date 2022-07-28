@@ -8,7 +8,7 @@ export default {
         { user_id, lecture_id }
     ) => {
         try {
-            const data = await ApiRequestService.get('/chat', {
+            const data = await ApiRequestService.get('/messages', {
                 user_id: user_id,
                 lecture_id: lecture_id
             });
@@ -37,6 +37,26 @@ export default {
         } catch (errorMsg) {
             return Promise.reject(errorMsg);
 
+        }
+    },
+
+    [actions.GET_CHAT]: async (
+        { commit },
+        { user_id, lecture_id }
+    ) => {
+        try {
+            const data = await ApiRequestService.get('/chat', {
+                user_id: user_id,
+                lecture_id: lecture_id
+            });
+
+            commit(mutations.SET_CHAT, {
+                chat: data.data
+            });
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
         }
     },
 };

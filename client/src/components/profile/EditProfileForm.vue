@@ -180,6 +180,10 @@
 
         <BModal ref="change-password-modal" hide-footer block title="Змінити пароль">
             <div class="form-control-file">
+
+                <BAlert show variant="success" v-if="successChangePassword">Ваш пароль успішно зміненно!</BAlert>
+                <BAlert show variant="danger" v-if="passErrors.message">{{passErrors.message}}</BAlert>
+
                 <BFormGroup>
                     <BFormInput
                         id="input-password"
@@ -298,7 +302,9 @@ export default {
         image: null,
         preview: null,
         validated: false,
+        successChangePassword: false,
         errors: {},
+        passErrors: {},
     }),
 
     created()
@@ -342,50 +348,43 @@ export default {
 
         async onChangePassword()
         {
-            try
+            await this.CHANGE_PASSWORD(this.ChangePass)
+            .then(() =>
             {
-                await this.CHANGE_PASSWORD(this.ChangePass).then((response) =>
-                {
-                    this.errors = {};
-                    console.log(response);
-                }).catch((error) =>
-                {
-                    console.log(error);
-                    this.errors = error.response.data.error;
-                    if (error.response.data.errors)
-                    {
-                        this.errors = error.response.data.errors;
-                    }
-                });
-            } catch (error)
+                this.passErrors = {};
+                this.successChangePassword = true;
+                setTimeout(() => {
+                    this.$refs['change-password-modal'].hide();
+                    this.successChangePassword = false;
+                    this.ChangePass = {};
+                },2000);
+
+            }).catch((error) =>
             {
-                console.log(error);
-            }
+                this.passErrors = error.response.data.error;
+                if (error.response.data.errors)
+                {
+                    this.passErrors = error.response.data.errors;
+                }
+            });
         },
 
         async onSaveClick()
         {
             this.editUser.dateBirth = this.dateBirth;
-            try
+            await this.UPDATE_PROFILE(this.editUser).then(() =>
             {
-                await this.UPDATE_PROFILE(this.editUser).then(() =>
-                {
-                    this.validated = true;
-                    this.errors = {};
-                }).catch((error) =>
-                {
-                    this.validated = false;
-                    console.log(error);
-                    this.errors = error.response.data.error;
-                    if (error.response.data.errors)
-                    {
-                        this.errors = error.response.data.errors;
-                    }
-                });
-            } catch (error)
+                this.validated = true;
+                this.errors = {};
+            }).catch((error) =>
             {
-                console.log(error);
-            }
+                this.validated = false;
+                this.errors = error.response.data.error;
+                if (error.response.data.errors)
+                {
+                    this.errors = error.response.data.errors;
+                }
+            });
         },
 
         ShowUploadImageModal()

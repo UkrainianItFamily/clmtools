@@ -25,8 +25,6 @@ final class ChangePasswordAction
         {
             throw new InvalidChangePasswordNewPasswordEqualOldPasswordException();
         }
-        else{
-            $user->forceFill(['password' => Hash::make($request->getNewPassword())])->save();
-        }
+        $user->forceFill(['password' => Hash::make($request->getNewPassword())])->save();
     }
 }

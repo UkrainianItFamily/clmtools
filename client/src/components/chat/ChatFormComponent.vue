@@ -10,6 +10,7 @@
                 v-model="body"
             >
             </textarea>
+            <button type="button" @click="sendMessage">Отправить</button>
             <span class="notice">
                 Натисніть Enter, щоб надіслати повідомлення
             </span>

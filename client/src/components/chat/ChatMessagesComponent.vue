@@ -13,6 +13,7 @@
 <script>
 import MessageComponent from '@/components/chat/MessageComponent.vue';
 import { mapActions, mapGetters } from 'vuex';
+import Event from '../../store/modules/chat/event.js';
 
 export default {
     name: 'ChatMessagesComponent',
@@ -50,6 +51,10 @@ export default {
                     alert(Object.values(error.response.data.errors).join('\r\n'));
                 }
             } );
+
+        Event.$on('added_message', (message) => {
+            this.getMessages.push(message);
+        });
 
     },
 

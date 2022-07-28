@@ -28,7 +28,7 @@ class LectionsApiTest extends TestCase
         ]);
 
         $this->lecture = Lecture::factory()->create([
-            'user_id' => $this->user->id,
+            'author_id' => $this->user->id,
             'title' => $this->title,
         ]);
         $this->lecture_url = '/api/v1/lecture/'. $this->lecture->id;

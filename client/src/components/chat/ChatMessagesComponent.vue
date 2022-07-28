@@ -55,8 +55,6 @@ export default {
         Event.$on('added_message', (message) => {
             this.getMessages.push(message);
         });
-
     },
-
 };
 </script>

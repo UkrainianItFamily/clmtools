@@ -1,3 +1,11 @@
-export const USER_LOGIN = 'userLogin';
-export const USER_LOGOUT = 'userLogout';
-export const SET_AUTHENTICATED_USER = 'setAuthUser';
+export const USER_REGISTER = 'USER_REGISTER';
+export const USER_LOGIN = 'USER_LOGIN';
+export const VERIFY_EMAIL = 'VERIFY_EMAIL';
+export const RESEND_VERIFY_EMAIL = 'RESEND_VERIFY_EMAIL';
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const UPDATE_PROFILE_IMAGE = 'UPDATE_PROFILE_IMAGE';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const GET_AUTHENTICATED_USER = 'GET_AUTHENTICATED_USER';
+export const SET_AUTHENTICATED_USER = 'SET_AUTHENTICATED_USER';

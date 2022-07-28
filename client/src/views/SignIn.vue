@@ -2,7 +2,7 @@
     <section class="mt-4">
             <div class="d-flex justify-content-center">
                 <div class="box shadow-box w-50">
-                    <h3 class="text-center mb-4">Authorization</h3>
+                    <h3 class="text-center mb-4">Авторизація</h3>
                     <form
                         class="form"
                         @submit.prevent
@@ -13,7 +13,7 @@
                                 id="input-email"
                                 v-model="user.email"
                                 name="email"
-                                placeholder="Email"
+                                placeholder="E-mail"
                             ></BFormInput>
                         </BFormGroup>
 
@@ -23,7 +23,7 @@
                                 v-model="user.password"
                                 type="password"
                                 name="password"
-                                placeholder="Password"
+                                placeholder="Пароль"
                             ></BFormInput>
                         </BFormGroup>
 
@@ -31,14 +31,14 @@
                             <BCol>
                                 <p class="ml-4">
                                     <RouterLink class="link link-signup" :to="{name: 'auth.signUp'}">
-                                        Registration
+                                        Реєстрація
                                     </RouterLink>
                                 </p>
                             </BCol>
                             <BCol>
                                 <p class="mr-4 text-right">
                                     <RouterLink class="link link-signup" :to="{name: 'auth.forgotPassword'}">
-                                        Forgot password?
+                                        Забули пароль?
                                     </RouterLink>
                                 </p>
                             </BCol>
@@ -48,7 +48,7 @@
                             block
                             @click="onSubmit"
                         >
-                            Sign in
+                            Увійти
                         </BButton>
 
                     </form>
@@ -84,13 +84,13 @@ export default {
 
     methods: {
         ...mapActions('auth', [
-            'signIn',
+            'USER_LOGIN',
         ]),
         showModal() {
             this.$refs.modal.showModal();
         },
         onSubmit() {
-            this.signIn(this.user)
+            this.USER_LOGIN(this.user)
                 .then(() => {
                     if (this.hasAuthenticatedUser) {
                         alert("Ви увійшли до системи");

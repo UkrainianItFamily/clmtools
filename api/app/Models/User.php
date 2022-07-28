@@ -126,12 +126,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->phone;
     }
 
-    public function getCity(): ?string
+    public function getCity(): ?int
     {
         return $this->city;
     }
 
-    public function getUniversity(): ?string
+    public function getUniversity(): ?int
     {
         return $this->university;
     }

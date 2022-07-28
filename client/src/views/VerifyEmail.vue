@@ -30,6 +30,7 @@
 
 <script>
     import { mapActions } from 'vuex';
+    import {RESEND_VERIFY_EMAIL, VERIFY_EMAIL} from '../store/modules/auth/types/actions';
 
     export default {
         name: "VerifyEmail",
@@ -43,11 +44,11 @@
 
         methods: {
             ...mapActions('auth', [
-                'verifyEmail',
-                'reSendEmail',
+                'VERIFY_EMAIL',
+                'RESEND_VERIFY_EMAIL',
             ]),
             reSend() {
-                this.reSendEmail({ id: this.registered_user_id })
+                this.RESEND_VERIFY_EMAIL({ id: this.registered_user_id })
                     .then(() => {
                         alert("Лист з верифікацією надіслан повторно");
                     })
@@ -63,7 +64,7 @@
             let params = new URLSearchParams(this.$router.history.current.query);
             this.url = this.registered_user_id + '?' + params.toString();
 
-            this.verifyEmail({ url: this.url })
+            this.VERIFY_EMAIL({ url: this.url })
                 .then(() => {
                     this.message = "Дякуємо за підтвердження електронної адреси.";
                 })

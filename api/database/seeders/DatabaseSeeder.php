@@ -14,22 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $user = \App\Models\User::factory()->create([
-             'name' => 'Test',
+         $lecturer = \App\Models\User::factory()->create([
+             'name' => 'Lecturer',
              'last_name' => 'User',
-             'email' => 'test@example.com',
+             'email' => 'lecturer@example.com',
              'phone' => '111111111111',
              'lecturer' => true
          ]);
 
         \App\Models\Course::factory(3)->create([
-            'user_id' => $user->id
+            'user_id' => $lecturer->id
         ])->each(function($course) {
             \App\Models\Lecture::factory(3)->create([
-                'user_id' => $course->user_id,
                 'course_id' => $course->id,
                 'author_id' => $course->user_id,
             ]);
         });
+
     }
 }

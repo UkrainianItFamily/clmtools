@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::table('lectures', function (Blueprint $table) {
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users');
         });
     }
 
@@ -29,7 +27,6 @@ return new class extends Migration
     {
         Schema::table('lectures', function (Blueprint $table) {
             $table->dropColumn('description');
-            $table->dropForeign('lectures_author_id_foreign');
         });
     }
 };

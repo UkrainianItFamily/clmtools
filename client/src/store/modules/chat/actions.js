@@ -3,7 +3,7 @@ import * as mutations from './types/mutations';
 import ApiRequestService from '@/services/request-service/ApiRequestService';
 
 export default {
-    [actions.GET_CHAT]: async (
+    [actions.GET_MESSAGES]: async (
         { commit },
         { user_id, lecture_id }
     ) => {
@@ -13,8 +13,8 @@ export default {
                 lecture_id: lecture_id
             });
 
-            commit(mutations.SET_CHAT, {
-                chat: data.data
+            commit(mutations.SET_MESSAGES, {
+                messages: data.data
             });
 
             return Promise.resolve();

@@ -1,7 +1,7 @@
 <template>
     <div class="message-area" v-if="messagesExist">
         <MessageComponent
-            v-for="message in getChat"
+            v-for="message in getMessages"
             :key="message.id"
             :message="message"
         ></MessageComponent>
@@ -27,21 +27,21 @@ export default {
             user: 'getAuthenticatedUser'
         }),
         ...mapGetters('chat', [
-           'getChat',
+           'getMessages',
         ]),
     },
     methods: {
         ...mapActions('chat', [
-            'GET_CHAT',
+            'GET_MESSAGES',
         ]),
     },
     mounted() {
-        this.GET_CHAT({
+        this.GET_MESSAGES({
             user_id: this.user.id,
             lecture_id: this.$route.params.lection_id
         })
             .then(() => {
-                if(this.getChat.length){
+                if(this.getMessages.length){
                     this.messagesExist = true;
                 }
             })

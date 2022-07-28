@@ -1,1 +1,1 @@
-export const SET_CHAT = 'SET_CHAT';
+export const SET_MESSAGES = 'SET_MESSAGES';

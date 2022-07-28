@@ -1,1 +1,1 @@
-export const GET_CHAT = 'getChat';
+export const GET_MESSAGES = 'getMessages';

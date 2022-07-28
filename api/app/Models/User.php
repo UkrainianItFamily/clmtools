@@ -139,7 +139,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->graduation_year;
     }
 
-    public function getVerifiedEmail(): Carbon
+    public function getVerifiedEmail(): ?Carbon
     {
         return $this->email_verified_at;
     }

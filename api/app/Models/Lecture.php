@@ -11,9 +11,9 @@ class Lecture extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description' , 'preview_image', 'link', 'user_id', 'course_id', 'author_id'];
+    protected $fillable = ['title', 'description' , 'preview_image', 'link', 'course_id', 'author_id'];
 
-    public function user(): BelongsToMany {
+    public function users(): BelongsToMany {
         return $this->belongsToMany(User::class);
     }
 

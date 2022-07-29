@@ -19,9 +19,9 @@ final class UpdateValidationRequest extends FormRequest
             'name' => 'string|min:2',
             'last_name' => 'string|min:2',
             'date_birth' => 'date|before:tomorrow|date_format:Y-m-d',
-            'city' => 'string',
-            'university' => 'string',
-            'graduation_year' => 'integer|digits:4|max:'.(date('Y')+1)
+            'city' => 'int',
+            'university' => 'int',
+            'graduation_year' => 'integer|size:4|min:1900|max:'.(date('Y')+1)
         ];
     }
 }

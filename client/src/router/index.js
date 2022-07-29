@@ -13,6 +13,7 @@ import SignIn from '@/views/SignIn';
 import ForgotPassword from "@/views/ForgotPassword";
 import VerifyEmail from '@/views/VerifyEmail';
 import ResetPassword from "@/views/ResetPassword";
+import Profile from "@/views/Profile";
 import Lections from '@/views/Lections/Lections';
 import DetailLection from '@/views/Lections/DetailLection';
 
@@ -76,6 +77,12 @@ const routes = [
         meta: { handleAuth: true },
     },
     {
+        path: '/personal/profile',
+        name: 'profile',
+        component: Profile,
+        meta: { requiresAuth: true },
+    },
+    {
         path: '/lections',
         name: 'lections',
         component: Lections,
@@ -86,7 +93,7 @@ const routes = [
         component: DetailLection,
     },
     {
-        path: '/chat-temp-url',
+        path: '/lections/:lection_id/chat',
         name: 'Chat',
         component: Chat,
         meta: { requiresAuth: true },

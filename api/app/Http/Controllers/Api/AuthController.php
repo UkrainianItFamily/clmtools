@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Action\Auth\UploadProfileImageAction;
-use App\Action\Auth\UploadProfileImageRequest;
+use App\Actions\Auth\UploadProfileImageAction;
+use App\Actions\Auth\UploadProfileImageRequest;
+use App\Actions\Auth\ChangePasswordAction;
+use App\Actions\Auth\ChangePasswordRequest;
 use App\Actions\Auth\LogoutAction;
 use App\Actions\Auth\ForgotPasswordAction;
 use App\Actions\Auth\ForgotPasswordRequest;
@@ -18,8 +20,9 @@ use App\Actions\Auth\UpdateProfileAction;
 use App\Actions\Auth\UpdateProfileRequest;
 use App\Http\Presenters\AuthenticationResponseArrayPresenter;
 use App\Http\Presenters\UserArrayPresenter;
-use App\Http\Request\Api\Auth\UploadProfileImageValidationRequest;
+use App\Http\Requests\Api\Auth\UploadProfileImageValidationRequest;
 use App\Http\Requests\Api\Auth\AuthRequest;
+use App\Http\Requests\Api\Auth\ChangePasswordValidationRequest;
 use App\Http\Requests\Api\Auth\PasswordResetLinkRequest;
 use App\Http\Requests\Api\Auth\ResetRequest;
 use App\Http\Requests\Api\Auth\UpdateValidationRequest;
@@ -77,6 +80,22 @@ final class AuthController extends ApiController
         return $this->successResponse(['msg' => __('passwords.reset')], 200);
     }
 
+    public function change_password(
+        ChangePasswordValidationRequest $validationRequest,
+        ChangePasswordAction $action
+    )
+    {
+        $request = new ChangePasswordRequest(
+            $validationRequest->old_password,
+            $validationRequest->new_password,
+            $validationRequest->new_password_confirmation
+        );
+
+        $action->execute($request);
+
+        return $this->successResponse(['msg' => __('passwords.changed')], 200);
+    }
+
     public function logout(
         LogoutAction $action
     ): JsonResponse
@@ -97,7 +116,7 @@ final class AuthController extends ApiController
         UpdateValidationRequest $updateValidationRequest,
         UpdateProfileAction $action,
         UserArrayPresenter $userArrayPresenter
-    ){
+    ): JsonResponse{
         $response = $action->execute(
             new UpdateProfileRequest(
                 $updateValidationRequest->get('name'),
@@ -116,7 +135,7 @@ final class AuthController extends ApiController
         UploadProfileImageValidationRequest $validationRequest,
         UploadProfileImageAction $action,
         UserArrayPresenter $userArrayPresenter
-    ): ApiResponse {
+    ): JsonResponse {
         $response = $action->execute(
             new UploadProfileImageRequest(
                 $validationRequest->file('image')

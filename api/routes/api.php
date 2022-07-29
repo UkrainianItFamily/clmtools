@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StatusController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\HandbookControllers;
+use App\Http\Controllers\Api\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +34,10 @@ Route::prefix('v1')->group(function () {
         Route::post('register', [RegistrationController::class, 'register']);
         Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
         Route::post('reset', [AuthController::class, 'reset'])->name('reset-password');
+        Route::post('change-password', [AuthController::class, 'change_password'])->name('change-password');
         Route::put('me', [AuthController::class, 'update'])->name('profile.update');
         Route::get('me', [AuthController::class, 'me'])->name('profile.me');
-        Route::put('me/image', [AuthController::class, 'uploadProfileImage']);
+        Route::post('me/image', [AuthController::class, 'uploadProfileImage']);
     });
 
     Route::controller(AuthController::class)->group(function () {
@@ -50,5 +53,19 @@ Route::prefix('v1')->group(function () {
         Route::post('lecture/{id}', [LectureControllers::class, 'lecture'])->name('lecture');
         Route::get('form-lecture', [LectureControllers::class, 'formLecture'])->name('form.lecture');
         Route::post('form-lecture', [LectureControllers::class, 'createLecture'])->name('create.lecture');
+
+        Route::post('chat', [ChatController::class, 'store'])->name('chat.store');
+        Route::get('chat', [ChatController::class, 'chat'])->name('chat');
+        Route::post('message', [ChatController::class, 'storeMessage'])->name('chat.store-message');
+
+        Route::group(['prefix' => '/cities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getCities']);
+            Route::get('/{id}', [HandbookControllers::class, 'city']);
+        });
+
+        Route::group(['prefix' => '/universities'], function () {
+            Route::get('/', [HandbookControllers::class, 'getUniversities']);
+            Route::get('/{id}', [HandbookControllers::class, 'university']);
+        });
     });
 });

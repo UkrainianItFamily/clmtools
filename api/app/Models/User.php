@@ -7,6 +7,8 @@ use App\Notifications\MailResetPasswordNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -71,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): string
     {
         return $this->getKey();
     }
@@ -81,7 +83,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
@@ -124,12 +126,12 @@ class User extends Authenticatable implements JWTSubject
         return $this->phone;
     }
 
-    public function getCity(): ?string
+    public function getCity(): ?int
     {
         return $this->city;
     }
 
-    public function getUniversity(): ?string
+    public function getUniversity(): ?int
     {
         return $this->university;
     }
@@ -161,5 +163,15 @@ class User extends Authenticatable implements JWTSubject
     public function getUserRoleLecturer(): ?bool
     {
         return $this->lecturer;
+    }
+
+    public function chats(): HasMany
+    {
+        return $this->hasMany(Chat::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
     }
 }

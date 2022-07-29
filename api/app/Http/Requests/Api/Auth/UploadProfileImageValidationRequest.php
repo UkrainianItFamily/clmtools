@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Request\Api\Auth;
+namespace App\Http\Requests\Api\Auth;
 
-use App\Http\Request\ApiFormRequest;
+use App\Http\Requests\Api\ApiFormRequest;
 
 final class UploadProfileImageValidationRequest extends ApiFormRequest
 {

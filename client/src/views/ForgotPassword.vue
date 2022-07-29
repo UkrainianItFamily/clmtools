@@ -43,6 +43,7 @@
 
 <script>
 import {mapActions} from 'vuex';
+import {FORGOT_PASSWORD} from '../store/modules/auth/types/actions';
 export default {
     name: "ForgotPasswordPage",
 
@@ -56,12 +57,12 @@ export default {
 
     methods: {
         ...mapActions('auth', [
-            'forgotPassword'
+            'FORGOT_PASSWORD'
         ]),
 
         onSubmit(e) {
             e.preventDefault();
-            this.forgotPassword(this.user)
+            this.FORGOT_PASSWORD(this.user)
                 .then(() => {
                     this.validated = true;
                     this.errors = {};

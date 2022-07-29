@@ -14,8 +14,9 @@ final class GetMessagesByLectureIdAction
 
     public function execute(GetMessagesByLectureIdRequest $request): GetMessagesByLectureIdResponse
     {
-        return new GetMessagesByLectureIdResponse(
-            $this->messageRepository->getMessagesByLectureId($request->getUserId(), $request->getLectureId())
-        );
+        $messageRepository = $this->messageRepository;
+        $messages = $messageRepository->getMessagesByLectureId($request->getUserId(), $request->getLectureId());
+
+        return new GetMessagesByLectureIdResponse($messages);
     }
 }

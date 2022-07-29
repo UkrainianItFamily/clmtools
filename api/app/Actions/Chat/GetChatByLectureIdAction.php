@@ -14,8 +14,9 @@ final class GetChatByLectureIdAction
 
     public function execute(GetChatByLectureIdRequest $request): GetChatByLectureIdResponse
     {
-        return new GetChatByLectureIdResponse(
-            $this->chatRepository->getChatByLectureId($request->getUserId(), $request->getLectureId())
-        );
+        $chatRepository = $this->chatRepository;
+        $chat = $chatRepository->getChatByLectureId($request->getUserId(), $request->getLectureId());
+
+        return new GetChatByLectureIdResponse($chat);
     }
 }

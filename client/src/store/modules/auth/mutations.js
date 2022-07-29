@@ -23,6 +23,7 @@ export default {
         state.isLoggedIn = true;
 
         Storage.setUser(state.user = userMapper(user));
+        state.user = userMapper(user);
     },
 
     [mutations.ADD_REGISTER_USER]: (state, id) => {

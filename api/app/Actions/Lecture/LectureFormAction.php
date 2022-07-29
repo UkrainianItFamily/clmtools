@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Lecture;
 
-use App\Actions\Auth\AuthRequest;
+use App\Models\Authentication;
 use App\Repository\{CourseRepository, UserRepository};
 
 final class LectureFormAction
@@ -13,10 +13,10 @@ final class LectureFormAction
     {
     }
 
-    public function execute(AuthRequest $request): LectureFormResponse
+    public function execute(): LectureFormResponse
     {
         return new LectureFormResponse(
-            $this->courseRepository->getCoursesByUser($request->getAuthUserId()),
+            $this->courseRepository->getCoursesByUser(Authentication::getAuthUserId()),
             $this->userRepository->getStudents(),
         );
     }

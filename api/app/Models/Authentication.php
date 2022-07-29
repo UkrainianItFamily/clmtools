@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Auth;
+namespace App\Models;
 
-final class AuthRequest
+final class Authentication
 {
     public static function getAuthUserId(): int
     {

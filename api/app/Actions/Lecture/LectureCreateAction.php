@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Actions\Lecture;
 
-use App\Models\User;
 use App\Repository\LectureRepository;
-use App\Actions\Auth\AuthRequest;
+use App\Models\Authentication;
 
 final class LectureCreateAction
 {
@@ -27,7 +26,7 @@ final class LectureCreateAction
             'link' => $request->getLink(),
             'preview_image' => $preview_image,
             'course_id' => $request->getCourseId(),
-            'author_id' => AuthRequest::getAuthUserId(),
+            'author_id' => Authentication::getAuthUserId(),
         ], $request->getUserId());
 
         $this->lectureRepository->attach($lecture, $request->getUserId());

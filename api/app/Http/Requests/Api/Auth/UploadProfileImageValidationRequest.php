@@ -11,7 +11,7 @@ final class UploadProfileImageValidationRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
-            'image' => 'required|image|size:5120'
+            'image' => 'required|image|max:5120'
         ];
     }
 }

@@ -20,7 +20,8 @@ final class AddChatAction
         $chat->user_id = Auth::id();
         $chat->lecture_id = $request->getLectureId();
 
-        $chat = $this->chatRepository->save($chat);
+        $chatRepository = $this->chatRepository;
+        $chat = $chatRepository->save($chat);
 
         return new AddChatResponse($chat);
     }

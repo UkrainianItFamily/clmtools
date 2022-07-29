@@ -180,11 +180,26 @@
 
         <BModal ref="change-password-modal" hide-footer block title="Змінити пароль">
             <div class="form-control-file">
+
+                <BAlert show variant="success" v-if="successChangePassword">Ваш пароль успішно зміненно!</BAlert>
+                <BAlert show variant="danger" v-if="passErrors.message">{{passErrors.message}}</BAlert>
+
                 <BFormGroup>
                     <BFormInput
                         id="input-password"
-                        v-model="ChangePass.password"
-                        name="password"
+                        v-model="ChangePass.oldPassword"
+                        name="old_password"
+                        type="password"
+                        placeholder="Старий пароль"
+                        required
+                    ></BFormInput>
+                </BFormGroup>
+
+                <BFormGroup>
+                    <BFormInput
+                        id="input-password"
+                        v-model="ChangePass.newPassword"
+                        name="new_password"
                         type="password"
                         placeholder="Новий пароль"
                         required
@@ -194,23 +209,16 @@
                 <BFormGroup>
                     <BFormInput
                         id="input-passwordConfirmation"
-                        v-model="ChangePass.passwordConfirmation"
-                        name="password_confirmation"
+                        v-model="ChangePass.newPasswordConfirmation"
+                        name="new_password_confirmation"
                         type="password"
-                        placeholder="Підтвердіть пароль"
+                        placeholder="Підтвердження нового пароля"
                         required
                     ></BFormInput>
                 </BFormGroup>
             </div>
             <div class="mt-3">
-                <BRow>
-                    <BCol>
-                        <BButton variant="secondary" block @click="hideModal">Зберегти</BButton>
-                    </BCol>
-                    <BCol>
-                        <BButton variant="outline-warning" block @click="hideModal">Відмінити</BButton>
-                    </BCol>
-                </BRow>
+                <BButton variant="secondary" block @click="onChangePassword">Зберегти</BButton>
             </div>
         </BModal>
 
@@ -222,6 +230,7 @@ import {mapGetters, mapActions} from 'vuex';
 import {emptyUser} from '@/services/Normalizer';
 import moment from 'moment';
 import methods from '@/components/methods/methods';
+import {CHANGE_PASSWORD} from '../../store/modules/auth/types/actions';
 
 export default {
     name: 'EditProfileForm',
@@ -238,10 +247,10 @@ export default {
         }),
         days()
         {
-             let currentYear = typeof(this.BirthYear) === 'string' ? this.BirthYear : new Date().getFullYear(),
-             currentMonth = typeof(this.BirthMonth) === 'string' ? this.BirthMonth : new Date().getMonth();
+            let currentYear = typeof (this.BirthYear) === 'string' ? this.BirthYear : new Date().getFullYear(),
+                currentMonth = typeof (this.BirthMonth) === 'string' ? this.BirthMonth : new Date().getMonth();
 
-            return this.getDaysInMonthArray(currentYear,currentMonth);
+            return this.getDaysInMonthArray(currentYear, currentMonth);
         },
         months()
         {
@@ -286,13 +295,16 @@ export default {
             return this.user.dateBirth ? new Date(this.user.dateBirth).getFullYear() : null;
         },
         ChangePass: {
-            password: '',
-            passwordConfirmation: '',
+            oldPassword: '',
+            newPassword: '',
+            newPasswordConfirmation: '',
         },
         image: null,
         preview: null,
         validated: false,
+        successChangePassword: false,
         errors: {},
+        passErrors: {},
     }),
 
     created()
@@ -309,7 +321,7 @@ export default {
     },
 
     methods: {
-        ...mapActions('auth', ['UPDATE_PROFILE','UPDATE_PROFILE_IMAGE']),
+        ...mapActions('auth', ['UPDATE_PROFILE', 'UPDATE_PROFILE_IMAGE', 'CHANGE_PASSWORD']),
 
         ...mapActions('handbook', ['GET_CITIES', 'GET_UNIVERSITIES']),
 
@@ -334,28 +346,45 @@ export default {
             });
         },
 
+        async onChangePassword()
+        {
+            await this.CHANGE_PASSWORD(this.ChangePass)
+            .then(() =>
+            {
+                this.passErrors = {};
+                this.successChangePassword = true;
+                setTimeout(() => {
+                    this.$refs['change-password-modal'].hide();
+                    this.successChangePassword = false;
+                    this.ChangePass = {};
+                },2000);
+
+            }).catch((error) =>
+            {
+                this.passErrors = error.response.data.error;
+                if (error.response.data.errors)
+                {
+                    this.passErrors = error.response.data.errors;
+                }
+            });
+        },
+
         async onSaveClick()
         {
             this.editUser.dateBirth = this.dateBirth;
-            try
+            await this.UPDATE_PROFILE(this.editUser).then(() =>
             {
-                await this.UPDATE_PROFILE(this.editUser).then(() =>
-                {
-                    this.validated = true;
-                    this.errors = {};
-                }).catch((error) =>
-                {
-                    this.validated = false;
-                    this.errors = error.response.data.error;
-                    if (error.response.data.errors)
-                    {
-                        this.errors = error.response.data.errors;
-                    }
-                });
-            } catch (error)
+                this.validated = true;
+                this.errors = {};
+            }).catch((error) =>
             {
-                console.log(error);
-            }
+                this.validated = false;
+                this.errors = error.response.data.error;
+                if (error.response.data.errors)
+                {
+                    this.errors = error.response.data.errors;
+                }
+            });
         },
 
         ShowUploadImageModal()
@@ -371,7 +400,6 @@ export default {
         hideModal()
         {
             this.$refs['upload-image-modal'].hide();
-            this.$refs['change-password-modal'].hide();
         },
 
         selectImage()
@@ -392,7 +420,7 @@ export default {
                     this.image = file[0];
                 };
                 reader.readAsDataURL(file[0]);
-                this.$emit('input', file[0]);
+                this.$emit('fileInput', file[0]);
             }
         },
 

@@ -20,14 +20,16 @@ final class AddMessageAction
 
     public function execute(AddMessageRequest $request): AddMessageResponse
     {
-        $chat = $this->chatRepository->getChatByLectureId(Auth::id(), $request->getLectureId());
+        $chatRepository = $this->chatRepository;
+        $chat = $chatRepository->getChatByLectureId(Auth::id(), $request->getLectureId());
 
         $message = new Message();
         $message->user_id = Auth::id();
         $message->chat_id = $chat->getId();
         $message->body = $request->getBody();
 
-        $message = $this->messageRepository->save($message);
+        $messageRepository = $this->messageRepository;
+        $message = $messageRepository->save($message);
 
         return new AddMessageResponse($message);
     }

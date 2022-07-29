@@ -6,6 +6,8 @@ use App\Actions\Chat\AddChatAction;
 use App\Actions\Chat\AddChatRequest;
 use App\Actions\Chat\AddMessageAction;
 use App\Actions\Chat\AddMessageRequest;
+use App\Actions\Chat\GetChatByLectureIdAction;
+use App\Actions\Chat\GetChatByLectureIdRequest;
 use App\Actions\Chat\GetMessagesByLectureIdAction;
 use App\Actions\Chat\GetMessagesByLectureIdRequest;
 use App\Http\Presenters\ChatArrayPresenter;
@@ -31,6 +33,22 @@ class ChatController extends ApiController
     }
 
     public function chat(
+        Request $request,
+        GetChatByLectureIdAction $action,
+        ChatArrayPresenter $presenter
+    ): JsonResponse
+    {
+        $response = $action->execute(
+            new GetChatByLectureIdRequest(
+                $request->get('user_id'),
+                $request->get('lecture_id')
+            )
+        );
+
+        return $this->successResponse($presenter->present($response->getChat()));
+    }
+
+    public function messages(
         Request $request,
         GetMessagesByLectureIdAction $action,
         MessageArrayPresenter $presenter

@@ -171,7 +171,7 @@ export default {
     ) => {
         try {
             const user = await requestService.get('/auth/me');
-            commit(mutations.SET_AUTHENTICATED_USER, user);
+            commit(mutations.SET_AUTHENTICATED_USER, user.data);
 
             return Promise.resolve();
         } catch (error) {
@@ -198,7 +198,7 @@ export default {
                 graduation_year: graduationYear
             });
 
-            commit(mutations.SET_AUTHENTICATED_USER, data,);
+            commit(mutations.SET_AUTHENTICATED_USER, data.data);
 
             return Promise.resolve();
         } catch (error) {
@@ -214,7 +214,7 @@ export default {
             const formData = new FormData();
             formData.append('image', image, image.name);
             const data = await requestService.post('/auth/me/image', formData);
-            commit(mutations.SET_AUTHENTICATED_USER, data,);
+            commit(mutations.SET_AUTHENTICATED_USER, data.data);
 
             return Promise.resolve();
         } catch (error) {

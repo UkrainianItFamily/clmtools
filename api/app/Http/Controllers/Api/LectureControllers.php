@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Authentication;
+use App\Models\User;
 use App\Actions\Lecture\LectureAction;
 use App\Actions\Lecture\LectureCollectionAction;
 use App\Actions\Lecture\LectureCollectionRequest;
@@ -66,7 +66,7 @@ class LectureControllers extends ApiController
         LectureCreateAction $action,
         LectureArrayPresenter $presenter
     ): JsonResponse {
-        if (!Authentication::isUserLecturer()) {
+        if (!User::isUserLecturer()) {
             return $this->errorResponse(__('authorize.forbidden_by_role'));
         }
         $request = new LectureCreateRequest(

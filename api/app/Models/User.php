@@ -174,4 +174,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Message::class);
     }
+
+    public static function getAuthUserId(): int
+    {
+        return \Auth::id();
+    }
+
+    public static function isUserLecturer(): ?bool
+    {
+        return \Auth::user()->lecturer == true;
+    }
 }

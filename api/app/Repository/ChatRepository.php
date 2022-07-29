@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Exceptions\ChatNotFoundException;
 use App\Models\Chat;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -33,9 +34,15 @@ final class ChatRepository
 
     public function getChatByLectureId(int $user_id, int $lecture_id): Chat
     {
-        return Chat::where([
+        $chat = Chat::where([
             ['user_id', $user_id],
             ['lecture_id', $lecture_id]
         ])->first();
+
+        if (!$chat) {
+            throw new ChatNotFoundException();
+        }
+
+        return $chat;
     }
 }

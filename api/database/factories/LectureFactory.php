@@ -19,7 +19,7 @@ class LectureFactory extends Factory
         return [
             'title' => $this->faker->sentence(5,true),
             'link' => 'https://www.youtube.com/watch?v=USjZcfj8yxE',
-            'preview_image' => 'https://via.placeholder.com/600/5F113B/FFFFFF/?text=Lecture*',
+            'preview_image' => config('constants.thumbnail.empty').'Lecture*',
         ];
     }
 }

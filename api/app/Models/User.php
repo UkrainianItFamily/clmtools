@@ -6,12 +6,12 @@ use App\Notifications\EmailVerificationNotification;
 use App\Notifications\MailResetPasswordNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use phpDocumentor\Reflection\Types\Integer;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
@@ -156,9 +156,8 @@ class User extends Authenticatable implements JWTSubject
         $this->notify(new MailResetPasswordNotification($token));
     }
 
-    public function lectures(): BelongsTo
-    {
-        return $this->belongsTo(Lecture::class);
+    public function lectures(): BelongsToMany {
+        return $this->belongsToMany(Lecture::class);
     }
 
     public function getUserRoleLecturer(): ?bool
@@ -174,5 +173,15 @@ class User extends Authenticatable implements JWTSubject
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public static function getAuthUserId(): int
+    {
+        return \Auth::id();
+    }
+
+    public static function isUserLecturer(): ?bool
+    {
+        return \Auth::user()->lecturer == true;
     }
 }

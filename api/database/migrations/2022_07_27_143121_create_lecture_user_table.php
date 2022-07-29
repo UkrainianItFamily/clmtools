@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('lectures', function (Blueprint $table) {
-            $table->unsignedBigInteger('author_id');
-            $table->foreign('author_id')->references('id')->on('users');
+        Schema::create('lecture_user', function (Blueprint $table) {
+            $table->id();
+            $table->integer('lecture_id')->unsigned();
+            $table->integer('user_id')->unsigned();
         });
     }
 
@@ -26,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('lectures', function (Blueprint $table) {
-            $table->dropForeign('lectures_author_id_foreign');
-        });
+        Schema::dropIfExists('lecture_user');
     }
 };

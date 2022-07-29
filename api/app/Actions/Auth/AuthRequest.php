@@ -13,6 +13,6 @@ final class AuthRequest
 
     public static function isUserLecturer(): ?bool
     {
-        return \Auth::user()->lecturer;
+        return \Auth::user()->lecturer == true;
     }
 }

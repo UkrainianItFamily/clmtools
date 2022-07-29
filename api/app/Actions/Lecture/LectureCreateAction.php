@@ -10,6 +10,10 @@ use App\Actions\Auth\AuthRequest;
 
 final class LectureCreateAction
 {
+    private const EMPTY_THUMBNAIL = 'https://via.placeholder.com/600/5F113B/FFFFFF/?text=';
+    private const YOUTUBE_THUMBNAIL = 'https://img.youtube.com/vi/';
+    private const THUMBNAIL_SIZE = '/maxresdefault.jpg';
+
     public function __construct(private LectureRepository $lectureRepository)
     {
     }
@@ -18,8 +22,8 @@ final class LectureCreateAction
     {
         $link_parts = stristr($request->getLink(), '=');
         $preview_image = $link_parts ?
-            'https://img.youtube.com/vi/'.mb_substr($link_parts, 1).'/maxresdefault.jpg' :
-            'https://via.placeholder.com/600/5F113B/FFFFFF/?text='.$request->getTitle();
+            self::YOUTUBE_THUMBNAIL.mb_substr($link_parts, 1).self::THUMBNAIL_SIZE :
+            self::EMPTY_THUMBNAIL.$request->getTitle();
 
         $lecture = $this->lectureRepository->create([
             'title' => $request->getTitle(),

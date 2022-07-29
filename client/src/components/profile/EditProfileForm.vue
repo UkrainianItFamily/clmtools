@@ -15,8 +15,6 @@
             @submit.prevent="onSaveClick"
             novalidate="true"
         >
-            <BAlert show variant="success" v-if="validated">Дані збережено!</BAlert>
-            <!--            <BAlert show variant="danger" v-if="errors.message">{{ errors.message }}</BAlert>-->
 
             <div role="group" class="mt-3">
                 <label for="input-name"><b>Ім'я</b></label>
@@ -28,6 +26,7 @@
                     required
                     trim
                 ></BFormInput>
+                <BAlert show variant="danger" v-if="errors.name">{{Object.values(errors.name).join('\r\n')}}</BAlert>
             </div>
 
             <div role="group" class="mt-3">
@@ -40,6 +39,7 @@
                     required
                     trim
                 ></BFormInput>
+                <BAlert show variant="danger" v-if="errors.last_name">{{Object.values(errors.last_name).join('\r\n')}}</BAlert>
             </div>
 
             <label for="input-dateBirth" class="mt-3"><b>Дата народження</b></label>
@@ -75,6 +75,7 @@
                         </BFormSelect>
                     </BCol>
                 </BRow>
+                <BAlert show variant="danger" v-if="errors.date_birth">{{Object.values(errors.date_birth).join('\r\n')}}</BAlert>
             </BFormGroup>
 
             <div role="group" class="mt-3">
@@ -135,11 +136,14 @@
                 >
                     <BFormSelectOption v-for="year in years" :key="year" :value="year">{{ year }}</BFormSelectOption>
                 </BFormSelect>
+                <BAlert show variant="danger" v-if="errors.graduation_year">{{Object.values(errors.graduation_year).join('\r\n')}}</BAlert>
             </div>
+
+            <BAlert show variant="success" v-if="validated">Дані збережено!</BAlert>
 
             <div class="mt-3 mb-5">
                 <BButton block @click="ShowChangePasswordModal">Змінити пароль</BButton>
-                <BButton block type="submit">Зберегти</BButton>
+                <BButton block :disabled="disableSaveBtn" type="submit">Зберегти</BButton>
             </div>
         </form>
 
@@ -165,6 +169,8 @@
                     ref="fileInput"
                     accept=".jpg, .png, .jpeg"
                 >
+                <BAlert show variant="success" v-if="successUploadImage">Ваше фото зміненно!</BAlert>
+                <BAlert show variant="danger" v-if="imageErrors.message">{{imageErrors.message}}</BAlert>
             </div>
             <div class="mt-3">
                 <BRow>
@@ -276,35 +282,34 @@ export default {
             }
             return array;
         },
+        disableSaveBtn(){
+            return JSON.stringify(this.user) === JSON.stringify(this.editUser) &&
+                this.BirthDay === this.pad(new Date(this.user.dateBirth).getDate()) &&
+                this.BirthMonth === this.pad(new Date(this.user.dateBirth).getMonth() + 1) &&
+                this.BirthYear === new Date(this.user.dateBirth).getFullYear();
+        }
     },
 
     data: () => ({
         editUser: {
             ...emptyUser(),
         },
-        BirthDay()
-        {
-            return this.user.dateBirth ? new Date(this.user.dateBirth).getDay() : null;
-        },
-        BirthMonth()
-        {
-            return this.user.dateBirth ? new Date(this.user.dateBirth).getMonth() : null;
-        },
-        BirthYear()
-        {
-            return this.user.dateBirth ? new Date(this.user.dateBirth).getFullYear() : null;
-        },
+        BirthDay: null,
+        BirthMonth: null,
+        BirthYear: null,
+        validated: false,
+        errors: {},
         ChangePass: {
             oldPassword: '',
             newPassword: '',
             newPasswordConfirmation: '',
         },
+        successChangePassword: false,
+        passErrors: {},
         image: null,
         preview: null,
-        validated: false,
-        successChangePassword: false,
-        errors: {},
-        passErrors: {},
+        successUploadImage: false,
+        imageErrors: {},
     }),
 
     created()
@@ -312,6 +317,9 @@ export default {
         this.editUser = {
             ...this.user,
         };
+        this.BirthDay = this.pad(new Date(this.user.dateBirth).getDate());
+        this.BirthMonth = this.pad(new Date(this.user.dateBirth).getMonth() + 1);
+        this.BirthYear = new Date(this.user.dateBirth).getFullYear();
     },
 
     mounted()
@@ -379,11 +387,7 @@ export default {
             }).catch((error) =>
             {
                 this.validated = false;
-                this.errors = error.response.data.error;
-                if (error.response.data.errors)
-                {
-                    this.errors = error.response.data.errors;
-                }
+                this.errors = error.response.data.errors;
             });
         },
 
@@ -426,13 +430,22 @@ export default {
 
         async uploadAvatar()
         {
-            try
+            await this.UPDATE_PROFILE_IMAGE(this.image).then(() =>
             {
-                await this.UPDATE_PROFILE_IMAGE(this.image);
-            } catch (error)
+                this.imageErrors = {};
+                this.successUploadImage = true;
+                this.image = null;
+                this.preview = null;
+                setTimeout(() => {
+                    this.hideModal();
+                    this.successUploadImage = false;
+                },2000);
+            }).catch((error) =>
             {
-                console.log(error);
-            }
+                this.image = null;
+                this.preview = null;
+                this.imageErrors = error.response.data;
+            });
         },
 
     },

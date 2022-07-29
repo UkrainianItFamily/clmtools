@@ -59,4 +59,20 @@ export default {
             return Promise.reject(error);
         }
     },
+
+    [actions.POST_CHAT]: async (
+        { commit },
+        { lecture_id }
+    ) => {
+        try {
+            await ApiRequestService.post('/chat', {
+                lecture_id: lecture_id
+            });
+
+            return Promise.resolve();
+        } catch (errorMsg) {
+            return Promise.reject(errorMsg);
+
+        }
+    },
 };

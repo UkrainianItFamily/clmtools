@@ -9,7 +9,7 @@
                     <ChatFormComponent></ChatFormComponent>
                 </div>
                 <div class="card-body" v-else>
-                    <button>Почати листування</button>
+                    <button type="button" @click="createChat">Почати листування</button>
                 </div>
             </div>
         </div>
@@ -43,7 +43,23 @@ export default {
     methods: {
         ...mapActions('chat', [
             'GET_CHAT',
+            'POST_CHAT'
         ]),
+        createChat() {
+            this.POST_CHAT({
+                lecture_id: this.$route.params.lection_id
+            })
+                .then(() => {
+                    if(this.getChat){
+                        this.chatExist = true;
+                    }
+                })
+                .catch((error) => {
+                    if (error.response.data.errors) {
+                        alert(Object.values(error.response.data.errors).join('\r\n'));
+                    }
+                } );
+        },
     },
     mounted() {
         this.GET_CHAT({
@@ -51,7 +67,6 @@ export default {
             lecture_id: this.$route.params.lection_id
         })
             .then(() => {
-                console.log(this.getChat.id);
                 if(this.getChat.id){
                     this.chatExist = true;
                 }
